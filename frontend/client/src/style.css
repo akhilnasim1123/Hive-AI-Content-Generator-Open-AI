@@ -1,0 +1,309 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Kadwa';
+}
+.landing-banner{
+    width: 100%;
+    height: 630px;
+
+    background-color: rgb(26 32 43);
+    color: rgb(59 255 225);
+    font-family: 'Kadwa';
+}.landing-banner .banner-cat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 630px;
+
+}.landing-banner .banner-img{
+    width: 50%;
+}
+.landing-banner .banner-img{
+    /* background-image: url('./media/IMG_20230320_201820_983-removebg-preview.png');
+    background-repeat: no-repeat;
+    background-size: cover; */
+    width: 50%;
+}
+.landing .main-navbar{
+    background-color: rgb(26 32 43);
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+}
+.landing .main-navbar .navbar-partOne-banner{
+    width: 60%;
+}
+.landing .main-navbar .navbar-partTwo-banner{
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+
+}
+.landing .main-navbar .navbar-partTwo-banner .about{
+    text-decoration: none;
+    color: rgb(59 255 225);
+    font-size: 20px;
+}
+.landing .main-navbar .navbar-partTwo-banner .login{
+    text-decoration: none;
+    color: rgb(59 255 225);
+    font-size: 20px;
+
+}.user-login{
+    opacity: .9;
+    z-index: 2;
+    position:absolute;
+    top: 20%;
+    left: 25%;
+    width: 40%;
+    box-shadow: 5px 6px 6px;
+    /* background-color: rgb(0,0,0); /* Fallback color */
+    /* background-color: rgba(0,0,0, 0.4);   */
+    /* transform: translate(-50%, -50%); */
+
+}
+@media only screen and (max-width: 600px) {
+    .p-inputtext{
+        background-color:rgb(26 32 43);
+        width: 10rem;
+    }.user-login  {
+        width: 80%;
+        left: 1%;
+        top: 10%;
+    }
+    .login-page .login-signup{
+        color: rgb(59 255 225);
+    }
+    .login-page .account-signUp{
+        color: rgb(119, 120, 120);
+        text-align: center;
+    
+    }
+}
+@media only screen and (min-width: 600px) {
+    .p-inputtext{
+        background-color: rgb(26 32 43);
+        width: 15rem;
+    }.user-login  {
+        width: 60%;
+        left: 20%;
+        top: 10%;
+    }
+    .login-page .login-signup{
+        color: rgb(59 255 225);
+    }
+    .login-page .account-signUp{
+        color: rgb(119, 120, 120);
+        text-align: center;
+    
+    }
+    
+}
+@media only screen and (min-width: 768px) {
+.p-inputtext{
+    background-color: rgb(26 32 43);
+    width: 15rem;
+}  .user-login  {
+    width: 50%;
+    left: 20%;
+    top: 10%;
+}
+.login-page .login-signup{
+    color: rgb(59 255 225);
+}
+.login-page .account-signUp{
+    color: rgb(119, 120, 120);
+    text-align: center;
+
+}.user-sign-or{
+    left: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    
+}.register-page{
+    width: 50%;
+    left: 20%;
+    top: 10%;
+    height: 700px;
+}
+.admin-page{
+    width: 100%;
+    height: 730px;
+    margin-top: -48px;
+    background-color: rgb(28, 28, 28);
+    
+
+}
+.admin-login{
+    width: 60%;
+    left: 20%;
+    top: 10%;
+    justify-content: center;
+    align-items: center;
+    height: 500px ;
+    opacity: .5;
+}.admin-body{
+    height: 720px;
+    width: 100%;
+}.navbar-admin{
+    width: 15%;
+}.admin-login .p-inputtext{
+    background-color:rgb(26 32 43);
+    color: aliceblue;
+}
+
+}
+.logo-admin{
+    text-align: center;
+}
+.admin-pages{
+    width: 100%;
+    text-align: center;
+    height: 400px;
+}
+.admin-pages .nav-users{
+    text-decoration: none;
+    color: rgb(195, 195, 195);
+    width: 100%;
+
+}
+.admin-pages .nav-users:hover{
+    color:aquamarine;
+    width: 100%;
+}
+.admin-pages .userpage{
+    height: 35px;
+    padding-top: 6px;
+
+}
+.admin-pages .userpage:hover{
+    width: 100%;
+    background-color: black;
+    color: aquamarine;
+}
+.key-page{
+    height: 35px;
+    padding-top: 6px;
+
+}
+.key-page:hover{
+    width: 100%;
+    background-color: black;
+    color: aquamarine;
+}.prime-management{
+    height: 35px;
+    padding-top: 6px;
+}
+.prime-management:hover{
+    width: 100%;
+    background-color: black;
+    color: aquamarine;
+}
+
+
+
+.register-page{
+    opacity: .9;
+    z-index: 2;
+    position:absolute;
+    top: 20%;
+    left: 25%;
+    width: 40%;
+    box-shadow: 5px 6px 6px;
+}
+.re-background-img{
+    background-image: url('./containers/user/media/1410223.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height:900px;
+    filter: blur(5px);
+}
+.login-page{
+    margin-top: -50px;
+    height: 770px;
+}
+.background-img{
+    background-image: url('./containers/user/media/1410223.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height:100%;
+    filter: blur(5px);
+}.user-login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}.generate-page{
+    width: 100%;
+    height: 800px;
+
+}.generate-layout{
+    width: 100%;
+    height: 100%;
+}.left-sidebar{
+    background-color:rgb(26 32 43);
+    width: 16%;
+    height: 724px;
+    position: fixed;
+}
+.generate-layout .right-sidebar{
+    background-color: rgb(220, 220, 220);
+    width: 20%;
+}.generate-layout .generatePage-body{
+    width: 80%;
+}.generate-intro{
+    background-color: #dfdfe1;
+    width: 90%;
+    height: 300px;
+    left: 5%;
+    color: rgb(26 32 43);
+    font-size: 10px;
+    box-shadow: 1;
+    border-radius: 19px;
+}.generate-intro .with-ai{
+    color: #37dfc7;
+}.generate-intro .text-block{
+    margin-left: 5%;
+}.generate-intro .new-button{
+    background-color:rgb(26 32 43) ;
+    color:white;
+    border: none;
+}.generate-intro .new-button:hover{
+    background-color:#37dfc7 ;
+    color:white;
+}.generate-intro .intro-new{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}.layout{
+    width: 100%;
+    display: flex;
+    
+}.side-bar-items{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+}.user-logout{
+    text-decoration: none;
+    color: rgb(148, 148, 149);
+}.side-bar-items .signout-icon{
+    width: 20%;
+}.side-bar-items .signout{
+    width: 80%;
+}.signout-icon .sign-out-icon{
+    color: rgb(148, 148, 149);
+}.layout .layout-children{
+    width: 80%;
+}.layout .layout-sidebar{
+    width: 20%;
+}.logout-user{
+    height: 30px;
+}
