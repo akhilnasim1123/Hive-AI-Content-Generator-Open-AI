@@ -1,3 +1,4 @@
+import { Button } from 'primereact/button'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
@@ -28,6 +29,9 @@ const Banner = ()=>{
                 <div><h1><b>Great Write, <br></br> Simplified</b></h1></div>
                 <div className='mt-4'>
                     <p>Compose bold, clear, mistake-free writing with <br /> Blacknotes’s AI powered Writing Assistant.</p>
+                </div>
+                <div>
+                    <Button  className='create-from-landing'><NavLink className='landing-create' to='/generate-page'>Create</NavLink> </Button>
                 </div>
             </div>
             <div className='banner-img'>

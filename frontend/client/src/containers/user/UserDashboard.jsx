@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import SideBar from '../../components/SideBar'
 
-const GeneratePage = () => {
+const UserDashboard = () => {
   const {isAuthenticated} = useSelector(state=>state.user)
   // if (!isAuthenticated) return <Navigate to='/login'/>
   return (
@@ -36,4 +36,4 @@ const GeneratePage = () => {
   )
 }
 
-export default GeneratePage
+export default UserDashboard

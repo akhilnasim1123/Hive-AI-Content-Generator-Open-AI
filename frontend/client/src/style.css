@@ -149,7 +149,7 @@
     height: 720px;
     width: 100%;
 }.navbar-admin{
-    width: 15%;
+    width: 80%;
 }.admin-login .p-inputtext{
     background-color:rgb(26 32 43);
     color: aliceblue;
@@ -306,4 +306,26 @@
     width: 20%;
 }.logout-user{
     height: 30px;
+}
+
+.layout-admin{
+    width: 100%;
+    display: flex;
+}.layout-sidebar-admin{
+    width: 20%;
+
+}.layout-children-admin{
+    width: 80%;
+}
+.admin-logo{
+    text-decoration: none;
+    color:rgb(148, 148, 149);
+}
+.create-from-landing{
+    background-color: #37dfc7;
+    border: none;
+}
+.landing-create{
+    color: #dfdfe1;
+    text-decoration: none;
 }

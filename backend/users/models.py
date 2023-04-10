@@ -1,8 +1,16 @@
+from datetime import timezone
+import uuid
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from phonenumber_field.modelfields import PhoneNumberField
 from django.core.validators import RegexValidator
+from django.utils.text import slugify
+
+
+
+
 class UserAccountManager(BaseUserManager):
+  
   def create_user(self, first_name, last_name,phone_number, email, password=None):
     if not email:
       raise ValueError('Users must have an email address')
@@ -46,6 +54,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
   is_active = models.BooleanField(default=True)
   is_superuser = models.BooleanField(default=False)
   image_url = models.URLField(blank=True,null=True,max_length=300)
+  is_staff = models.BooleanField(default=False,blank=True,null=True)
 
   objects = UserAccountManager()
 
@@ -54,3 +63,55 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
   def __str__(self):
     return self.email
+  
+
+
+class Blog(models.Model):
+  title = models.CharField(max_length=255)
+  keywords = models.CharField(blank=True,max_length=300,null=True)
+  wordCount = models.IntegerField(blank=True,null=True)
+  user = models.ForeignKey(UserAccount,on_delete=models.CASCADE)
+
+  unique_id=models.CharField(null=True,max_length=100,blank=True)
+  slug = models.SlugField(max_length=500,unique=True,blank=True,null=True)
+  date_created = models.DateTimeField(null=True,blank=True)
+  last_updated = models.DateTimeField(null=True,blank=True)
+
+  def __str__(self):
+    return '{} {}'.format(self.title,self.unique_id)
+  
+  def save(self, *args, **kwargs):
+    if self.date_created is None:
+      self.date_created = timezone.localtime(timezone.now())
+    if self.unique_id is None:
+      self.unique_id = str(uuid.uuid4()).split('-')[4]
+    
+    self.slug = slugify('{} {}'.format(self.title,self.unique_id))
+    self.last_updated = timezone.localtime(timezone.now())
+    super(Blog, self).save(*args, **kwargs)
+
+
+
+
+class BlogSection(models.Model):
+  title = models.CharField(max_length=255)
+  body = models.TextField(blank=True,null=True)
+  blog = models.ForeignKey(Blog,on_delete=models.CASCADE)
+
+  unique_id=models.CharField(null=True,max_length=100,blank=True)
+  slug = models.SlugField(max_length=500,unique=True,blank=True,null=True)
+  date_created = models.DateTimeField(null=True,blank=True)
+  last_updated = models.DateTimeField(null=True,blank=True)
+
+  def __str__(self):
+    return '{} {}'.format(self.title,self.unique_id)
+  
+  def save(self, *args, **kwargs):
+    if self.date_created is None:
+      self.date_created = timezone.localtime(timezone.now())
+    if self.unique_id is None:
+      self.unique_id = str(uuid.uuid4()).split('-')[4]
+    
+    self.slug = slugify('{} {}'.format(self.title,self.unique_id))
+    self.last_updated = timezone.localtime(timezone.now())
+    super(BlogSection, self).save(*args, **kwargs)
