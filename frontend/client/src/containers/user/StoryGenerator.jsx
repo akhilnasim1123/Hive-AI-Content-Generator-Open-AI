@@ -9,6 +9,7 @@ import { ShimmerSectionHeader } from "react-shimmer";
 import Shimmer from '../shimmer/shimmer';
 import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
+import copy from "copy-to-clipboard";  
 
 const StoryGeneratorPage = () => {
     const navigate = useNavigate()
@@ -62,6 +63,31 @@ const StoryGeneratorPage = () => {
     }
     console.log(words, accuracy)
 
+
+
+    // function onCopy() {
+    //     // Get the text field
+    //     var copyText = document.getElementById("myInput");
+    //     console.log(copyText)
+    //     // Select the text field
+    //     copyText.select();
+    //     copyText.setSelectionRange(0, 99999); // For mobile devices
+      
+    //     // Copy the text inside the text field
+    //     navigator.clipboard.writeText(copyText.value);
+        
+    //     // Alert the copied text
+    //     toast.current.show({ severity:'success', summary: 'Copied', life: 3000 })
+    //   }
+
+    const copyToClipboard = () => {
+        copy(blogContent);
+        toast.current.show({ severity:'success', summary: 'Copied', life: 3000 })
+     }
+
+
+
+
     if (loading) return <Shimmer/>
     return (
         <Layout>
@@ -110,6 +136,7 @@ const StoryGeneratorPage = () => {
 
             <div className='card text-white content-card mt-3' >
                 <div className='container'>
+                    <div className='mt-4' onClick={copyToClipboard} style={{display:'flex',justifyContent:'end'}}><i class="fa-solid fa-clipboard" style={{width:'3%',fontSize:'23px'}}></i></div>
                     <div className='mt-3'>
                         {/* <h3 style={{ textDecoration: 'underline' }}>{blogContent ? blogContent[0] : ''}</h3> */}
                     </div>
@@ -118,7 +145,7 @@ const StoryGeneratorPage = () => {
                             {/* {blogContent && blogContent.map((content, index) => {
                                 return <li key={index}>{content}</li>
                             })} */}
-<p>                            {blogContent?blogContent:''}</p>
+<p id='myInput'>                            {blogContent?blogContent:''}</p>
 
                     </div>
                 </div>
