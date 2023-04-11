@@ -42,6 +42,8 @@ media
 # IntelliJ
 out/
 
+.env
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 
