@@ -12,6 +12,12 @@ import AdminPage from './containers/admin/AdminPage';
 import Users from './containers/admin/User';
 import Dashboard from './containers/admin/Dashboard';
 import UserDashboard from './containers/user/UserDashboard';
+import GenerationPage from './containers/user/GenerationPage';
+import { BlogGenerator } from './features/user';
+import BlogGeneratorPage from './containers/user/BlogGenerate';
+import StoryGenerator from './containers/user/StoryGenerator';
+import ContentView from './containers/user/ContentView';
+import StoryGeneratorPage from './containers/user/StoryGenerator';
 const App = () => {
   return (
 
@@ -20,10 +26,14 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<RegisterPage />} />
-        <Route path="/generate-page" element={<UserDashboard />} />
+        <Route path="/home" element={<UserDashboard />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin-page" element = {<Dashboard/>} />
         <Route path="/users-list" element={<Users/>} />
+        <Route path="/blog-idea" element={<GenerationPage/>} />
+        <Route path="/blog-generate" element={<BlogGeneratorPage/>} />
+        <Route path="/story-generate" element={<StoryGeneratorPage/>} />
+        <Route path="/content-view" element={<ContentView/>} />
       </Routes>
     </Router>
 

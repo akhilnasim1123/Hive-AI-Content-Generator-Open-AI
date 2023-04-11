@@ -101,6 +101,126 @@ const adminLogout = createAsyncThunk(
   }
 )
       
+
+export const BlockUser = createAsyncThunk(
+  "user/block",
+  async (email, thunkAPI) => {
+    console.log(email);
+    const body = JSON.stringify(email);
+    console.log(email);
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/Block", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+
+      console.log(res, "heyu");
+      const data = await res.json();
+      if (res.status === 200) {
+        console.log("everything is ok");
+        console.log(data);
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+export const DeleteUser = createAsyncThunk(
+  "user/Delete",
+  async (email, thunkAPI) => {
+    console.log(email);
+    const body = JSON.stringify(email);
+    console.log(email);
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/delete", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+
+      console.log(res, "heyu");
+      const data = await res.json();
+      if (res.status === 200) {
+        console.log("everything is ok");
+        console.log(data);
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const searchData = createAsyncThunk(
+  "user/search",
+  async (search, thunkAPI) => {
+    const body = JSON.stringify(search);
+    console.log(search);
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/search", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+
+      console.log(res, "heyu");
+      const data = await res.json();
+      if (res.status === 200) {
+        console.log("everything is ok");
+        console.log(data);
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const UsersDetails = createAsyncThunk(
+  "users/",
+  async (setUserDetails, thunkAPI) => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/user-data", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res, "heyu");
+      const data = await res.json();
+      // console.log(data);
+      if (res.status === 200) {
+        console.log("everything is ok");
+        setUserDetails(data);
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
       
 
 const initialState = {

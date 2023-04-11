@@ -31,7 +31,7 @@ const Banner = ()=>{
                     <p>Compose bold, clear, mistake-free writing with <br /> Blacknotes’s AI powered Writing Assistant.</p>
                 </div>
                 <div>
-                    <Button  className='create-from-landing'><NavLink className='landing-create' to='/generate-page'>Create</NavLink> </Button>
+                    <Button  className='create-from-landing'><NavLink className='landing-create' to='/home'>Create</NavLink> </Button>
                 </div>
             </div>
             <div className='banner-img'>

@@ -71,7 +71,7 @@ export default function LoginPage() {
         return errors[name] ? <small className="p-error">{errors[name].message}</small> : <small className="p-error">&nbsp;</small>;
     };
 
-    if (isAuthenticated) return <Navigate to="/generate-page" />;
+    if (isAuthenticated) return <Navigate to="/home" />;
     return (
         <div className="login-page pt-5  column  justify-content-center">
             <div className='background-img'></div>

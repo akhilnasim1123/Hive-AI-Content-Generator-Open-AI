@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
-import { Toast } from 'primereact/toast';
+import { Toast } from "primereact/toast";
 import { useRef } from "react";
 
 export const register = createAsyncThunk(
   "users/register",
-  async ({ first_name, last_name,phone, email, password }, thunkAPI) => {
+  async ({ first_name, last_name, phone, email, password }, thunkAPI) => {
     const body = JSON.stringify({
       first_name,
       last_name,
-      phone_number:phone,
+      phone_number: phone,
       email,
       password,
     });
@@ -55,7 +55,6 @@ export const register = createAsyncThunk(
   }
 );
 
-
 const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
   try {
     const res = await fetch("/api/users/me", {
@@ -74,14 +73,12 @@ const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
       // })
       return data;
     } else {
-
       return thunkAPI.rejectWithValue(data);
     }
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response.data);
   }
 });
-
 
 export const login = createAsyncThunk(
   "users/login",
@@ -121,15 +118,15 @@ export const login = createAsyncThunk(
         });
 
         const data = await res.json();
-        console.log(data)
+        console.log(data);
         if (res.status === 200) {
           const { dispatch } = thunkAPI;
-          console.log(res.status)
+          console.log(res.status);
           dispatch(getUser());
           Swal.fire({
-          	text:'Logged in Successfully',
-          	icon:'success'
-          })
+            text: "Logged in Successfully",
+            icon: "success",
+          });
 
           return data;
         } else {
@@ -150,34 +147,124 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "users/logout",
-  async (_, thunkAPI) => {
-    try {
-      const res = await fetch('/api/users/logout', {
-        method: 'POST',
-        headers:{
-          Accept:"application/json",
+export const logout = createAsyncThunk("users/logout", async (_, thunkAPI) => {
+  try {
+    const res = await fetch("/api/users/logout", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+    if (res.status === 200) {
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue(data);
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
+export const contentGenerator = createAsyncThunk(
+  "users/content-generator",
+  async ({ topic, keywords }, thunkAPI) => {
+    const body = JSON.stringify({
+      topic,
+      keywords,
+    });
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/users/blog-ideas-generator`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body,
         }
-      })
-      const data = await res.json();
-      console.log(data)
-      if (res.status === 200){
+      );
+      const data = await response.json();
+      console.log(data);
+      if (response.status === 200) {
         return data;
-      }
-      else{
-        return thunkAPI.rejectWithValue(data)
+      } else {
+        return thunkAPI.rejectWithValue(data);
       }
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
-  )
+);
+export const BlogGenerator = createAsyncThunk(
+  "users/Blog-generator",
+  async ({ topic, keywords,words,accuracy }, thunkAPI) => {
+    const body = JSON.stringify({
+      topic,
+      keywords,
+      words,
+      accuracy,
+    });
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/users/blog-generator`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body,
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (response.status === 200) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
-
-
-
+export const StoryGenerator = createAsyncThunk(
+  "users/story-generator",
+  async ({ topic, keywords,words,accuracy }, thunkAPI) => {
+    const body = JSON.stringify({
+      topic,
+      keywords,
+      words,
+      accuracy,
+    });
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/users/story-generator`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body,
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (response.status === 200) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 
 const initialState = {
@@ -185,6 +272,7 @@ const initialState = {
   user: null,
   loading: false,
   registered: false,
+  content :'',
 };
 
 const userSlice = createSlice({
@@ -210,25 +298,55 @@ const userSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.loading = true;
       })
-      .addCase(login.fulfilled,(state,actions)=>{
+      .addCase(login.fulfilled, (state, actions) => {
         state.loading = false;
         state.isAuthenticated = true;
         state.user = actions.payload;
       })
-      .addCase(login.rejected,(state)=>{
+      .addCase(login.rejected, (state) => {
         state.loading = false;
       })
-      .addCase(logout.pending,(state)=>{
+      .addCase(logout.pending, (state) => {
         state.loading = true;
       })
-      .addCase(logout.fulfilled,(state)=>{
+      .addCase(logout.fulfilled, (state) => {
         state.isAuthenticated = false;
         state.loading = false;
       })
-      .addCase(logout.rejected,(state)=>{
+      .addCase(logout.rejected, (state) => {
         state.loading = false;
       })
-    }
+      .addCase(contentGenerator.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(contentGenerator.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(contentGenerator.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(BlogGenerator.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(BlogGenerator.fulfilled, (state,actions) => {
+        state.loading = false;
+        state.content = actions.payload
+      })
+      .addCase(BlogGenerator.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(StoryGenerator.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(StoryGenerator.fulfilled, (state,actions) => {
+        state.loading = false;
+        state.content = actions.payload
+      })
+      .addCase(StoryGenerator.rejected, (state) => {
+        state.loading = false;
+      })
+
+  },
 });
 export const { resetRegistered } = userSlice.actions;
 export default userSlice.reducer;
