@@ -7,12 +7,12 @@ import SideBar from '../../components/SideBar'
 import Carousel from 'react-bootstrap/Carousel';
 const UserDashboard = () => {
   const { isAuthenticated } = useSelector(state => state.user)
-  // if (!isAuthenticated) return <Navigate to='/login'/>
-  const [index, setIndex] = useState(0);
+  if (!isAuthenticated) return <Navigate to='/login'/>
+  // const [index, setIndex] = useState(0);
 
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
+  // const handleSelect = (selectedIndex, e) => {
+  //   setIndex(selectedIndex);
+  // };
   return (
     <Layout title="auth site | Home" content="Hom Page">
       <div className='generate-page'>

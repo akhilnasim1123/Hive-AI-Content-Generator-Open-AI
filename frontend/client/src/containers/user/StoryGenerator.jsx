@@ -10,6 +10,7 @@ import Shimmer from '../shimmer/shimmer';
 import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
 import copy from "copy-to-clipboard";  
+import { Sidebar } from 'primereact/sidebar';
 
 const StoryGeneratorPage = () => {
     const navigate = useNavigate()
@@ -25,6 +26,7 @@ const StoryGeneratorPage = () => {
     const toast = useRef(null);
     console.log(blogContent)
     const { topic, keywords,words,accuracy } = formData
+    const [visible, setVisible] = useState(false);
 
 
     const onSubmitHandler = (e) => {
@@ -81,8 +83,16 @@ const StoryGeneratorPage = () => {
     //   }
 
     const copyToClipboard = () => {
+        if(blogContent[1].length > 0) {
+            toast.current.show({ severity:'success', summary:'Csadfsdaf'
+        })
+    }
+ 
         copy(blogContent);
-        toast.current.show({ severity:'success', summary: 'Copied', life: 3000 })
+        toast.current.show({ severity:'success', summary: 'Copied to clipboard', life: 3000 })
+     }
+     const visibleContent = ()=>{
+        setVisible(true)
      }
 
 
@@ -136,7 +146,14 @@ const StoryGeneratorPage = () => {
 
             <div className='card text-white content-card mt-3' >
                 <div className='container'>
-                    <div className='mt-4' onClick={copyToClipboard} style={{display:'flex',justifyContent:'end'}}><i class="fa-solid fa-clipboard" style={{width:'3%',fontSize:'23px'}}></i></div>
+
+                    <div className='mt-4'  style={{display:'flex',justifyContent:'end',cursor: "pointer"}}>
+                    
+                    <i class="fa-sharp fa-solid fa-expand fa-fade" onClick={visibleContent} style={{width:'3%',fontSize:'23px'}}></i>
+                        <i class="fa-solid fa-clipboard mx-4" onClick={copyToClipboard} style={{width:'3%',fontSize:'23px'}}></i>
+                    
+                    </div>
+
                     <div className='mt-3'>
                         {/* <h3 style={{ textDecoration: 'underline' }}>{blogContent ? blogContent[0] : ''}</h3> */}
                     </div>
@@ -150,6 +167,12 @@ const StoryGeneratorPage = () => {
                     </div>
                 </div>
             </div>
+            <Sidebar visible={visible} onHide={() => setVisible(false)} fullScreen>
+                <h2>{blogContent ? blogContent[0] : ''}</h2>
+                <p>
+                {blogContent?blogContent:''}
+                </p>
+            </Sidebar>
         </Layout>
     )
 }

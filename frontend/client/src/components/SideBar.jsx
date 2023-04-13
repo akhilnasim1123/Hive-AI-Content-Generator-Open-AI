@@ -26,7 +26,7 @@ const SideBar = () => {
                 <i class="fa-solid fa-gauge dashboard-icons"></i>
                 </div>
                 <div className='dashboard'>
-                  <NavLink className='side-bar-item-link dashboard-logo'>Dashboard</NavLink>
+                  <NavLink className='side-bar-item-link dashboard-logo' to='/home'>Dashboard</NavLink>
                   </div>
               </div>
 

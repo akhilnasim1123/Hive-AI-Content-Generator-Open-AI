@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 import uuid
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
@@ -67,8 +67,10 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
 
 class Blog(models.Model):
-  title = models.CharField(max_length=255)
+  title = models.CharField(max_length=255,null=True)
+  blog_ideas = models.CharField(blank=True,max_length=300,null=True)
   keywords = models.CharField(blank=True,max_length=300,null=True)
+  audience = models.CharField(blank=True,max_length=300,null=True)
   wordCount = models.IntegerField(blank=True,null=True)
   user = models.ForeignKey(UserAccount,on_delete=models.CASCADE)
 
@@ -76,6 +78,7 @@ class Blog(models.Model):
   slug = models.SlugField(max_length=500,unique=True,blank=True,null=True)
   date_created = models.DateTimeField(null=True,blank=True)
   last_updated = models.DateTimeField(null=True,blank=True)
+
 
   def __str__(self):
     return '{} {}'.format(self.title,self.unique_id)
@@ -115,3 +118,32 @@ class BlogSection(models.Model):
     self.slug = slugify('{} {}'.format(self.title,self.unique_id))
     self.last_updated = timezone.localtime(timezone.now())
     super(BlogSection, self).save(*args, **kwargs)
+  
+
+
+class BlogIdeaSave(models.Model):
+  title = models.CharField(max_length=255,null=True)
+  blog_ideas = models.CharField(blank=True,max_length=300,null=True)
+  keywords = models.CharField(blank=True,max_length=300,null=True)
+  audience = models.CharField(blank=True,max_length=300,null=True)
+  wordCount = models.IntegerField(blank=True,null=True)
+  user = models.ForeignKey(UserAccount,on_delete=models.CASCADE)
+
+  unique_id=models.CharField(null=True,max_length=100,blank=True)
+  slug = models.SlugField(max_length=500,unique=True,blank=True,null=True)
+  date_created = models.DateTimeField(null=True,blank=True)
+  last_updated = models.DateTimeField(null=True,blank=True)
+
+
+  def __str__(self):
+    return '{} {}'.format(self.title,self.unique_id)
+  
+  def save(self, *args, **kwargs):
+    if self.date_created is None:
+      self.date_created = timezone.localtime(timezone.now())
+    if self.unique_id is None:
+      self.unique_id = str(uuid.uuid4()).split('-')[4]
+    
+    self.slug = slugify('{} {}'.format(self.title,self.unique_id))
+    self.last_updated = timezone.localtime(timezone.now())
+    super(Blog, self).save(*args, **kwargs)

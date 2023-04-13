@@ -3,14 +3,14 @@ import openai
 # from django.conf import settings
 from backend import settings
 # Load your API key from an environment variable or secret management service
-openai.api_key = settings.OPENAI_API_KEYS
+openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 
 def generateBlogTopicIdeas(topic, keywords):
     blog_topics = []
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt="generate blog topic ideas on the following topic: {}\nkeywords:{} \n*".format(
+        prompt="generate blog topic ideas on the given topic: {}\nkeywords:{} \n*".format(
             topic, keywords),
         temperature=0.5,
         max_tokens=250,
@@ -95,11 +95,29 @@ def generateStory(topic, keywords,words,accuracy):
     else:
         return []
     return blog_topics
+def generateBlogSections(topic,section,keywords):
+    response = openai.Completion.create(
+        model="text-davinci-003",
+        prompt="Generate detailed blog section write up for the following blog section heading, using the blog title, and keywords provided.\nblog title : {}\n Blog section heading: {}\nkeywords: {}\n".format(topic,section, keywords),
+        temperature=0.6,
+        max_tokens=800,
+        top_p=1,
+        best_of=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+    if 'choices' in response:
+        if len(response['choices']) > 0:
+            res = response['choices'][0]['text']
+            cleaned_response = res.replace('\n','<br />')
+            return cleaned_response
+        else:
+            return []
+    else:
+        return []
 
 
 
 
 
-# res = generateBlogTopicIdeas(topic,keywords).replace('\n', ' ')
 
-# b_list =res.split('*')

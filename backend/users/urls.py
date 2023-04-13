@@ -13,5 +13,7 @@ urlpatterns = [
   path('search',views.Search),
   path('blog-ideas-generator',views.BlogTopicIdeas),
   path('blog-generator',views.BlogTopic),
-  path('story-generator',views.Story)
+  path('story-generator',views.Story),
+  path('save-blog',views.BlogIdeasSave),
+  path('generate-blog-sections',views.generateBlogsSect),
 ]

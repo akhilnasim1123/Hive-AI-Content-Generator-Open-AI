@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 
+from .models import Blog, BlogSection
+
 
 User = get_user_model()
 
@@ -43,4 +45,16 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'phone_number','email','is_active','is_superuser','image_url')
 
 # class ContentSerializer(serializers.)
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog    
+        fields = '__all__'
+
+class BlogSectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogSection   
+        fields = ('title','body')
+
+
  

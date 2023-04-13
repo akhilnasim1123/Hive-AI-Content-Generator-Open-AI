@@ -367,9 +367,10 @@
     text-decoration: none;
 }.navlink{
     text-decoration: none;
-}.content-card{
+}.content-card {
     background-color: rgb(26 32 43) ;
     color: #dfdfe1;
+
     
 }
 .service-category{
@@ -562,4 +563,19 @@
 }
 .dashboard-icons{
     color: rgb(148, 148, 149);
+}.content-col{
+    color: rgb(148, 148, 149);
+}
+.content-col:hover{
+    color:rgb(59 255 225);
+}.content-row{
+    color:rgb(59 255 225);
+}.content-row:hover{
+    color:rgb(59 255 225);
+}.content-save-btn{
+    border-color: rgb(148, 148, 149);
+    color:  rgb(148, 148, 149);
+}
+.content-save-btn:hover{
+    border-color:rgb(59 255 225);
 }

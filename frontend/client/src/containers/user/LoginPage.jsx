@@ -55,8 +55,11 @@ export default function LoginPage() {
         if (email.length > 30){
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Email is too long' });
         }else if (email && password) {
-            dispatch(login({email, password}))
-            show();
+            dispatch(login({email, password})).then((result)=>{
+                show();
+                
+            })
+
         }
         else {
             toast.current.show({ severity: 'error', summary: 'Please fill in all fields'});

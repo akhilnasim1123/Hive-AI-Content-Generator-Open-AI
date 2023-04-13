@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/api/users/me", async (req, res) => {
   const { access } = req.cookies;
+  console.log(req,'asdfsjflasdfjaslfjaldf')
   console.log(access)
 
   try {
@@ -14,11 +15,11 @@ router.get("/api/users/me", async (req, res) => {
       headers: {
         Accept: "application/json",
         Authorization: `Bearer ${access}`,
-      },
+      }
     });
 
     const data = await apiRes.json();
-
+    console.log(data)
     return res.status(apiRes.status).json(data);
   } catch (err) {
     return res.status(500).json({

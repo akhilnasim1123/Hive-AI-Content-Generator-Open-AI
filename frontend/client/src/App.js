@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingPage from './containers/user/LandingPage';
 import LoginPage from './containers/user/LoginPage';
 import RegisterPage from './containers/user/RegisterPage';
 import './style.css'
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import {store} from './store';
 import GeneratePage from './containers/user/UserDashboard';
 import AdminLogin from './containers/admin/AdminLogin';
@@ -13,12 +13,20 @@ import Users from './containers/admin/User';
 import Dashboard from './containers/admin/Dashboard';
 import UserDashboard from './containers/user/UserDashboard';
 import GenerationPage from './containers/user/GenerationPage';
-import { BlogGenerator } from './features/user';
+import { BlogGenerator, checkAuth } from './features/user';
 import BlogGeneratorPage from './containers/user/BlogGenerate';
 import StoryGenerator from './containers/user/StoryGenerator';
 import ContentView from './containers/user/ContentView';
 import StoryGeneratorPage from './containers/user/StoryGenerator';
 const App = () => {
+  const { isAdminAuthenticated } = useSelector((state) => state.admin);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
+
+
   return (
 
 <Router>
