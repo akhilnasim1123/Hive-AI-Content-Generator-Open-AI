@@ -64,32 +64,51 @@ const GenerationPage = () => {
         dispatch(blogSections({checkedList,topic,keywords})).then((result) => {
             setBlogSection(result.payload)
             console.log(result.payload)
-        }).then((result) => {
-            if (blogSection){
             setVisible(true)
-            }
+
         })
 
     }
 
-    const handleSelect = (event) => {
-        const value = event.target.value;
-        const isChecked = event.target.checked;
-        console.log(value)
+    // const handleSelect = (event) => {
+    //     const value = event.target.value;
+    //     const isChecked = event.target.checked;
+    //     console.log(value)
      
-        if (isChecked) {
-          //Add checked item into checkList
-          setCheckedList([...checkedList, value]);
+    //     if (isChecked) {
+    //       //Add checked item into checkList
+    //       setCheckedList([...checkedList, value]);
 
-        } else {
-          //Remove unchecked item from checkList
-          const filteredList = checkedList.filter((item) => item !== value);
-          setCheckedList(filteredList);
+    //     } else {
+    //       //Remove unchecked item from checkList
+    //       const filteredList = checkedList.filter((item) => item !== value);
+    //       console.log(filteredList)
+    //       setCheckedList(filteredList);
+    //     }
+
+    //   };
+    //   console.log(checkedList)
+
+    const selectContent = (content) => {     
+        if(!checkedList.find(id => id === content)){
+            setCheckedList([ ... checkedList, content]); // adds a student id
+             // let data = studentID; //This can go
+             // data.push(content); //This can go 
+             console.log("Hi I'm True")
+             console.log(content)
+
+          }  
+           else {
+            setCheckedList(checkedList.filter(studentId => studentId !== content)) 
+            //deletes a student id
+            console.log("Hi I'm False")
+               console.log(content)
+            }  
         }
+
+
+
         console.log(checkedList)
-      };
-
-
 
     if (loading) return <Shimmer />
     if (!isAuthenticated) return <Navigate to="/login" />;
@@ -141,7 +160,7 @@ const GenerationPage = () => {
                                                 <button className='btn content-save-btn' onClick={(e) => contentSave(e.target.value, content, user.email)}>Save</button>
                                             </td>
                                             <td>
-                                                <Checkbox value={content} onChange={handleSelect} key={index} ></Checkbox>
+                                                <Checkbox checked={checkedList.includes(content)} key={index} value={content} onChange={(e)=>selectContent(e.target.value)} ></Checkbox>
                                             </td>
                                         </tr>
                                     )
@@ -155,10 +174,16 @@ const GenerationPage = () => {
             <button className='btn btn-outline-dark content-save-btn mt-3 mb-3' onClick={generateBlog}>Blog</button>
 
             <Sidebar visible={visible} onHide={() => setVisible(false)} fullScreen>
-                <h2>Ooh.... Fuck</h2>
+            {blogSection&&blogSection.map((section,index)=>{
+                return(
+                    <div>
+                <h2>{section.title}</h2>
                 <p>
-                    {blogSection?blogSection:''}
+                    {section.body}
                 </p>
+                </div>
+                )
+                    })}
             </Sidebar>
         </Layout>
     )

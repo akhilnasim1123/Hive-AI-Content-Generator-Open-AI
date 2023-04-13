@@ -98,9 +98,9 @@ def generateStory(topic, keywords,words,accuracy):
 def generateBlogSections(topic,section,keywords):
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt="Generate detailed blog section write up for the following blog section heading, using the blog title, and keywords provided.\nblog title : {}\n Blog section heading: {}\nkeywords: {}\n".format(topic,section, keywords),
+        prompt="Generate detailed blog section write up for the following blog section heading, using the blog title, and keywords provided.\nblog title : {}\n Blog section heading: {}\nkeywords: {}\n requirement:maximum words \n".format(topic,section, keywords),
         temperature=0.6,
-        max_tokens=800,
+        max_tokens=200,
         top_p=1,
         best_of=1,
         frequency_penalty=0,
@@ -109,7 +109,7 @@ def generateBlogSections(topic,section,keywords):
     if 'choices' in response:
         if len(response['choices']) > 0:
             res = response['choices'][0]['text']
-            cleaned_response = res.replace('\n','<br />')
+            cleaned_response = res.replace('\n',' <br/> ' )
             return cleaned_response
         else:
             return []
