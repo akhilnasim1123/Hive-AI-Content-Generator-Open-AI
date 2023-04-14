@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 
-from .models import Blog, BlogSection
+from .models import *
 
 
 User = get_user_model()
@@ -46,15 +46,24 @@ class UserSerializer(serializers.ModelSerializer):
 
 # class ContentSerializer(serializers.)
 
-class BlogSerializer(serializers.ModelSerializer):
+class BlogIdeaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Blog    
-        fields = '__all__'
+        model = BlogIdea    
+        fields = ('title','blog_ideas','unique_id')
 
 class BlogSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogSection   
         fields = ('title','body')
 
+class BlogIdeaSaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogIdeaSave  
+        fields = ('title','blog_ideas','keywords','wordCount','unique_id')
 
- 
+
+class StorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StoryDetails  
+        fields = ('title','story','audience','keywords','wordCount','unique_id')
+

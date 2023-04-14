@@ -17,11 +17,12 @@ import "primereact/resources/primereact.min.css";
 //icons
 import "primeicons/primeicons.css";
 import { Navigate, NavLink } from 'react-router-dom';
+import Shimmer from '../shimmer/shimmer';
 
 
 
 export default function LoginPage() {
-    const {isAuthenticated,loading}=useSelector(state=>state.user)
+    const {isAuthenticated,authLoading}=useSelector(state=>state.user)
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
         email: '',
@@ -73,7 +74,7 @@ export default function LoginPage() {
     const getFormErrorMessage = (name) => {
         return errors[name] ? <small className="p-error">{errors[name].message}</small> : <small className="p-error">&nbsp;</small>;
     };
-
+    if (authLoading) return <Shimmer />
     if (isAuthenticated) return <Navigate to="/home" />;
     return (
         <div className="login-page pt-5  column  justify-content-center">

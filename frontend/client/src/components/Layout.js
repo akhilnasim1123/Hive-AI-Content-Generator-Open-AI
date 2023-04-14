@@ -11,7 +11,7 @@ const Layout = ({title,content,children}) =>(
     <div className='layout-sidebar'>
         <SideBar/>
         </div>   
-    <div className="container layout-children">
+    <div className=" layout-children">
         {children}
     </div>
     </div>

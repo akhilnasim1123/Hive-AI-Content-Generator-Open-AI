@@ -14,9 +14,10 @@ import { Checkbox } from "primereact/checkbox";
 
 const GenerationPage = () => {
     const toast = useRef(null);
-    const [blogSection,setBlogSection]=useState([])
+    let [blogSection,setBlogSection]=useState([])
     const [checked, setChecked] = useState(false);
     const { loading, user, isAuthenticated } = useSelector(state => state.user)
+    const [blogdetails,setBlogDetails] = useState([])
     if (user) {
         console.log(user.email)
     }
@@ -27,7 +28,7 @@ const GenerationPage = () => {
         topic: '',
         keywords: '',
     })
-
+    const {unique_id} = blogdetails
     const [checkedList, setCheckedList] = useState([]);
     console.log(blogContent)
     const { topic, keywords } = formData
@@ -38,9 +39,12 @@ const GenerationPage = () => {
         const email = user.email
         e.preventDefault();
         dispatch(contentGenerator({ topic, keywords,email })).then((result) => {
-            console.log(result)
-            // console.log(res)
-            setBlogContent(result.payload)
+            console.log(result.payload)
+            const {blog_topic,blog} = result.payload
+            setBlogDetails(blog)
+
+            // console.log(res)    
+            setBlogContent(blog_topic)
         })
     }
 
@@ -61,34 +65,21 @@ const GenerationPage = () => {
 
     const generateBlog = () => {
         console.log(checkedList,topic,keywords)
-        dispatch(blogSections({checkedList,topic,keywords})).then((result) => {
+        dispatch(blogSections({checkedList,topic,keywords,unique_id})).then((result) => {
             setBlogSection(result.payload)
             console.log(result.payload)
-            setVisible(true)
 
+        }).then((result) => {
+            if (checkedList.length>0) {
+                setVisible(true)
+                
+                }
+            else{
+                toast.current.show({ severity: 'error', summary: 'Select Any Topic', life: 3000 })
+            }
         })
 
     }
-
-    // const handleSelect = (event) => {
-    //     const value = event.target.value;
-    //     const isChecked = event.target.checked;
-    //     console.log(value)
-     
-    //     if (isChecked) {
-    //       //Add checked item into checkList
-    //       setCheckedList([...checkedList, value]);
-
-    //     } else {
-    //       //Remove unchecked item from checkList
-    //       const filteredList = checkedList.filter((item) => item !== value);
-    //       console.log(filteredList)
-    //       setCheckedList(filteredList);
-    //     }
-
-    //   };
-    //   console.log(checkedList)
-
     const selectContent = (content) => {     
         if(!checkedList.find(id => id === content)){
             setCheckedList([ ... checkedList, content]); // adds a student id
@@ -114,7 +105,7 @@ const GenerationPage = () => {
     if (!isAuthenticated) return <Navigate to="/login" />;
     return (
         <Layout>
-            <div className='mt-4'>
+            <div className='mt-4 generation-ideas-page'>
                 <h3><b>Enter Your Blog Ideas Below to <br /> Generate Blog Topic <br /> Suggestions</b></h3>
             </div>
             <form onSubmit={onSubmitHandler} className='w-50'>
@@ -174,7 +165,8 @@ const GenerationPage = () => {
             <button className='btn btn-outline-dark content-save-btn mt-3 mb-3' onClick={generateBlog}>Blog</button>
 
             <Sidebar visible={visible} onHide={() => setVisible(false)} fullScreen>
-            {blogSection&&blogSection.map((section,index)=>{
+            {blogSection?blogSection.map((section,index)=>{
+                section.body.replace('*','<br>')
                 return(
                     <div>
                 <h2>{section.title}</h2>
@@ -183,7 +175,11 @@ const GenerationPage = () => {
                 </p>
                 </div>
                 )
-                    })}
+                    }):
+                    <div>
+
+                    </div>
+                    }
             </Sidebar>
         </Layout>
     )

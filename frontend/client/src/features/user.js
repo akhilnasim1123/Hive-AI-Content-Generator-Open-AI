@@ -169,7 +169,7 @@ export const logout = createAsyncThunk("users/logout", async (_, thunkAPI) => {
 
 export const contentGenerator = createAsyncThunk(
   "users/content-generator",
-  async ({ topic, keywords,email }, thunkAPI) => {
+  async ({ topic, keywords, email }, thunkAPI) => {
     const body = JSON.stringify({
       topic,
       keywords,
@@ -201,7 +201,7 @@ export const contentGenerator = createAsyncThunk(
 );
 export const BlogGenerator = createAsyncThunk(
   "users/Blog-generator",
-  async ({ topic, keywords,words,accuracy }, thunkAPI) => {
+  async ({ topic, keywords, words, accuracy }, thunkAPI) => {
     const body = JSON.stringify({
       topic,
       keywords,
@@ -235,12 +235,13 @@ export const BlogGenerator = createAsyncThunk(
 
 export const StoryGenerator = createAsyncThunk(
   "users/story-generator",
-  async ({ topic, keywords,words,accuracy }, thunkAPI) => {
+  async ({ topic, keywords, words, accuracy, email }, thunkAPI) => {
     const body = JSON.stringify({
       topic,
       keywords,
       words,
       accuracy,
+      email,
     });
     try {
       const response = await fetch(
@@ -295,28 +296,31 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-export const saveBlogIdea=createAsyncThunk(
-  'users/save-blog-idea', async ({content,email,topic,keywords}, thunkAPI) => {
+export const saveBlogIdea = createAsyncThunk(
+  "users/save-blog-idea",
+  async ({ content, email, topic, keywords }, thunkAPI) => {
     const body = JSON.stringify({
       content,
       email,
       topic,
       keywords,
     });
-    console.log(body)
+    console.log(body);
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/users/save-blog',{
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          "Content-Type": "application/json",
-        },
-        body,
-        
-      });
-      console.log(response)
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/users/save-blog",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body,
+        }
+      );
+      console.log(response);
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       if (response.status === 200) {
         return data;
       } else {
@@ -328,27 +332,31 @@ export const saveBlogIdea=createAsyncThunk(
   }
 );
 
-export const blogSections=createAsyncThunk(
-  'users/sgenerate-blog-sections', async ({checkedList,topic,keywords}, thunkAPI) => {
+export const blogSections = createAsyncThunk(
+  "users/sgenerate-blog-sections",
+  async ({ checkedList, topic, keywords, unique_id }, thunkAPI) => {
     const body = JSON.stringify({
       checkedList,
       topic,
       keywords,
+      unique_id,
     });
-    console.log(body)
+    console.log(body);
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/users/generate-blog-sections',{
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          "Content-Type": "application/json",
-        },
-        body,
-        
-      });
-      console.log(response)
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/users/generate-blog-sections",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body,
+        }
+      );
+      console.log(response);
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       if (response.status === 200) {
         return data;
       } else {
@@ -360,14 +368,43 @@ export const blogSections=createAsyncThunk(
   }
 );
 
-
+export const userCollection = createAsyncThunk(
+  "users/collection",
+  async (res,thunkAPI) => {
+    console.log(res,'sdfsadfsdaf')
+    const email = res;
+    const body = JSON.stringify({
+      email,
+    })
+    console.log(email,'emailllllllllllllllllllllllllllll')
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/user-collection",{
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      })
+      const data = await res.json()
+      if (res.status === 200){
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const initialState = {
   isAuthenticated: false,
   user: null,
   loading: false,
+  authLoading: false,
   registered: false,
-  content :'',
+  content: "",
 };
 
 const userSlice = createSlice({
@@ -391,15 +428,15 @@ const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(login.pending, (state) => {
-        state.loading = true;
+        state.authLoading = true;
       })
       .addCase(login.fulfilled, (state, actions) => {
-        state.loading = false;
+        state.authLoading = false;
         state.isAuthenticated = true;
         state.user = actions.payload;
       })
       .addCase(login.rejected, (state) => {
-        state.loading = false;
+        state.authLoading = false;
       })
       .addCase(getUser.pending, (state) => {
         state.loading = true;
@@ -433,9 +470,9 @@ const userSlice = createSlice({
       .addCase(BlogGenerator.pending, (state) => {
         state.loading = true;
       })
-      .addCase(BlogGenerator.fulfilled, (state,actions) => {
+      .addCase(BlogGenerator.fulfilled, (state, actions) => {
         state.loading = false;
-        state.content = actions.payload
+        state.content = actions.payload;
       })
       .addCase(BlogGenerator.rejected, (state) => {
         state.loading = false;
@@ -443,22 +480,22 @@ const userSlice = createSlice({
       .addCase(StoryGenerator.pending, (state) => {
         state.loading = true;
       })
-      .addCase(StoryGenerator.fulfilled, (state,actions) => {
+      .addCase(StoryGenerator.fulfilled, (state, actions) => {
         state.loading = false;
-        state.content = actions.payload
+        state.content = actions.payload;
       })
       .addCase(StoryGenerator.rejected, (state) => {
         state.loading = false;
       })
       .addCase(checkAuth.pending, (state) => {
-        state.loading = true;
+        state.authLoading = true;
       })
       .addCase(checkAuth.fulfilled, (state) => {
-        state.loading = false;
+        state.authLoading = false;
         state.isAuthenticated = true;
       })
       .addCase(checkAuth.rejected, (state) => {
-        state.loading = false;
+        state.authLoading = false;
       })
       .addCase(saveBlogIdea.pending, (state) => {
         state.loading = true;
@@ -472,14 +509,22 @@ const userSlice = createSlice({
       .addCase(blogSections.pending, (state) => {
         state.loading = true;
       })
-      .addCase(blogSections.fulfilled, (state,actions) => {
+      .addCase(blogSections.fulfilled, (state, actions) => {
         state.loading = false;
-        state.content = actions.payload
+        state.content = actions.payload;
       })
       .addCase(blogSections.rejected, (state) => {
         state.loading = false;
       })
-
+      .addCase(userCollection.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(userCollection.fulfilled, (state, actions) => {
+        state.loading = false;
+      })
+      .addCase(userCollection.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 export const { resetRegistered } = userSlice.actions;

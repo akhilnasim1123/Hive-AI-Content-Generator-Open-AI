@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../features/user'
+import { Sidebar } from 'primereact/sidebar';
+import { Button } from 'primereact/button';
 
 
 
 const SideBar = () => {
+
+  const [visible, setVisible] = useState(false);
+
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const onSubmitHandler = (e) => {
@@ -16,7 +22,10 @@ const SideBar = () => {
     
   }
   return (
-    <div className='left-sidebar'>
+    
+    <div className="flex justify-content-center mt-4">
+    <Sidebar visible={visible} onHide={() => setVisible(false)} className='left-sidebar'>
+
         <div className='side-bar-items mt-5'>
 
           <div>
@@ -26,7 +35,7 @@ const SideBar = () => {
                 <i class="fa-solid fa-gauge dashboard-icons"></i>
                 </div>
                 <div className='dashboard'>
-                  <NavLink className='side-bar-item-link dashboard-logo' to='/home'>Dashboard</NavLink>
+                  <NavLink className='side-bar-item-link dashboard-logo' to='/home/dashboard'>Dashboard</NavLink>
                   </div>
               </div>
 
@@ -53,6 +62,9 @@ const SideBar = () => {
             </div>
           </div>
         </div>
+    </Sidebar>
+    <Button icon="pi pi-bars sidebar-han" size='sm' onClick={() => setVisible(true)}  style={{backgroundColor:'white',color:'rgb(26 32 43)',borderColor: 'rgb(26 32 43)'}}/>
+
     </div>
   )
 }

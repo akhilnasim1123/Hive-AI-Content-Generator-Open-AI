@@ -1,172 +1,134 @@
-import { Button } from 'primereact/button'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Navigate, NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
-import SideBar from '../../components/SideBar'
-import Carousel from 'react-bootstrap/Carousel';
+import { useDispatch, useSelector } from 'react-redux'
+import { userCollection } from '../../features/user'
+
+
+
+
 const UserDashboard = () => {
-  const { isAuthenticated } = useSelector(state => state.user)
-  if (!isAuthenticated) return <Navigate to='/login'/>
-  // const [index, setIndex] = useState(0);
 
-  // const handleSelect = (selectedIndex, e) => {
-  //   setIndex(selectedIndex);
-  // };
-  return (
-    <Layout title="auth site | Home" content="Hom Page">
-      <div className='generate-page'>
-        <div className='row generate-layout'>
-          <div className='generatePage-body'>
-            <div>
-              <div className=''>
-                <div className=' col card generate-intro mt-5 '>
-                  <div className=" mt-5 text-block">
-                    <h2>
-                      <b>Write Captivating <br /> Blog Introductions <br /> <span className='with-ai'> With A I</span></b>
-                    </h2>
-                  </div>
-                  <div className=' intro-new'>
-                    <Button className='mt-3 new-button' size='sm'><NavLink className='navlink ' to='/generate-page'>New</NavLink></Button>
-                  </div>
+    const dispatch = useDispatch()
+
+    const { user } = useSelector(state => state.user)
+
+    const [Collection, setCollection] = useState()
+    useEffect(() => {
+        const email = user&&user.email
+            if (email === undefined) {
+                return null
+            }
+            
+            dispatch(userCollection(email)).then((result) => {
+            setCollection(result.payload)
+            })
+    
+    }, [user])
+    return (
+        <Layout title="DashBoard" content="Profile">
+            <div className='container mt-5'>
+                <div className="surface-0 profile-block p-4 shadow-2 border-round border-dark">
+                    <div style={{ display: 'flex' }}>
+                        <div style={{ width: '10%' }}>
+                            <img className='round profile-img' src={require('./media/pngfind.com-circle-shape-png-5453533.png')} alt="profile img" />
+                        </div>
+                        <div className='mx-3' style={{ width: '60%' }}>
+                            <div className="text-3xl font-medium text-900 mb-2">{user && user.first_name + ' ' + user.last_name}</div>
+                            <div className="font-medium text-500 ">{user && user.email}</div>
+                            <div className="font-medium text-500 ">{user && user.phone_number}</div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div>
-                <div className='service-category row mt-5'>
-
-                  <div className='card col-md-4 col-12 .col-md-6 services mt-4 blog-idea-service'>
-                    <div id="blog-idea">
-                    <div className='mt-4 blog-idea'>
-                      <i class="fa-solid fa-blog blog-idea-logo"></i>
-                    </div>
-                    <div className='blog-idea-assistant'><h className='mt-3 heading'><b>Blog Idea Assistance</b></h></div>
-                    <div className='mt-3'>
-                      <p className='para-idea'>  AI Blog writing assistant
-                        generates blog posts based on your
-                        specific needs, so you can write
-                        more without taking up extra time.</p>
-                    </div>
-                    <div className='mt-3'>
-                      <Button size='sm' className='create-button'><NavLink to='/blog-idea' className='navlink'>Create</NavLink></Button>
-                    </div>
-                    </div>
-                  </div>
-
-
-                  <div className=' card col-md-4 col-12 .col-md-6 services mt-4 blog-service'>
-                    <div className='blog-ass'>
-                    <div className='blog-logo mt-4'>
-                    <i class="fa-brands fa-blogger-b blog-gen-logo"></i>
-                    </div>
-                    <div className='blog-idea-assistant'>
-                      <h className='mt-3 heading'> <b>Blog Writing Assistance</b></h>
-                    </div>
-                    <div className='mt-3'>
-                      <p className='para-blog'>  AI Blog writing assistant
-                        generates blog posts based on your
-                        specific needs, so you can write
-                        more without taking up extra time.</p>
-                    </div>
-                    <div className=''>
-                      <Button size='sm' className='create-button'><NavLink to='/blog-generate' className='navlink'>Create</NavLink></Button>
-                    </div>
-                    </div>
-                  </div>
-                  <div className='card col-md-4 col-12 .col-md-6 mt-4 services story-service'>
-                    <div className='story-ass'>
-                    <div className='story-logo mt-4'>
-                    <i class="fa-solid fa-book story-logo"></i>
-                    </div>
-                    <div className='story-assistance'>
-                      <h className='mt-3 heading'> <b>Story Writing Assistance</b></h>
-                    </div>
-                    <div className='mt-3'>
-                      <p className='para-story'>  AI Blog writing assistant
-                        generates blog posts based on your
-                        specific needs, so you can write
-                        more without taking up extra time.</p>
-                    </div>
-                    <div className=''>
-                      <Button size='sm' className='create-button'><NavLink to='/story-generate' className='navlink'>Create</NavLink></Button>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            <div className='card  chat-block'>
-              <div className="container">
-              <div className='mt-3'>
-                <p><b>ChatGPT is the perfect way to stay connected and make new friends. <br /> So what are you waiting for? <br /> Invite your friends to join Chat</b></p>
-              </div>
-              <div className="mt-3">
-                <Button label='Chat' size='sm'> </Button>
-              </div>
-              </div>
             </div>
 
 
 
-            {/* <div className='mt-5 '>
+            <div className='container mt-5'>
 
+                <div className="grid">
+                    <div className="col-12 md:col-6 lg:col-3">
+                        <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                            <div className="flex justify-content-between mb-3">
+                                <div>
+                                    <span className="block text-500 font-medium mb-3">Blog Topic Idea</span>
+                                    <div className="text-900 font-medium text-xl">{Collection&&Collection.blogIdeasCount}</div>
+                                </div>
+                                <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                                    <i className="fa-solid fa-blog text-blue-500 text-xl"></i>
 
-
-            <Carousel variant="dark" className='text-white'>
-      <Carousel.Item>
-        <img
-          className="d-block w-100 carousel-image-style"
-          src={require('./media/ios-13-stock-ipados-dark-green-black-background-amoled-ipad-3840x2160-794.jpg')}
-          alt="First slide"
-          style={{height: '200px'}}
-        />
-        <Carousel.Caption>
-          <h5>First slide label</h5>
-          <p>  AI Blog writing assistant
-                        generates blog posts based on your
-                        specific needs, so you can write
-                        more without taking up extra time.</p>
-          <button className='btn btn-white text-white'>Create</button>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <div className='bg-dark'>
-
-        </div>
-        <Carousel.Caption>
-          <h5>Second slide label</h5>
-          <p>  AI Blog writing assistant
-                        generates blog posts based on your
-                        specific needs, so you can write
-                        more without taking up extra time.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="holder.js/800x400?text=Third slide&bg=e5e5e5"
-          alt="Third slide"
-        />
-        <Carousel.Caption>
-          <h5>Third slide label</h5>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
-
-
-
-
-
-            </div> */}
+                                </div>
+                            </div>
+                            <span className="text-green-500 font-medium">24 new </span>
+                            <span className="text-500">since last visit</span>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-3">
+                        <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                            <div className="flex justify-content-between mb-3">
+                                <div>
+                                    <span className="block text-500 font-medium mb-3">Blog Sections</span>
+                                    <div className="text-900 font-medium text-xl">{Collection&&Collection.blogSectionCount}</div>
+                                </div>
+                                <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                                    <i className="pi pi-map-marker text-orange-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <span className="text-green-500 font-medium">%52+ </span>
+                            <span className="text-500">since last week</span>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-3">
+                        <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                            <div className="flex justify-content-between mb-3">
+                                <div>
+                                    <span className="block text-500 font-medium mb-3">Stories</span>
+                                    <div className="text-900 font-medium text-xl">{Collection&&Collection.storyCount}</div>
+                                </div>
+                                <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                                    <i className="pi pi-inbox text-cyan-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <span className="text-green-500 font-medium">520  </span>
+                            <span className="text-500">newly registered</span>
+                        </div>
+                    </div>
+                    <div className="col-12 md:col-6 lg:col-3">
+                        <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                            <div className="flex justify-content-between mb-3">
+                                <div>
+                                    <span className="block text-500 font-medium mb-3">Total Words</span>
+                                    <div className="text-900 font-medium text-xl">{Collection&&Collection.total_words}</div>
+                                </div>
+                                <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                                    <i className="pi pi-comment text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                            <span className="text-green-500 font-medium">85 </span>
+                            <span className="text-500">responded</span>
+                        </div>
+                    </div>
+                </div>
 
             </div>
-          </div>
-        </div>
-      </div>
-    </Layout>
-  )
+            <div className="container mt-3 mb-3">
+                <hr />
+            </div>
+            
+            <div className='container mt-5'>
+                <div className="surface-0 profile-block p-4 shadow-2 border-round border-dark">
+                    <div style={{ display: 'flex' }}>
+                        <div className='mx-3 mt-2' style={{ width: '90%' }}>
+                            <div className="text-3xl font-medium text-900 mb-2">Blog Ideas</div>
+                        </div>
+                        <div className='text-center mt-3'>
+                        <i className="pi pi-arrow-right text-cyan-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </Layout>
+    )
 }
 
 export default UserDashboard

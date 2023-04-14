@@ -71,7 +71,7 @@ def generateStory(topic, keywords,words,accuracy):
     words = int(words)
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt="write a story, based on the following topic: {}\nkeywords:{}\nrequirements:heading, max_tokens words\n*".format(topic, keywords),
+        prompt="write a story, based on the following topic: {}\nkeywords:{}\nrequirements:heading \n  should contain {} words\n*".format(topic, keywords,words),
         temperature=accuracy,
         max_tokens=words,
         top_p=1,
@@ -98,7 +98,7 @@ def generateStory(topic, keywords,words,accuracy):
 def generateBlogSections(topic,section,keywords):
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt="Generate detailed blog section write up for the following blog section heading, using the blog title, and keywords provided.\nblog title : {}\n Blog section heading: {}\nkeywords: {}\n requirement:maximum words \n".format(topic,section, keywords),
+        prompt="Generate detailed blog section write up for '' the following blog section heading, using the blog title, and keywords provided.\nblog title : {}\n Blog section heading: {}\nkeywords: {}\n requirement:maximum words \n".format(topic,section, keywords),
         temperature=0.6,
         max_tokens=200,
         top_p=1,
@@ -109,7 +109,7 @@ def generateBlogSections(topic,section,keywords):
     if 'choices' in response:
         if len(response['choices']) > 0:
             res = response['choices'][0]['text']
-            cleaned_response = res.replace('\n',' <br/> ' )
+            cleaned_response = res.replace('\n',"*" )
             return cleaned_response
         else:
             return []

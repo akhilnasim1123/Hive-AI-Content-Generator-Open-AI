@@ -16,4 +16,5 @@ urlpatterns = [
   path('story-generator',views.Story),
   path('save-blog',views.BlogIdeasSave),
   path('generate-blog-sections',views.generateBlogsSect),
+  path('user-collection',views.UserCollection),
 ]

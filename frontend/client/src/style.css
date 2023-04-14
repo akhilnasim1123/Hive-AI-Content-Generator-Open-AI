@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Kadwa';
+
 }
 .landing-banner{
     width: 100%;
@@ -287,6 +288,9 @@
     width: 16%;
     height: 724px;
     position: fixed;
+    
+}.left-sidebar::-webkit-scrollbar{
+    display: none;
 }
 .generate-layout .right-sidebar{
     background-color: rgb(220, 220, 220);
@@ -320,8 +324,13 @@
     width: 100%;
     display: flex;
     
-}.side-bar-items{
+}.p-sidebar-left .p-sidebar {
+    width: 14rem;
     height: 100%;
+}
+
+.side-bar-items{
+    height: 90%;
     display: flex;
     flex-direction: column;
 
@@ -336,9 +345,10 @@
 }.signout-icon .sign-out-icon{
     color: rgb(148, 148, 149);
 }.layout .layout-children{
-    width: 80%;
+    width: 100%;
 }.layout .layout-sidebar{
-    width: 20%;
+    width: 4%;
+    height: 100px;
 }.logout-user{
     height: 30px;
     width: 57%;
@@ -578,4 +588,18 @@
 }
 .content-save-btn:hover{
     border-color:rgb(59 255 225);
+}.sidebar-han{
+    border-color: rgb(26 32 43);
+}.chatGPT-intro{
+    margin-top: 10%;
+}.chat-now-btn{
+    background-color:  rgb(26 32 43);
+}.profile-img{
+    width: 90%;
+}.profile-block{
+    cursor: pointer;
+}.shadow-2 {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12) !important;
+}.shadow-2:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 4px 5px 6px rgba(0, 0, 0, 0.12) !important;
 }

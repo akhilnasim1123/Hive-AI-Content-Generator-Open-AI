@@ -14,7 +14,7 @@ import { Sidebar } from 'primereact/sidebar';
 
 const StoryGeneratorPage = () => {
     const navigate = useNavigate()
-    const { loading } = useSelector(state => state.user)
+    const { loading,user } = useSelector(state => state.user)
     const [blogContent, setBlogContent] = useState('')
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
@@ -30,6 +30,7 @@ const StoryGeneratorPage = () => {
 
 
     const onSubmitHandler = (e) => {
+        const email = user.email
         e.preventDefault();
         // eslint-disable-next-line no-mixed-operators
         if (topic=== '' &&keywords === '' ) {
@@ -45,7 +46,7 @@ const StoryGeneratorPage = () => {
             toast.current.show({ severity: 'error', summary: 'Please enter more than 0.4 accuracy',life: 3000 })
         }
         else {
-            dispatch(StoryGenerator({ topic, keywords,words,accuracy })).then((result) => {
+            dispatch(StoryGenerator({ topic, keywords,words,accuracy,email })).then((result) => {
                 console.log(result)
                 // console.log(res)
                 setBlogContent(result.payload)
@@ -155,7 +156,7 @@ const StoryGeneratorPage = () => {
                     </div>
 
                     <div className='mt-3'>
-                        {/* <h3 style={{ textDecoration: 'underline' }}>{blogContent ? blogContent[0] : ''}</h3> */}
+                        <h3 style={{ textDecoration: 'underline' }}>{blogContent ? blogContent[0] : ''}</h3>
                     </div>
                     <div className='generation-block' onClick={content} style={{width:'100%',display:'block'}}>
 
