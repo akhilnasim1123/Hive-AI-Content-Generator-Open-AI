@@ -55,22 +55,22 @@ const Subscription = ()=>{
             <div className="col-12 lg:col-4">
                 <div className="p-3 h-full">
                     <div className="shadow-2 p-3 h-full flex flex-column" style={{ borderRadius: '6px' }}>
-                        <div className="text-900 font-medium text-xl mb-2">Basic</div>
+                        <div className="text-900 font-medium text-xl mb-2">Free Trail</div>
                         <div className="text-600">Plan description</div>
                         <hr className="my-3 mx-0 border-top-1 border-bottom-none border-300" />
                         <div className="flex align-items-center">
-                            <span className="font-bold text-2xl text-900">$9</span>
+                            <span className="font-bold text-2xl text-900">$0.00</span>
                             <span className="ml-2 font-medium text-600">per month</span>
                         </div>
                         <hr className="my-3 mx-0 border-top-1 border-bottom-none border-300" />
                         <ul className="list-none p-0 m-0 flex-grow-1">
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Arcu vitae elementum</span>
+                                <span>20000 words <span className='text-secondary'> per month</span></span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>
-                                <span>Dui faucibus in ornare</span>
+                                <span>All use Cases</span>
                             </li>
                             <li className="flex align-items-center mb-3">
                                 <i className="pi pi-check-circle text-green-500 mr-2"></i>

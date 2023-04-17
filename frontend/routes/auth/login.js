@@ -34,7 +34,7 @@ router.post("/api/users/login", async (req, res) => {
         }),
         cookie.serialize("refresh", data.refresh, {
           httpOnly: true,
-          maxAge: 60 * 60 * 60,
+          maxAge: 60 * 60 * 30,
           path: "/api/",
           sameSite: "strict",
           secure: process.env.NODE_ENV === "production",

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
+import { json } from "react-router-dom";
 
 export const register = createAsyncThunk(
   "users/register",
@@ -192,6 +193,10 @@ export const contentGenerator = createAsyncThunk(
       if (response.status === 200) {
         return data;
       } else {
+        Swal.fire({
+          text: data,
+          icon: "error",
+        });
         return thunkAPI.rejectWithValue(data);
       }
     } catch (error) {
@@ -225,6 +230,10 @@ export const BlogGenerator = createAsyncThunk(
       if (response.status === 200) {
         return data;
       } else {
+        Swal.fire({
+          text: data,
+          icon: "error",
+        });
         return thunkAPI.rejectWithValue(data);
       }
     } catch (error) {
@@ -260,6 +269,11 @@ export const StoryGenerator = createAsyncThunk(
       if (response.status === 200) {
         return data;
       } else {
+        Swal.fire({
+          text: data,
+          icon: "error",
+        });
+
         return thunkAPI.rejectWithValue(data);
       }
     } catch (error) {
@@ -360,6 +374,10 @@ export const blogSections = createAsyncThunk(
       if (response.status === 200) {
         return data;
       } else {
+        Swal.fire({
+          text: data,
+          icon: "error",
+        });
         return thunkAPI.rejectWithValue(data);
       }
     } catch (error) {
@@ -397,6 +415,145 @@ export const userCollection = createAsyncThunk(
     }
   }
 );
+
+export const premiumSubscription = createAsyncThunk (
+  'users/primium-subscription', async ({amount,paymentId,email,key},thunkAPI) =>{
+    const body = JSON.stringify({
+      amount,
+      paymentId,
+      email,
+      key
+    })
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/primium-subscription",{
+        method: 'POST',
+        headers:{
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body,
+      })
+      const data = await res.json()
+      if (res.statusCode === 200){
+        return data
+      }
+      else{
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+
+export const premiumSubscriptionPlans = createAsyncThunk (
+  'users/plans', async (email,thunkAPI) =>{
+    const body = JSON.stringify({
+      email,
+    })
+  
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/premium-plans`,{
+        method: 'POST',
+        headers:{
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        email,
+      })
+      const data = await res.json()
+      if (res.statusCode === 200){
+        return data
+      }
+      else{
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+
+export const otpLogin = createAsyncThunk(
+  'users/otp', async (email,thunkAPI)=>{
+    const body = JSON.stringify({
+      email,
+    })
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/otp",{
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+        
+      })
+      const data = res.json()
+      if (res.status === 200){
+        return data
+      }
+      else{
+        console.log(res)
+        console.log(data)
+        Swal.fire({
+          text: 'Invalid Email, Please enter a valid email',
+          icon: "error",
+
+        })
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+//otp-verify
+export const otpVerification = createAsyncThunk(
+  'users/otp', async (otp,thunkAPI)=>{
+    const body = JSON.stringify({
+      otp,
+    })
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/otp-verify",{
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+        
+      })
+      const data = res.json()
+      
+      if (res.status === 200){
+        console.log(data)
+        return data
+      }
+      else{
+        console.log(res)
+        console.log(data)
+        Swal.fire({
+          text: 'Invalid otp, Please enter a valid OTP',
+          icon: "error",
+
+        })
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+
+
+
+
+
 
 const initialState = {
   isAuthenticated: false,
@@ -524,7 +681,16 @@ const userSlice = createSlice({
       })
       .addCase(userCollection.rejected, (state) => {
         state.loading = false;
-      });
+      }).addCase(premiumSubscription.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(premiumSubscription.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.user = actions.payload;
+      })
+      .addCase(premiumSubscription.rejected, (state) => {
+        state.loading = false;
+      })
   },
 });
 export const { resetRegistered } = userSlice.actions;

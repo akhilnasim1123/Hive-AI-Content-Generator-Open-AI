@@ -14,6 +14,7 @@ import "primereact/resources/primereact.min.css";
 //icons
 import "primeicons/primeicons.css";
 import { BlockUser, DeleteUser, searchData, UsersDetails } from "../../features/admin";
+import Shimmer from "../shimmer/shimmer";
 
 const UserData = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const UserData = () => {
   // const { allUser } = useSelector((state) => state.admin);
   // const [searchInput, setSearchInput] = useState('');
 
-  const { isAdminAuthenticated } = useSelector((state) => state.admin);
+  const { isAdminAuthenticated ,loading } = useSelector((state) => state.admin);
   console.log(isAdminAuthenticated);
   const [searchInput, setSearchInput] = useState(userdetails);
   const [state,setState]=useState(null)
@@ -112,6 +113,8 @@ const onSelect=(name,email) => {
   const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
   const paginatorRight = <Button type="button" icon="pi pi-download" text />;
 // {  if (!isAdminAuthenticated) return <Navigate to="/admin" />;}
+
+if (loading) return <Shimmer />
   return (
     <AdminLayout title="admin page | AdminPage" content="AdminPage">
       <div>

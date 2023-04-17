@@ -115,6 +115,14 @@ def generateBlogSections(topic,section,keywords):
             return []
     else:
         return []
+    
+
+def CountChecker(user,wordCount):
+    totalCount = user.wordCount + wordCount
+    if totalCount < user.monthlyCount:
+        return True
+    else:
+        return False
 
 
 

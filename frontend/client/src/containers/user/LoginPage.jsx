@@ -16,13 +16,16 @@ import "primereact/resources/primereact.min.css";
 
 //icons
 import "primeicons/primeicons.css";
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import Shimmer from '../shimmer/shimmer';
+import { Dialog } from 'primereact/dialog';
 
 
 
 export default function LoginPage() {
+    const navigate = useNavigate()
     const {isAuthenticated,authLoading}=useSelector(state=>state.user)
+    const [visible,setVisible] = useState()
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
         email: '',
@@ -105,8 +108,11 @@ export default function LoginPage() {
                             </>
                         )}
                     />
-                    <div>
-                        
+                    <div className='forgot-password'>
+                    <NavLink to='/otp'>forgot password?</NavLink>
+                    </div>
+                
+                    <div>      
                    {email ? <Button label="Login" className='mt-3' style={{ backgroundColor: 'rgb(59 255 225)', color: 'rgb(26 32 43)', border: 'none' }} type="submit" icon="pi pi-check" />
 :<Button disabled label="Login" className='mt-3' style={{ backgroundColor: 'rgb(59 255 225)', color: 'rgb(26 32 43)', border: 'none' }} type="submit" icon="pi pi-check" />
 }                     
@@ -121,6 +127,8 @@ export default function LoginPage() {
                 </div>
 
             </div>
+           
         </div>
+        
     )
 }

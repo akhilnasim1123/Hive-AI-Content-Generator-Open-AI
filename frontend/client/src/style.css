@@ -593,7 +593,7 @@
 }.chatGPT-intro{
     margin-top: 10%;
 }.chat-now-btn{
-    background-color:  rgb(26 32 43);
+    background-color:  #1a202b;
 }.profile-img{
     width: 90%;
 }.profile-block{
@@ -602,4 +602,19 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.12) !important;
 }.shadow-2:hover {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03), 0px 0px 2px rgba(0, 0, 0, 0.06), 4px 5px 6px rgba(0, 0, 0, 0.12) !important;
+}
+.prime-management-buttons{
+    display: flex;
+}.prime-management-buttons .prime-buttons:hover{
+    background-color: #303134;
+}.prime-management-buttons .prime-buttons{
+    background-color: #212529;
+}
+.forgot-password{
+    width: 35%;
+    margin-top: -11px;
+    font-size: 11px;
+}.otp-option:hover{
+    background-color: #f3f3f3;
+    color: #000000;
 }

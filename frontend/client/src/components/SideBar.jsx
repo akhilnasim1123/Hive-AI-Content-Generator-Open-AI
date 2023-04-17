@@ -43,11 +43,20 @@ const SideBar = () => {
               <div className='dashboard-icon'>
                 <i class="fa-solid fa-gauge dashboard-icons"></i>
                 </div>
-                <div className='dashboard'><NavLink className='side-bar-item-link dashboard-logo'>Generate Blog</NavLink></div>
+                <div className='dashboard'><NavLink className='side-bar-item-link dashboard-logo' to='/home'>Generate Blog</NavLink></div>
               </div>
-              <div></div>
+
+              <div className='row mt-3'>
+              <div className='dashboard-icon'>
+                <i class="fa-solid fa-gauge dashboard-icons"></i>
+                </div>
+                <div className='dashboard'><NavLink to='/home/dashboard/billing-page' className='side-bar-item-link dashboard-logo'>Billing</NavLink></div>
+              </div>
+
             </div>
           </div>
+
+          
 
 
           <div className='logout-user mt-3'>

@@ -1,7 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import Shimmer from '../shimmer/shimmer'
 
 const AdminPage = () => {
+    // const {loading} = useSelector(state=>state.admin)
+    // if (loading) return <Shimmer />
     return (
         <div className='row admin-body'>
             <div className='navbar-admin bg-dark'>
@@ -18,7 +22,7 @@ const AdminPage = () => {
                             <NavLink to='/users' className='nav-users '>Keys</NavLink>
                         </div>
                         <div className="prime-management mt-3">
-                            <NavLink to='/users' className='nav-users '>Prime Management</NavLink>
+                            <NavLink to='/admin-page/prime-management' className='nav-users '>Prime Management</NavLink>
                         </div>
                     </div>
                 </div>

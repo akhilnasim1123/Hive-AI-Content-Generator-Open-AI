@@ -36,13 +36,42 @@ class UserCreateSerializer(serializers.ModelSerializer):
     )
 
     return user
+  
+# class UserChangePasswordSerializer(serializers.ModelSerializer):
+#   class Meta:
+#     model = User
+#     fields = ('first_name', 'last_name', 'phone_number','email', 'password')
+
+#   def validate(self, data):
+#     user = User(**data)
+#     password = data.get('password')
+
+#     try:
+#       validate_password(password, user)
+#     except exceptions.ValidationError as e:
+#       serializer_errors = serializers.as_serializer_error(e)
+#       raise exceptions.ValidationError(
+#         {'password': serializer_errors['non_field_errors']}
+#       )
+
+#     return data
+#   def save(self, validated_data):
+#     user = User.objects.create_user(
+#       first_name=validated_data['first_name'],
+#       last_name=validated_data['last_name'],
+#       phone_number=validated_data['phone_number'],
+#       email=validated_data['email'],
+#       password=validated_data['password'],
+#     )
+
+#     return user
 
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User    
-        fields = ('first_name', 'last_name', 'phone_number','email','is_active','is_superuser','image_url')
+        fields = ('first_name', 'last_name', 'phone_number','email','is_active','is_superuser','image_url','wordCount','premium','subscriptionType','monthlyCount')
 
 # class ContentSerializer(serializers.)
 
@@ -67,3 +96,17 @@ class StorySerializer(serializers.ModelSerializer):
         model = StoryDetails  
         fields = ('title','story','audience','keywords','wordCount','unique_id')
 
+class PrimeSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = Prime
+      fields = "__all__"
+
+class PrimeNameSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = Prime
+      fields = ('prime',)
+
+class UserPasswordsSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = UserAccount
+      fields = ('password',)

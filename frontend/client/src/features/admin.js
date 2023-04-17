@@ -1,9 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
 import { getUser } from "./user";
-
-
-
 
 export const adminLog = createAsyncThunk(
   "admin/login",
@@ -31,7 +28,7 @@ export const adminLog = createAsyncThunk(
       });
       console.log("failed");
       return thunkAPI.rejectWithValue();
-    } else if (email !== null && email !== "admin2@gmail.com") {
+    } else if (email !== null && email !== "admin4@gmail.com") {
       Swal.fire({
         text: "Only admin can access!!",
         icon: "error",
@@ -51,13 +48,13 @@ export const adminLog = createAsyncThunk(
         console.log(res);
 
         const data = await res.json();
-        console.log(res.status)
+        console.log(res.status);
 
         if (res.status === 200) {
           const { dispatch } = thunkAPI;
-          
+
           // dispatch(getAdmin(data.access));
-          console.log(data)
+          console.log(data);
           return data;
         } else {
           Swal.fire({
@@ -77,30 +74,25 @@ export const adminLog = createAsyncThunk(
   }
 );
 
-const adminLogout = createAsyncThunk(
-  "admin/logout",
-  async(_,thunkAPI) => {
-    try {
-      const res = await fetch('/api/admin/logout',{
-        method: 'GET',
-        headers: {
-          Accept: "application/json"
-        }
-      })
-      const data = await res.json();
-      console.log(res.status)
-      if (res.status === 200){
-        return data
-      }
-      else{
-        return thunkAPI.rejectWithValue(data)
-      }
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data)
+const adminLogout = createAsyncThunk("admin/logout", async (_, thunkAPI) => {
+  try {
+    const res = await fetch("/api/admin/logout", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(res.status);
+    if (res.status === 200) {
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue(data);
     }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
-)
-      
+});
 
 export const BlockUser = createAsyncThunk(
   "user/block",
@@ -169,7 +161,7 @@ export const searchData = createAsyncThunk(
     const body = JSON.stringify(search);
     console.log(search);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/search", {
+      const res = await fetch("http://127.0.0.1:8000/api/users/prime-search", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -197,12 +189,13 @@ export const UsersDetails = createAsyncThunk(
   "users/",
   async (setUserDetails, thunkAPI) => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/user-data", {
-        method: "GET",
+      const res = await fetch("http://127.0.0.1:8000/api/users/user-details", {
+        method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-        },
+        }
+
       });
       console.log(res, "heyu");
       const data = await res.json();
@@ -220,37 +213,253 @@ export const UsersDetails = createAsyncThunk(
   }
 );
 
+export const primeUsers = createAsyncThunk(
+  "users/primeUs",
+  async (value, thunkAPI) => {
+    const body = JSON.stringify({
+      value,
+    });
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/user-data", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      });
 
-      
+      const data = await res.json();
+      // console.log(data);
+      if (res.status === 200) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const freeTrail = createAsyncThunk(
+  "users/freeTrail",
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/free-trail", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      // console.log(data);
+      if (res.status === 200) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+export const Beginner = createAsyncThunk(
+  "users/Beginner",
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/beginner", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      // console.log(data);
+      if (res.status === 200) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editPrime = createAsyncThunk(
+  "users/editPrime",
+  async ({ words, prize, month, key, prime }, thunkAPI) => {
+    console.log(key)
+    const body = JSON.stringify({
+      words,
+      prize,
+      month,
+      key,
+      prime,
+    })
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/edit-prime",{
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+
+      const data = await res.json();
+      console.log(data);
+      if (res.status === 200) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+export const PrimeData = createAsyncThunk(
+  "users/prime",
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/prime-data", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      // console.log(data);
+      if (res.status === 200) {
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
 
 const initialState = {
-isAdminAuthenticated: false,
-admin:null,
-loading: false,
-login:false,
-}
+  isAdminAuthenticated: false,
+  admin: null,
+  loading: false,
+  login: false,
+};
 const adminSlice = createSlice({
-    name:"admin",
-    initialState,
-    reducers:{
-        resetLogin:(state)=>{
-            state.login = false;
-        }
+  name: "admin",
+  initialState,
+  reducers: {
+    resetLogin: (state) => {
+      state.login = false;
     },
-    extraReducers:(builder) => {
-        builder
-        .addCase(adminLog.pending, (state) => {
-            state.loading = true;
-          })
-          .addCase(adminLog.fulfilled,(state,actions)=>{
-            state.loading = false;
-            state.isAdminAuthenticated = true;
-            state.admin = actions.payload;
-          })
-          .addCase(adminLog.rejected,(state)=>{
-            state.loading = false;
-          })
-    }
-})
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(adminLog.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(adminLog.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.isAdminAuthenticated = true;
+        state.admin = actions.payload;
+      })
+      .addCase(adminLog.rejected, (state) => {
+        state.loading = false;
+      })
+
+      .addCase(UsersDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(UsersDetails.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.isAdminAuthenticated = true;
+
+      })
+      .addCase(UsersDetails.rejected, (state) => {
+        state.loading = false;
+      })
+
+      .addCase(primeUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(primeUsers.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.isAdminAuthenticated = true;
+ 
+      })
+      .addCase(primeUsers.rejected, (state) => {
+        state.loading = false;
+      })
+      
+      .addCase(freeTrail.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(freeTrail.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.isAdminAuthenticated = true;
+
+      })
+      .addCase(freeTrail.rejected, (state) => {
+        state.loading = false;
+      })
+      
+      .addCase(Beginner.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(Beginner.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.isAdminAuthenticated = true;
+
+      })
+      .addCase(Beginner.rejected, (state) => {
+        state.loading = false;
+      })
+      
+      .addCase(editPrime.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editPrime.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.isAdminAuthenticated = true;
+
+      })
+      .addCase(editPrime.rejected, (state) => {
+        state.loading = false;
+      })
+      
+      .addCase(PrimeData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(PrimeData.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.isAdminAuthenticated = true;
+
+      })
+      .addCase(PrimeData.rejected, (state) => {
+        state.loading = false;
+      })
+
+
+
+
+  },
+});
 export const { resetLogin } = adminSlice.actions;
 export default adminSlice.reducer;

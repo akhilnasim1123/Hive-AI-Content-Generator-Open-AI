@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(UserAccount),
 admin.site.register(BlogIdea),
 admin.site.register(BlogSection),
+admin.site.register(Prime)
