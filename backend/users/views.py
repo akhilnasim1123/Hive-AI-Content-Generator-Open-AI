@@ -168,15 +168,19 @@ def Block(request):
 
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
-def Update(request):
+def UpdateProfileImage(request):
     if request.method == 'POST':
         data = request.data
         email = data['email']
+
         url = data['url']
+        print(url)
         user = UserAccount.objects.get(email=email)
         user.image_url = url
         user.save()
-        return Response(status=status.HTTP_200_OK)
+        user = UserSerializer(user)
+        
+        return Response(user.data['image_url'],status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'POST'])
@@ -561,6 +565,25 @@ def registerSubscriptions(request):
     user.save()
     user = UserSerializer(user)
     return Response(user.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def UpdateProfile(request):
+    data = request.data
+    first_name = data['first_name']
+    last_name = data['last_name']
+    email = data['email']
+    phone_number = data['phone_number']
+    user = UserAccount.objects.get(email=email)
+    print(user.first_name, user.last_name)
+    user.first_name = first_name
+    user.last_name = last_name
+    user.email = email
+    user.phone_number = phone_number
+    user.save()
+    user = UserSerializer(user)
+    return Response(user.data,status=status.HTTP_200_OK)
 
 
 

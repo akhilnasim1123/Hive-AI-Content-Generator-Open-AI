@@ -49,9 +49,10 @@ const BillingPage = () => {
     console.log(prize)
     console.log(plan)
     setVisible({
-      visible:true,
       amount:prize,
-      key:plan
+      key:plan,
+      visible:true
+
 
     })
 
@@ -97,7 +98,7 @@ const BillingPage = () => {
   const {freeTrail,beginner,advanced} = plans
 console.log(user && user.currentSub)
 
-  if (user && user.premiumSub === false) {
+  if (user && user.premium === false) {
     return (
       <Layout>
 

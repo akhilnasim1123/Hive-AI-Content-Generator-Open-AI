@@ -9,7 +9,6 @@ urlpatterns = [
   path('user-data',views.UserData),
   path('user-details',views.UsersData),
   path('Block',views.Block),
-  path('update',views.Update),
   path('delete',views.Delete),
   path('search',views.Search),
   path('prime-search',views.PrimeSearch),
@@ -27,5 +26,7 @@ urlpatterns = [
   path('edit-prime',views.EditPrime),
   path('prime-data',views.PrimeData),
   path('premium-plans',views.subscriptionPlans),
-  path('primium-subscription',views.registerSubscriptions)
+  path('primium-subscription',views.registerSubscriptions),
+  path('update-image',views.UpdateProfileImage),
+  path('update-profile',views.UpdateProfile),
 ]

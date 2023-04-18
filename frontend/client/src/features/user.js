@@ -551,6 +551,80 @@ export const otpVerification = createAsyncThunk(
 
 
 
+export const changeUserImage = createAsyncThunk(
+  "user",
+  async (obj, thunkAPI) => {
+    console.log("dfgsadhkjhdfkahkdjsfaksdhfkashdfk");
+    console.log(obj);
+    const { url, email } = obj;
+    // console.log(dataUrl,'this is data url ofofofofo')
+    console.log(email, "this is email.........");
+    const body = JSON.stringify({
+      url,
+      email,
+    });
+    // console.log(dataUrl,'this is data url ofofofofo')
+    // console.log(email,'emaaaaiillllllllll')
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/update-image", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+      });
+
+      const data = await res.json();
+
+      if (res.status === 200) {
+        const { dispatch } = thunkAPI;
+
+        dispatch(getUser());
+
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(data);
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const ProfileEdit = createAsyncThunk(
+  'user/data-edit',
+  async({first_name,last_name,email,phone_number},thunkAPI)=>{
+    const body = JSON.stringify({
+      first_name,
+      last_name,
+      email,
+      phone_number,
+    })
+    console.log(body)
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/users/update-profile",{
+          method: 'POST',
+          headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body,
+        })
+        const data = await res.json()
+        if (res.statusCode === 200){
+          return data
+        }
+        else{
+          return thunkAPI.rejectWithValue(data)
+        }
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data)
+      }
+    }
+  )
+
+
 
 
 
@@ -689,6 +763,16 @@ const userSlice = createSlice({
         state.user = actions.payload;
       })
       .addCase(premiumSubscription.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(ProfileEdit.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(ProfileEdit.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.user = actions.payload;
+      })
+      .addCase(ProfileEdit.rejected, (state) => {
         state.loading = false;
       })
   },

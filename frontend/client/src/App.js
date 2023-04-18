@@ -33,7 +33,6 @@ const App = () => {
   const { isAuthenticated, authLoading } = useSelector((state) => state.user);
   const { isAdminAuthenticated } = useSelector((state) => state.admin);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(checkAuth());
   }, []);
