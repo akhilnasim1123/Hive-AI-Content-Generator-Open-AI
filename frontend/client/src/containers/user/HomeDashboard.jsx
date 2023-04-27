@@ -1,25 +1,28 @@
 import { Button } from 'primereact/button'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate, NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import SideBar from '../../components/SideBar'
 import Carousel from 'react-bootstrap/Carousel';
 const HomeDashboard = () => {
   const { isAuthenticated } = useSelector(state => state.user)
+  const navigate = useNavigate()
   if (!isAuthenticated) return <Navigate to='/login'/>
   // const [index, setIndex] = useState(0);
 
   // const handleSelect = (selectedIndex, e) => {
   //   setIndex(selectedIndex);
   // };
+
   return (
     <Layout title="auth site | Home" content="Hom Page">
       <div className=" text-700 chatGPT-intro mb-5 text-center">
     <div className="text-blue-600 font-bold mb-3"><i className="pi pi-discord"></i>&nbsp;POWERED BY OPEN AI</div>
     <div className="text-900 font-bold text-5xl mb-3">Chat The Powerful A I</div>
     <div className="text-700 text-2xl mb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</div>
-    <Button label="Chat Now" icon="pi pi-discord" className="chat-now-btn font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" />
+    <Button label="Chat Now" icon="pi pi-discord" onClick={()=>{navigate('/chat')}}
+    className="chat-now-btn font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" />
 </div>
       <div className='generate-page' style={{paddingLeft: '5%'}}>
         <div className='row generate-layout'>
@@ -108,6 +111,15 @@ const HomeDashboard = () => {
           </div>
         </div>
       </div>
+
+
+      <div className=" text-700 image-generator-intro mt-5 mb-5 text-center">
+    <div className="text-blue-600 font-bold mt-5 mb-3"><i className="pi  pi-discord"></i>&nbsp;POWERED BY OPEN AI</div>
+    <div className="text-900 text-white font-bold text-5xl mb-3">Generate Image</div>
+    <div className="text-700 text-2xl mb-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</div>
+    <Button label="Generate Now" icon="pi pi-discord" onClick={()=>{navigate('/image-generator')}}
+    className="chat-now-btn font-bold px-5 py-3 p-button-raised p-button-rounded white-space-nowrap" />
+</div>
     
     </Layout>
   )

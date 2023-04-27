@@ -5,13 +5,16 @@ import { Button } from 'primereact/button'
 import { Sidebar } from 'primereact/sidebar'
 import { Dialog } from 'primereact/dialog';
 import Swal from 'sweetalert2'
-import { premiumSubscription, premiumSubscriptionPlans } from '../../features/user'
+import { cancelPrime, premiumSubscription, premiumSubscriptionPlans, subscribedDetails } from '../../features/user'
 import { useNavigate } from 'react-router-dom'
 
 
 const BillingPage = () => {
 
   const navigate = useNavigate()
+  const [subscribedData,setSubscribedData]=useState([])
+  const [planName,setPlanName]=useState()
+  const [plansName,setPlansName]=useState([])
 
   const [formData,setVisible]=useState({
     visible:false,
@@ -23,17 +26,8 @@ const BillingPage = () => {
     beginner:'',
     advanced:'',
   });
-  useEffect(()=>{
-      dispatch(premiumSubscriptionPlans(user?user.email:null)).then(result => {
-          console.log(result.payload)
-          setPlans({
-            freeTrail:result.payload[1],
-            beginner:result.payload[2],
-            advanced:result.payload[0],
-          })
+  
 
-      })
-  },[])
 
 
 
@@ -97,6 +91,46 @@ const BillingPage = () => {
   }
   const {freeTrail,beginner,advanced} = plans
 console.log(user && user.currentSub)
+
+const cancelSub = () =>{
+    const email = user&&user.email
+    
+    dispatch(cancelPrime(email)).then(result=>{
+        console.log(email)
+        const data = result.payload
+        console.log(data)
+        setSubscribedData(data.subscribed)
+        setPlanName(data.plan)
+        setPlansName(data.plans)
+    })
+}
+
+useEffect(()=>{
+    const email = user&&user.email
+    if (email === undefined) {
+        return null
+    }
+      dispatch(premiumSubscriptionPlans(email)).then(result => {
+          console.log(result.payload)
+          setPlans({
+            freeTrail:result.payload[1],
+            beginner:result.payload[2],
+            advanced:result.payload[0],
+          })
+
+      })
+      dispatch(subscribedDetails(email)).then(result => {
+        console.log(email)
+        const data = result.payload
+        console.log(data)
+        setSubscribedData(data.subscribed)
+        setPlanName(data.plan)
+        setPlansName(data.plans)
+      })
+    },[user]) 
+
+
+console.log(plansName)
 
   if (user && user.premium === false) {
     return (
@@ -231,36 +265,50 @@ console.log(user && user.currentSub)
   else{
   return (
     <Layout>
-            <div className='container mt-5' onClick={()=>navigate('/home/dashboard/profile-view')}>
-                            <div className="surface-0 profile-block p-4 shadow-2 border-round border-dark">
-                                <div style={{ display: 'flex' }}>
-                                    <div style={{ width: '10%' }}>
-                                        <img className='round profile-img' src={require('./media/pngfind.com-circle-shape-png-5453533.png')} alt="profile img" />
-                                    </div>
-                                    <div className='mx-3' style={{ width: '60%' }}>
-                                        <div className="text-3xl font-medium text-900 mb-2">{user && user.first_name + ' ' + user.last_name}</div>
-                                        <div className="font-medium text-500 ">{user && user.currentSub}</div>
-                                        <div className="font-medium text-500 ">{user && user.phone_number}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+           <div className='mt-5'>
+                <table className="table table-hover mt-5">
+                    <thead>
+                    <tr>
+                        <th scope='col'>Plan</th>
+                        <th scope='col'>Month</th>
+                        <th scope='col'>Prize</th>
+                        <th scope='col'>Payment Id</th>
+                        <th scope='col'>Words</th>
+                        <th scope='col'>Used</th>
+                        <th scope='col'>Status</th>
+                        <th scope='col'>Cancel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {plansName&&plansName.map((plan,index)=>
+                        {
+                            return(
+                        <tr>
+                            <td>{plan&&plan.planName}</td>
+                            <td>{plan&&plan.month}</td>
+                            <td>${plan&&plan.payment}</td>
+                            <td>{plan&&plan.payment_id}</td>
+                            <td>{plan&&plan.words}</td>
+                            <td>{user&&user.wordCount}</td>
+                        {plan&&plan.status===true?
+                        <>
+                            <td>Active</td> 
+                            <td><button className="btn border-dark" onClick={cancelSub}>Cancel</button></td>  
+                            </> 
+                        :
+                            <>
+                            <td>Cancelled</td>
+                            <td><button disabled className="btn">Cancel</button></td>  
+                            </>
+                        }
+                            
+                        </tr>
+                        )
+                           })}
+                    </tbody>
 
-
-                        <div className='container mt-5' onClick={()=>navigate('/home/dashboard/profile-view')}>
-                            <div className="surface-0 profile-block p-4 shadow-2 border-round border-dark">
-                                <div style={{ display: 'flex' }}>
-                                    <div style={{ width: '10%' }}>
-                                        <img className='round profile-img' src={require('./media/pngfind.com-circle-shape-png-5453533.png')} alt="profile img" />
-                                    </div>
-                                    <div className='mx-3' style={{ width: '60%' }}>
-                                        <div className="text-3xl font-medium text-900 mb-2">{user && user.first_name + ' ' + user.last_name}</div>
-                                        <div className="font-medium text-500 ">{user && user.email}</div>
-                                        <div className="font-medium text-500 ">{user && user.phone_number}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                </table>
+           </div>
     </Layout>
   )
   }

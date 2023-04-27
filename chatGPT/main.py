@@ -26,7 +26,7 @@ def answer(ques, chat_log = None):
             prompt_text = f'{chat_log}{restart_sequence} {ques}{start_sequence}'
             print(prompt_text)
             response = openai.Completion.create(
-                model = "text-davinci-002",
+                model = "text-davinci-003",
                 prompt = prompt_text,
                 temperature = 0.8,
                 max_tokens = 500,
@@ -50,8 +50,8 @@ def checkViolation(ans):
     return output
 
 def gpt3_logs(question, answer, chat_log=None):
-    if chat_log is None:
-        chat_log = session_prompt
+    # if chat_log is None:
+    #     chat_log = session_prompt
     return f'{chat_log}{restart_sequence} {question}{start_sequence}{answer}'
 
 def message_check(message, chat_log):
@@ -67,7 +67,7 @@ def message_check(message, chat_log):
 
 def main(msg,chat):
     ans = message_check(msg,chat)
-    print("VBot: ", str(ans))
+    print("VBot: ", str(ans),)
     return ans
 
 if __name__ == "__main__":

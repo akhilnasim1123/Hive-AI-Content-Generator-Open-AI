@@ -5,18 +5,40 @@ from .models import OTP, UserAccount
 
 
 def sent_otp_via_email(email):
-    subject = 'Account Login Through Email Address'
+    subject = 'Please Verify Your Email Address'
     otp = random.randint(1000,9999)
-    message = f'Your OTP is {otp}'
+    message = f'Your Verification OTP is {otp}'
+    email_from = settings.EMAIL_HOST
+    send_mail(subject, message, email_from,[email])
+    # user = UserAccount.objects.get(email=email)
+    verify = OTP.objects.filter(email=email).exists()
+    if verify:
+        OTP.objects.filter(email=email).delete()
+    otp_registration = OTP.objects.create(
+        # user = user,
+        otp = otp,
+        email=email,
+    )
+    otp_registration.save()
+    return otp
+
+
+def sent_otp_for_emailVerify(email):
+    subject = 'Please Verify Your Email Address'
+    otp = random.randint(1000,9999)
+    message = f'Your Verification OTP is {otp}'
     email_from = settings.EMAIL_HOST
     send_mail(subject, message, email_from,[email])
     user = UserAccount.objects.get(email=email)
+    verify = OTP.objects.filter(email=email).exists()
+    if verify:
+        OTP.objects.filter(email=email).delete()
     otp_registration = OTP.objects.create(
-        user = user,
+        # user = user,
         otp = otp,
+        email=email,
     )
+
     otp_registration.save()
-    user.email_otp = otp
-    user.save()
     return otp
     

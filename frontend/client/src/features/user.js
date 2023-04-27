@@ -132,7 +132,7 @@ export const login = createAsyncThunk(
           return data;
         } else {
           Swal.fire({
-            text: res.statusText,
+            text: data.error,
             icon: "error",
           });
           return thunkAPI.rejectWithValue(data);
@@ -151,20 +151,21 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk("users/logout", async (_, thunkAPI) => {
   try {
     const res = await fetch("/api/users/logout", {
-      method: "POST",
+      method: "GET",
       headers: {
         Accept: "application/json",
       },
     });
+
     const data = await res.json();
-    console.log(data);
+
     if (res.status === 200) {
       return data;
     } else {
       return thunkAPI.rejectWithValue(data);
     }
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data);
+  } catch (err) {
+    return thunkAPI.rejectWithValue(err.response.data);
   }
 });
 
@@ -194,7 +195,7 @@ export const contentGenerator = createAsyncThunk(
         return data;
       } else {
         Swal.fire({
-          text: data,
+          text: data.error,
           icon: "error",
         });
         return thunkAPI.rejectWithValue(data);
@@ -206,12 +207,13 @@ export const contentGenerator = createAsyncThunk(
 );
 export const BlogGenerator = createAsyncThunk(
   "users/Blog-generator",
-  async ({ topic, keywords, words, accuracy }, thunkAPI) => {
+  async ({ topic, keywords, words, accuracy,email }, thunkAPI) => {
     const body = JSON.stringify({
       topic,
       keywords,
       words,
       accuracy,
+      email,
     });
     try {
       const response = await fetch(
@@ -231,7 +233,7 @@ export const BlogGenerator = createAsyncThunk(
         return data;
       } else {
         Swal.fire({
-          text: data,
+          text: data.error,
           icon: "error",
         });
         return thunkAPI.rejectWithValue(data);
@@ -312,12 +314,13 @@ export const checkAuth = createAsyncThunk(
 
 export const saveBlogIdea = createAsyncThunk(
   "users/save-blog-idea",
-  async ({ content, email, topic, keywords }, thunkAPI) => {
+  async ({ content, email, topic, keywords,unique_id }, thunkAPI) => {
     const body = JSON.stringify({
       content,
       email,
       topic,
       keywords,
+      unique_id,
     });
     console.log(body);
     try {
@@ -499,11 +502,36 @@ export const otpLogin = createAsyncThunk(
       else{
         console.log(res)
         console.log(data)
-        Swal.fire({
-          text: 'Invalid Email, Please enter a valid email',
-          icon: "error",
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
 
-        })
+export const emailVerify = createAsyncThunk(
+  'users/otp', async (email,thunkAPI)=>{
+    const body = JSON.stringify({
+      email,
+    })
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/email-verify",{
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+        
+      })
+      const data = res.json()
+      if (res.status === 200){
+        return data
+      }
+      else{
+        console.log(res)
+        console.log(data)
         return thunkAPI.rejectWithValue(data)
       }
     } catch (error) {
@@ -513,9 +541,10 @@ export const otpLogin = createAsyncThunk(
 )
 //otp-verify
 export const otpVerification = createAsyncThunk(
-  'users/otp', async (otp,thunkAPI)=>{
+  'users/otp', async ({otp,email},thunkAPI)=>{
     const body = JSON.stringify({
       otp,
+      email,
     })
     try {
       const res = await fetch("http://127.0.0.1:8000/api/users/otp-verify",{
@@ -549,6 +578,43 @@ export const otpVerification = createAsyncThunk(
   }
 )
 
+export const otpEmailVerification = createAsyncThunk(
+  'users/otp-email', async ({otp,email},thunkAPI)=>{
+    const body = JSON.stringify({
+      otp,
+      email,
+    })
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/otp-email-verify",{
+        method: 'POST',
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+        
+      })
+      const data = res.json()
+      
+      if (res.status === 200){
+        console.log(data)
+        return data
+      }
+      else{
+        console.log(res)
+        console.log(data)
+        Swal.fire({
+          text: 'Invalid otp, Please enter a valid OTP',
+          icon: "error",
+
+        })
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
 
 
 export const changeUserImage = createAsyncThunk(
@@ -623,8 +689,322 @@ export const ProfileEdit = createAsyncThunk(
       }
     }
   )
+  export const ImageGeneratorFun = createAsyncThunk(
+    'user/image-generator',
+    async({topic,keywords,imageQuality},thunkAPI)=>{
+      const body = JSON.stringify({
+        topic,
+        keywords,
+        imageQuality,
+      })
+      console.log(body)
+        try {
+          const res = await fetch("http://127.0.0.1:8000/api/users/image-generator",{
+            method: 'POST',
+            headers:{
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body,
+          })
+          const data = await res.json()
+          if (res.statusCode === 200){
+            return data
+          }
+          else{
+            return thunkAPI.rejectWithValue(data)
+          }
+        } catch (error) {
+          return thunkAPI.rejectWithValue(error.response.data)
+        }
+      }
+    )
 
 
+
+    export const SavedIdea = createAsyncThunk(
+      'user/saved-Ideas',
+      async(email,thunkAPI)=>{
+        console.log(email)
+        const body = JSON.stringify({
+          email,
+        })
+        console.log(body)
+          try {
+            const res = await fetch("http://127.0.0.1:8000/api/users/saved-ideas",{
+              method: 'POST',
+              headers:{
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body,
+            })
+            const data = await res.json()
+            if (res.statusCode === 200){
+              return data
+            }
+            else{
+              return thunkAPI.rejectWithValue(data)
+            }
+          } catch (error) {
+            return thunkAPI.rejectWithValue(error.response.data)
+          }
+        }
+      )
+
+
+      export const deleteIdea = createAsyncThunk(
+        'user/delete-Idea',
+        async({content,email},thunkAPI)=>{
+          console.log(email)
+          const body = JSON.stringify({
+            content,
+            email,
+          })
+          console.log(body)
+            try {
+              const res = await fetch("http://127.0.0.1:8000/api/users/delete-idea",{
+                method: 'POST',
+                headers:{
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body,
+              })
+              const data = await res.json()
+              if (res.statusCode === 200){
+                return data
+              }
+              else{
+                return thunkAPI.rejectWithValue(data)
+              }
+            } catch (error) {
+              return thunkAPI.rejectWithValue(error.response.data)
+            }
+          }
+        )
+
+        export const blogSect = createAsyncThunk(
+          "users/blog-section",
+          async (checkedList , thunkAPI) => {
+            const body = JSON.stringify({
+              checkedList,
+            });
+            console.log(checkedList)
+            console.log(body);
+            try {
+              const response = await fetch(
+                "http://127.0.0.1:8000/api/users/blog-section",
+                {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                  body,
+                }
+              );
+              console.log(response);
+              const data = await response.json();
+              console.log(data);
+              if (response.status === 200) {
+                return data;
+              } else {
+                Swal.fire({
+                  text: data,
+                  icon: "error",
+                });
+                return thunkAPI.rejectWithValue(data);
+              }
+            } catch (error) {
+              return thunkAPI.rejectWithValue(error.response.data);
+            }
+          }
+        );
+        
+
+        export const BlogSectionDetails = createAsyncThunk(
+          'user/blog-section',
+          async(email,thunkAPI)=>{
+            console.log(email)
+            const body = JSON.stringify({
+              email,
+            })
+            console.log(body)
+              try {
+                const res = await fetch("http://127.0.0.1:8000/api/users/blog-sections-details",{
+                  method: 'POST',
+                  headers:{
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  body,
+                })
+                const data = await res.json()
+                if (res.statusCode === 200){
+                  return data
+                }
+                else{
+                  return thunkAPI.rejectWithValue(data)
+                }
+              } catch (error) {
+                return thunkAPI.rejectWithValue(error.response.data)
+              }
+            }
+          )
+          export const deleteSections = createAsyncThunk(
+            'user/delete-Section',
+            async({content,email},thunkAPI)=>{
+              console.log(email)
+              const body = JSON.stringify({
+                content,
+                email,
+              })
+              console.log(body)
+                try {
+                  const res = await fetch("http://127.0.0.1:8000/api/users/delete-section",{
+                    method: 'POST',
+                    headers:{
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json'
+                    },
+                    body,
+                  })
+                  const data = await res.json()
+                  if (res.statusCode === 200){
+                    return data
+                  }
+                  else{
+                    return thunkAPI.rejectWithValue(data)
+                  }
+                } catch (error) {
+                  return thunkAPI.rejectWithValue(error.response.data)
+                }
+              }
+            )
+
+
+
+
+export const BlogDetails = createAsyncThunk(
+  'user/blog-Details',
+  async(email,thunkAPI)=>{
+    console.log(email)
+    const body = JSON.stringify({
+      email,
+    })
+    console.log(body)
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/users/blog-details",{
+          method: 'POST',
+          headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body,
+        })
+        const data = await res.json()
+        if (res.statusCode === 200){
+          return data
+        }
+        else{
+          return thunkAPI.rejectWithValue(data)
+        }
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data)
+      }
+    }
+  )
+
+
+  export const deleteBlog = createAsyncThunk(
+    'user/delete-Blog',
+    async({content,email},thunkAPI)=>{
+      console.log(email)
+      const body = JSON.stringify({
+        content,
+        email,
+      })
+      console.log(body)
+        try {
+          const res = await fetch("http://127.0.0.1:8000/api/users/delete-Blog",{
+            method: 'POST',
+            headers:{
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body,
+          })
+          const data = await res.json()
+          if (res.statusCode === 200){
+            return data
+          }
+          else{
+            return thunkAPI.rejectWithValue(data)
+          }
+        } catch (error) {
+          return thunkAPI.rejectWithValue(error.response.data)
+        }
+      }
+    )
+
+export const subscribedDetails = createAsyncThunk( 'user/delete-Blog',
+async(email,thunkAPI)=>{
+  console.log(email)
+  const body = JSON.stringify({
+    email,
+  })
+  console.log(body)
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/subscribed",{
+        method: 'POST',
+        headers:{
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body,
+      })
+      const data = await res.json()
+      if (res.statusCode === 200){
+        return data
+      }
+      else{
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+export const cancelPrime = createAsyncThunk( 'user/delete-Blog',
+async(email,thunkAPI)=>{
+  console.log(email)
+  const body = JSON.stringify({
+    email,
+  })
+  console.log(body)
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/cancel-sub",{
+        method: 'POST',
+        headers:{
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body,
+      })
+      const data = await res.json()
+      if (res.statusCode === 200){
+        return data
+      }
+      else{
+        return thunkAPI.rejectWithValue(data)
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
 
 
 
@@ -636,6 +1016,7 @@ const initialState = {
   authLoading: false,
   registered: false,
   content: "",
+  music :false
 };
 
 const userSlice = createSlice({
@@ -683,8 +1064,9 @@ const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(logout.fulfilled, (state) => {
-        state.isAuthenticated = false;
         state.loading = false;
+        state.isAuthenticated = false;
+        state.user = null;
       })
       .addCase(logout.rejected, (state) => {
         state.loading = false;
@@ -775,6 +1157,37 @@ const userSlice = createSlice({
       .addCase(ProfileEdit.rejected, (state) => {
         state.loading = false;
       })
+      .addCase(BlogSectionDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(BlogSectionDetails.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.user = actions.payload;
+      })
+      .addCase(BlogSectionDetails.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(blogSect.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(blogSect.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.user = actions.payload;
+      })
+      .addCase(blogSect.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(BlogDetails.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(BlogDetails.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.user = actions.payload;
+      })
+      .addCase(BlogDetails.rejected, (state) => {
+        state.loading = false;
+      })
+      //BlogDetails
   },
 });
 export const { resetRegistered } = userSlice.actions;

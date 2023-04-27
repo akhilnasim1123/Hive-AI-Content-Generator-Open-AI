@@ -13,7 +13,10 @@ urlpatterns = [
   path('search',views.Search),
   path('prime-search',views.PrimeSearch),
   path('otp',views.email_login),
+  path('email-verify',views.email_verify),
   path('otp-verify',views.otp_verify),
+  path('otp-email-verify',views.otp_emailVerify),
+
 
   path('blog-ideas-generator',views.BlogTopicIdeas),
   path('blog-generator',views.BlogTopic),
@@ -29,4 +32,14 @@ urlpatterns = [
   path('primium-subscription',views.registerSubscriptions),
   path('update-image',views.UpdateProfileImage),
   path('update-profile',views.UpdateProfile),
+  path('image-generator',views.ImageGenerate),
+  path('saved-ideas',views.savedIdeas),
+  path('delete-idea',views.deleteIdea),
+  path('blog-section',views.blogSect),
+  path('blog-sections-details',views.blogSectionDetails),
+  path('delete-section',views.deleteSection),
+  path('blog-details',views.blogDetails),
+  path('delete-Blog',views.deleteBlog),
+  path('subscribed',views.subscribedDetails),
+
 ]

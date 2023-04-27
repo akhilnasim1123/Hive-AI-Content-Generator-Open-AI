@@ -9,10 +9,12 @@ import { ShimmerSectionHeader } from "react-shimmer";
 import Shimmer from '../shimmer/shimmer';
 import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
+import copy from "copy-to-clipboard";  
+
 
 const BlogGeneratorPage = () => {
     const navigate = useNavigate()
-    const { loading } = useSelector(state => state.user)
+    const { loading,user } = useSelector(state => state.user)
     const [blogContent, setBlogContent] = useState('')
     const dispatch = useDispatch()
     const [formData, setFormData] = useState({
@@ -42,7 +44,8 @@ const BlogGeneratorPage = () => {
             toast.current.show({ severity: 'error', summary: 'Please enter more than 0.4 accuracy',life: 3000 })
         }
         else {
-            dispatch(BlogGenerator({ topic, keywords,words,accuracy })).then((result) => {
+            const email = user&&user.email
+            dispatch(BlogGenerator({ topic, keywords,words,accuracy,email })).then((result) => {
                 console.log(result)
                 // console.log(res)
                 setBlogContent(result.payload)
@@ -51,6 +54,17 @@ const BlogGeneratorPage = () => {
         }
 
     }
+
+    
+    const copyToClipboard = () => {
+        if(blogContent.length > 0) {
+            toast.current.show({ severity:'success', summary:'Csadfsdaf'
+        })
+    }
+ 
+        copy(blogContent);
+        toast.current.show({ severity:'success', summary: 'Copied to clipboard', life: 3000 })
+     }
 
     const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value || e.value})
@@ -111,11 +125,13 @@ const BlogGeneratorPage = () => {
                         {/* <h3 style={{ textDecoration: 'underline' }}>{blogContent ? blogContent[0] : ''}</h3> */}
                     </div>
                     <div className='generation-block' style={{width:'100%',display:'block'}}>
-
+                   <div className='d-flex justify-end'>
+                   <i class="fa-solid fa-clipboard mx-4" onClick={copyToClipboard} style={{width:'3%',fontSize:'23px',cursor:'pointer'}}></i>
+                   </div>
                             {/* {blogContent && blogContent.map((content, index) => {
                                 return <li key={index}>{content}</li>
                             })} */}
-<pre >                            {blogContent?blogContent:''}</pre>
+<p>                            {blogContent?blogContent:''}</p>
 
                     </div>
                 </div>

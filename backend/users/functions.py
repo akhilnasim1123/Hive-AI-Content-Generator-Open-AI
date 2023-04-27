@@ -41,7 +41,7 @@ def generateBlogTopic(topic, keywords,words,accuracy):
     words = int(words)
     response = openai.Completion.create(
         model="text-davinci-003",
-        prompt="generate a blog, based on the following topic: {}\nkeywords:{}\nrequirements:heading, max_tokens words\n*".format(topic, keywords),
+        prompt="write a blog, based on the following topic: {}\nkeywords:{}\nwords: {}\n*".format(topic, keywords,words),
         temperature=accuracy,
         max_tokens=words,
         top_p=1,
@@ -127,5 +127,16 @@ def CountChecker(user,wordCount):
 
 
 
+def ImageGenerator(topic,keywords,imageQuality):
+    response = openai.Image.create(
+                prompt="{}:keywords:{} ".format(topic,keywords),
+                n=1,
+                size=imageQuality
+    )
+    image_url = response['data'][0]['url']
+    print(image_url)
+    return image_url
+
+#256x256, 512x512, or 1024x1024
 
 

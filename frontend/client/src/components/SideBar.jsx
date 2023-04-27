@@ -14,13 +14,7 @@ const SideBar = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const onSubmitHandler = (e) => {
-    e.preventDefault()
-    dispatch(logout)
-    navigate('/login')
 
-    
-  }
   return (
     
     <div className="flex justify-content-center mt-4">
@@ -65,7 +59,7 @@ const SideBar = () => {
                 <i className='fa fa-sign-out sign-out-icon' aria-hidden="true"></i>
                 </div>
                 <div className='signout'>
-                <NavLink  className="user-logout" onClick={onSubmitHandler}>Log Out</NavLink>
+                <NavLink  className="user-logout" onClick={()=>dispatch(logout())}>Log Out</NavLink>
                 </div>
 
             </div>

@@ -6,7 +6,7 @@ from rest_framework import permissions, status
 
 from .helpers import sent_otp_to_mobile
 
-from .emails import sent_otp_via_email
+from .emails import sent_otp_for_emailVerify, sent_otp_via_email
 
 
 from .serializers import *
@@ -64,15 +64,25 @@ def email_login(request):
     user = UserAccount.objects.filter(email=email).exists()
     print(email)
     print(user)
-    if user == True:
+    if user:
+        message="Email Already, please try again"
+        return Response(message,status=status.HTTP_401_UNAUTHORIZED)
+    else:
         otp = sent_otp_via_email(email)
         print(otp)
         message = "Otp Sended"
         return Response(message,status=status.HTTP_200_OK)
-    else:
-        message="Invalid email, please try again"
-        return Response(message,status=status.HTTP_401_UNAUTHORIZED)
     
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def email_verify(request):
+    data = request.data
+    email = data['email']
+    otp = sent_otp_for_emailVerify(email)
+    print(otp)
+    message = "Otp Sended"
+    return Response(message,status=status.HTTP_200_OK)
 
 # @api_view(['GET', 'POST'])
 # @permission_classes([AllowAny])
@@ -91,26 +101,34 @@ def email_login(request):
     
 
 
-from django.contrib.auth.hashers import check_password
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def otp_verify(request):
     data = request.data
     otp = data['otp']
-    otp_verifying = OTP.objects.filter(otp=otp).exists()
+    email = data['email']
+    otp_verifying = OTP.objects.filter(otp=otp,email=email).exists()
     if otp_verifying:
         message="Verification Success"
-        otp_data = OTP.objects.get(otp=otp)
-        userdata = UserAccount.objects.get(email = otp_data.user.email)
-        user = UserPasswordsSerializer(userdata)
-        print(user)
-        pas = check_password(user.data,userdata.password)
-        print(pas)
-        context = {
-            'user': user.data,
-            'message':message,
-        }
-        return Response(context,status=status.HTTP_200_OK)
+        
+        return Response(message,status=status.HTTP_200_OK)
+    else:
+        message="Verification Failure"
+        return Response(message,status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def otp_emailVerify(request):
+    data = request.data
+    otp = data['otp']
+    email = data['email']
+    otp_verifying = OTP.objects.filter(otp=otp,email=email).exists()
+    if otp_verifying:
+        message="Verification Success"
+        user = UserAccount.objects.get(email=email)
+        user.email_verified = True
+        user.save()
+        return Response(message,status=status.HTTP_200_OK)
     else:
         message="Verification Failure"
         return Response(message,status=status.HTTP_401_UNAUTHORIZED)
@@ -232,6 +250,7 @@ def BlogTopicIdeas(request):
                 title=topic, keywords=keywords, user=user, wordCount=number_of_words)
             request.session['blog_topic'] = blog_topic
             blog = BlogIdeaSerializer(blog)
+            user.wordCount += number_of_words
             context = {'blog_topic': blog_topic, 'blog': blog.data}
             return Response(context, status=status.HTTP_200_OK)
         else:
@@ -252,7 +271,9 @@ def BlogTopic(request):
         
         user = UserAccount.objects.get(email=email)
         blog_topic = generateBlogTopic(topic, keywords, words, accuracy)
-        word_list = blog_topic[1].split()
+        word_list = blog_topic[0].split()
+        print(word_list)
+        print(word_list)
         number_of_words = len(word_list)
         wordCountChecker = CountChecker(user, number_of_words)
         if wordCountChecker:
@@ -263,6 +284,8 @@ def BlogTopic(request):
                 accuracy = accuracy,
                 user = user,
             )
+            user.wordCount += number_of_words
+            user.save()
             print(number_of_words)
             print(wordCountChecker)
             return Response(blog_topic, status=status.HTTP_200_OK)
@@ -297,6 +320,8 @@ def Story(request):
                 user=user,
                 story=story,
                 wordCount=number_of_words)
+            user.wordCount+=number_of_words
+            user.save()
             return Response(story, status=status.HTTP_200_OK)
         else:
             error = 'words count limit exceeded'
@@ -311,13 +336,17 @@ def BlogIdeasSave(request):
     email = data['email']
     keywords = data['keywords']
     title = data['topic']
+    unique_id = data['unique_id']
+    print(unique_id)
     user = UserAccount.objects.get(email=email)
-
+    blogIdea = BlogIdea.objects.get(unique_id=unique_id)
     blog = BlogIdeaSave.objects.create(
         title=title,
         blog_ideas=blogTopic,
         keywords=keywords,
         user=user,
+        idea = blogIdea,
+        idea_key = unique_id,
     )
     blog.save()
     blog = BlogIdeaSerializer(blog)
@@ -333,14 +362,16 @@ def generateBlogsSect(request):
     topic = data['topic']
     keywords = data['keywords']
     unique_id = data['unique_id']
-
+    print(headings)
     blog = BlogIdea.objects.get(
         title=topic, keywords=keywords, unique_id=unique_id)
     condition = True
     for heading in headings:
         section = generateBlogSections(topic, heading, keywords)
         word_list = section.split()
+        print(word_list)
         number_of_words = len(word_list)
+        print(number_of_words,'wordddddddddddd')
         wordCountChecker = CountChecker(blog.user, number_of_words)
         if wordCountChecker:
             blog_section = BlogSection.objects.create(
@@ -349,6 +380,10 @@ def generateBlogsSect(request):
                 blog=blog,
                 user=blog.user
             )
+            user = UserAccount.objects.get(email=blog.user.email)
+            print(user)
+            user.wordCount += number_of_words
+            user.save()
             blog_section.save()
         else:
             condition = False
@@ -414,11 +449,7 @@ def UserCollection(request):
     print(BlogIdea_wordCount,blogIdeaSaveWordCount,storyCountWords)
     
 
-    wordCount = + int(BlogIdea_wordCount) + int(blogIdeaSaveWordCount) + int(storyCountWords)
-    print(wordCount)
 
-    user.wordCount = wordCount
-    user.save()
     context = {
         'blogIdeas': blogIdeas.data,
         'blogSection': blogSection.data,
@@ -426,7 +457,6 @@ def UserCollection(request):
         'blogIdeasCount': blogIdeasCount,
         'blogSectionCount': blogSectionCount,
         'blogIdeaSaveCount': blogIdeaSaveCount,
-        'total_words': wordCount,
         'story': story.data,
         'storyCount': storyCount,
 
@@ -588,11 +618,192 @@ def UpdateProfile(request):
 
 
 
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def ImageGenerate(request):
+    data = request.data
+    topic = data['topic']
+    keywords = data['keywords']
+    imageQuality = data['imageQuality']
+    print(topic,keywords,imageQuality)
+    imageUrl = ImageGenerator(topic,keywords,imageQuality)
+    print(imageUrl)
+    return Response(imageUrl,status=status.HTTP_200_OK)
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def savedIdeas(request):
+    data = request.data
+    email = data['email']
+    user = UserAccount.objects.get(email=email)
+    ideas = BlogIdeaSave.objects.filter(user=user)
+    ideas = BlogIdeaSaveSerializer(ideas,many=True)
+    return Response(ideas.data,status=status.HTTP_200_OK)
 
 
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def deleteIdea(request):
+    data = request.data
+    idea = data['content']
+    email = data['email']
+    user = UserAccount.objects.get(email=email)
+    ideas = BlogIdeaSave.objects.get(user=user,blog_ideas=idea)
+    ideas.delete()
+    allIdeas = BlogIdeaSave.objects.filter(user=user)
+    allIdeas = BlogIdeaSaveSerializer(allIdeas,many=True)
+    return Response(allIdeas.data,status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def blogSect(request):
+    data = request.data
+    contents = []
+    headings = data['checkedList']
+    print(headings[0]['title'],'first')
+    condition = True
+    for heading in headings:
+        print(heading['idea_key'])
+        blog = BlogIdea.objects.get(
+        title=heading['title'], keywords=heading['keywords'], unique_id=heading['idea_key'])
+        section = generateBlogSections(heading['blog_ideas'], heading, heading['keywords'])
+        print(section)
+        word_list = section.split()
+        number_of_words = len(word_list)
+        wordCountChecker = CountChecker(blog.user, number_of_words)
+        print(wordCountChecker)
+        if wordCountChecker:
+            blog_section = BlogSection.objects.create(
+                title=heading['blog_ideas'],
+                body=section,
+                blog=blog,
+                user=blog.user
+            )
+            blog_section.save()
+            user = UserAccount.objects.get(email=blog.user.email)
+            user.wordCount += number_of_words
+            user.save()
+        else:
+            condition = False
+            return condition
+        if condition:
+            sections = BlogSection.objects.filter(
+                title=heading['blog_ideas'],
+                body=section,
+                blog=blog,
+                user=blog.user
+            )
+            sections = BlogSectionSerializer(sections, many=True)
+            contents.append(sections.data)
+    if condition:
+        print(contents)
+        return Response(contents, status=status.HTTP_200_OK)
+    else:
+        return Response(blog.user.wordCount, status='words count limit exceeded')
 
     
 
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def blogSectionDetails(request):
+    data = request.data
+    email = data['email']
+    user = UserAccount.objects.get(email=email)
+    section = BlogSection.objects.filter(user=user)
+    section = BlogSectionSerializer(section,many=True)
+    return Response(section.data,status=status.HTTP_200_OK)
 
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def deleteSection(request):
+    data = request.data
+    body = data['content']
+    email = data['email']
+    user = UserAccount.objects.get(email=email)
+    section = BlogSection.objects.get(user=user,body=body)
+    section.delete()
+    all_section = BlogSection.objects.filter(user=user)
+    all_section = BlogSectionSerializer(all_section,many=True)
+    return Response(all_section.data,status=status.HTTP_200_OK)
+
+    
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def blogDetails(request):
+    data = request.data
+    email = data['email']
+    user = UserAccount.objects.get(email=email)
+    blog = BlogCollection.objects.filter(user=user)
+    print(blog)
+    blog = BlogCollectionSerializer(blog,many=True)
+    return Response(blog.data,status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def deleteBlog(request):
+    data = request.data
+    blog = data['content']
+    email = data['email']
+    user = UserAccount.objects.get(email=email)
+    blog = BlogCollection.objects.get(user=user,blog=blog)
+    blog.delete()
+    all_blog = BlogSection.objects.filter(user=user)
+    all_blog = BlogSectionSerializer(all_blog,many=True)
+    return Response(all_blog.data,status=status.HTTP_200_OK)
 
         
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def subscribedDetails(request):
+    data = request.data
+    email = data['email']
+    print(email)
+    user = UserAccount.objects.get(email=email)
+    plans = PremiumSubscription.objects.filter(user=user)
+    plan = CurrentSub.objects.get(user=user)
+    planData = Prime.objects.get(prime=plan.premiumPlan.plan.prime)
+    print(planData)
+    plans = PremiumSubscriptionSerializer(plans,many=True)
+    planData = PrimeSerializer(planData)
+    plan= CurrentSubSerializer(plan)
+    print(plan.data,'plans')
+    context = {
+        'subscribed':plan.data,
+        'plan':planData.data,
+        'plans':plans.data
+    }
+    return Response(context,status=status.HTTP_200_OK)
+
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def cancelSubscription(request):
+    data = request.data
+    email = data['email']
+    user = UserAccount.objects.get(email=email)
+    plan = CurrentSub.objects.get(user=user)
+    subPlans= PremiumSubscription.objects.get(unique_id=plan.premiumPlan.unique_id)
+    subPlans.status = False
+    subPlans.save()
+    plan.delete()
+    user.premium = False
+    user.save()
+
+    plansDetails = PremiumSubscription.objects.filter(user=user)
+    plansDetails = PremiumSubscriptionSerializer(plansDetails,many=True)
+
+    planData = Prime.objects.get(prime=plan.premiumPlan.plan.prime)
+    planData = PrimeSerializer(planData)
+
+    plan = CurrentSubSerializer(plan)
+    context = {
+        'subscribed':plan.data,
+        'plan':planData.data,
+        'plans':plansDetails.data
+    }
+    return Response(context,status=status.HTTP_200_OK)

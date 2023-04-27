@@ -71,7 +71,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User    
-        fields = ('first_name', 'last_name', 'phone_number','email','is_active','is_superuser','image_url','wordCount','premium','subscriptionType','monthlyCount')
+        fields = ('first_name', 'last_name', 'phone_number','email','is_active','is_superuser','image_url','wordCount','premium','subscriptionType','monthlyCount','email_verified')
 
 # class ContentSerializer(serializers.)
 
@@ -83,12 +83,17 @@ class BlogIdeaSerializer(serializers.ModelSerializer):
 class BlogSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogSection   
-        fields = ('title','body')
+        fields = ('title','body','date_created')
+
+class BlogCollectionSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = BlogCollection
+      fields = ('title','blog','keywords','accuracy','wordCount','unique_id')
 
 class BlogIdeaSaveSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogIdeaSave  
-        fields = ('title','blog_ideas','keywords','wordCount','unique_id')
+        fields = ('title','blog_ideas','keywords','wordCount','unique_id','idea','idea_key')
 
 
 class StorySerializer(serializers.ModelSerializer):
@@ -110,3 +115,12 @@ class UserPasswordsSerializer(serializers.ModelSerializer):
    class Meta:
       model = UserAccount
       fields = ('password',)
+
+class PremiumSubscriptionSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = PremiumSubscription
+      fields = "__all__"
+class CurrentSubSerializer(serializers.ModelSerializer):
+   class Meta:
+      model = CurrentSub
+      fields = "__all__"

@@ -97,11 +97,11 @@ export default function LoginPage() {
                         render={({ field, fieldState }) => (
                             <>
                                 <span className="p-float-label">
-                                    <InputText id={field.name} name='email' value={email} className='form-inputs' onChange={onchange} maxlength="16" />
+                                    <InputText id={field.name} name='email' value={email} className='form-inputs text-white' onChange={onchange}  />
                                     <label htmlFor={field.name} style={{ color: 'rgb(59 255 225)' }}>Email Address</label>
                                 </span>
                                 <span className="p-float-label mt-4" style={{ color: 'rgb(59 255 225)', backgroundColor: 'rgb(26 32 43)' }}>
-                                    <Password style={{ color: 'rgb(59 255 225)', backgroundColor: 'rgb(26 32 43)' }} inputId="password" name='password' className='form-inputs' value={password} onChange={onchange} toggleMask />
+                                    <Password style={{ color: 'rgb(59 255 225)', backgroundColor: 'rgb(26 32 43)' }} inputId="password" name='password' className='form-inputs text-white' value={password} onChange={onchange} toggleMask />
                                     <label htmlFor="password" style={{ color: 'rgb(59 255 225)' }}>Password</label>
                                 </span>
                                 {getFormErrorMessage(field.name)}

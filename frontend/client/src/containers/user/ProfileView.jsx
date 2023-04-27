@@ -66,59 +66,53 @@ const ProfileView = () => {
 
     const navigate = useNavigate()
     const addphoto = (files, email) => {
-        console.log(email);
-        console.log(files);
-        console.log(process.env.REACT_APP_CloudImageUrl)
-        setPhoto(files);
-        setPhoto(user.image_urld);
-        console.log("ghdfhdfhdfhgvghd");
+        console.log(files)
+        setPhoto(files)
+        console.log(files.objectURL);
         const data = new FormData();
+        console.log(photo)
         data.append("file", photo);
         console.log(data)
         data.append("upload_preset", process.env.REACT_APP_Preset);
         data.append("cloud_name", process.env.REACT_APP_CloudName);
         console.log(process.env.REACT_APP_CloudImageUrl)
         console.log(data)
-        fetch(`https://api.cloudinary.com/v1_1/dgptf7y5v/image/upload`, {
+        fetch(`${process.env.REACT_APP_CloudImageUrl}`, {
             method: "post",
             body: data,
         })
-            .then((res) => {
-                console.log(res)
-                res.json()
-            })
-            .then((result) => {
-                console.log(result)
-                console.log(result.url);
-                const url = result.url;
-                console.log(url);
-                console.log(email);
-                let obj = {
-                    url: data.url,
-                    email,
-                };
-                dispatchEvent(changeUserImage(obj))
-                console.log('uploaded')
-            })
-            .then((res) => {
-
-            })
-            .catch((err) => console.log(err));
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.url);
+          const url = data.url;
+          console.log(url);
+          console.log(email);
+          let obj = {
+            url: data.url,
+            email,
+          };
+          dispatch(changeUserImage(obj));
+        })
+        .then((res) => {
+          navigate("http://localhost:3000/home/dashboard/profile-view");
+        })
+        .catch((err) => console.log(err));
     };
 
-    console.log(img)
+    console.log(photo)
 
     return (
         <Layout>
 
             <div className='container mx-5'>
                 <div className='card border-danger mt-5 mx-5' style={{ height: '450px', width: '75%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div className='' style={{ width: '40%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <div className='mx-3' style={{ width: '50%' }} >
-                            <img className='profile-img' style={{ width: '50%' }} src={user && user.image_url ? user.image_url : require('./media/pngfind.com-circle-shape-png-5453533.png')} alt="Profile pic" />
+                    <div className='' style={{ width: '40%', display: 'flex', flexDirection: 'column', alignItems: 'center',justifyContent:'center' }}>
+                        <div className='mx-3 d-flex justify-center' style={{ width: '50%' }} >
+                            <img className='profile-img ' style={{ width: '50%',borderRadius:'25px' }} src={user && user.image_url ? user.image_url : require('./media/pngfind.com-circle-shape-png-5453533.png')} alt="Profile pic" />
                         </div>
 
-                        <div style={{ width: '50%' }}>
+                        <div className='d-flex justify-center' style={{ width: '50%' }}>
+                        <div className='' >
                             <FileUpload
                                 mode="basic"
                                 name="demo[]"
@@ -130,7 +124,7 @@ const ProfileView = () => {
                                 className='mt-5'
                                 style={{ width: '10%' }} />
                         </div>
-
+                        </div>
                     </div>
                     <form onSubmit={ onSubmitHandler } action="" className='container ' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
                         <Toast ref={toast} />

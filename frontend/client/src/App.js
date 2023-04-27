@@ -28,6 +28,11 @@ import AdvancedLevel from "./containers/admin/AdvancedLevel";
 import FreeTrailPage from "./containers/admin/FreeTrail";
 import OtpEmail from "./containers/user/OtpEmail";
 import ProfileView from "./containers/user/ProfileView";
+import ChatGPT from "./containers/user/ChatGPT";
+import ImageGenerator from "./containers/user/ImageGenerator";
+import SavedIdeas from "./containers/user/SavedIdeas";
+import BlogSection from "./containers/user/BlogSection";
+import Blog from "./containers/user/Blog";
 
 const App = () => {
   const { isAuthenticated, authLoading } = useSelector((state) => state.user);
@@ -54,7 +59,11 @@ const App = () => {
         <Route path="/home/dashboard" element={<UserDashboard />} />
         <Route path="/home/dashboard/billing-page" element={<BillingPage />} />
         <Route path="/home/dashboard/profile-view" element={<ProfileView />} />
-
+        <Route path="/chat" element={<ChatGPT />} />
+        <Route path="/image-generator" element={<ImageGenerator />} />
+        <Route path="/home/dashboard/profile-view/saved" element={<SavedIdeas />} />
+        <Route path="/home/dashboard/profile-view/Blog-Section" element={<BlogSection />} />
+        <Route path="/home/dashboard/profile-view/Blog-details" element={<Blog />} />
         {/* admin side routes */}
 
         <Route path="/admin" element={<AdminLogin />} />

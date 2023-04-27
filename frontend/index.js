@@ -7,8 +7,8 @@ require('dotenv').config();
 
 const registerRoute = require('./routes/auth/register');
 const loginRoute = require('./routes/auth/login');
-const meRouter = require('./routes/auth/me')
 const logoutRoute = require('./routes/auth/logout');
+const meRouter = require('./routes/auth/me')
 const verifyRoute = require('./routes/auth/verify');
 
 const app = express();
@@ -18,9 +18,10 @@ app.use(cookieParser());
 
 app.use(registerRoute);
 app.use(loginRoute);
+app.use(logoutRoute);
 app.use(meRouter);
 app.use(verifyRoute);
-app.use(logoutRoute);
+
 app.use(express.static('client/build'));
 app.get('*', (req, res) => {
 	return res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));

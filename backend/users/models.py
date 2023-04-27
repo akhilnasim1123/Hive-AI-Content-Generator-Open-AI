@@ -84,6 +84,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
   subscriptionType = models.CharField(default ='Free Trail',max_length=150,blank=True,null=True)
   monthlyCount = models.IntegerField(default=20000)
   email_otp = models.IntegerField(blank=True,null=True)
+  email_verified = models.BooleanField(default=False,null=True)
   approve = models.BooleanField(default=True,null=True)
 
   objects = UserAccountManager()
@@ -111,7 +112,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
 class BlogCollection(models.Model):
   title = models.CharField(max_length=255,null=True)
-  blog = models.CharField(blank=True,max_length=300,null=True)
+  blog = models.CharField(blank=True,max_length=2000,null=True)
   keywords = models.CharField(blank=True,max_length=300,null=True)
   audience = models.CharField(blank=True,max_length=300,null=True)
   accuracy = models.IntegerField(blank=True,null=True)
@@ -202,7 +203,8 @@ class BlogIdeaSave(models.Model):
   audience                = models.CharField(blank=True,max_length=300,null=True)
   wordCount               = models.IntegerField(default=0)
   user                    = models.ForeignKey(UserAccount,on_delete=models.CASCADE)
-
+  idea                    = models.ForeignKey(BlogIdea, on_delete=models.CASCADE)
+  idea_key                = models.CharField(max_length=200)
   unique_id               = models.CharField(null=True,max_length=100,blank=True)
   slug                    = models.SlugField(max_length=500,unique=True,blank=True,null=True)
   date_created            = models.DateTimeField(null=True,blank=True)
@@ -282,14 +284,25 @@ class PremiumSubscription(models.Model):
   created_at               = models.DateTimeField(null=True, blank=True)
   unique_id                = models.CharField(null=True,max_length=100,blank=True)
   slug                     = models.SlugField(max_length=500,unique=True,blank=True,null=True)
+  planName                 = models.CharField(max_length=200,blank=True,null=True)
+  month                    = models.IntegerField(null=True, blank=True)
+  status                   = models.BooleanField(null=True, blank=True)
+  words                    = models.IntegerField(null=True, blank=True)
+
 
   def __str__(self):
-    return self.user
+    return self.user.first_name
   def save(self, *args, **kwargs):
     if self.created_at is None:
       self.created_at      = timezone.localtime(timezone.now())
     if self.unique_id is None:
       self.unique_id       = str(uuid.uuid4()).split('-')[4]
+    if self.planName is None:
+      self.planName = self.plan.prime
+    if self.month is None:
+      self.month = self.plan.month
+    if self.words is None:
+      self.words = self.plan.words
     self.slug = slugify('{} {}'.format(self.plan,self.payment_id))
     super(PremiumSubscription, self).save(*args, **kwargs)    
 
@@ -311,7 +324,8 @@ class CurrentSub(models.Model):
 
 class OTP(models.Model):
   otp = models.IntegerField(blank=True, null=True)
-  user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+  # user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+  email = models.EmailField(blank=True, null=True)
 
 
 

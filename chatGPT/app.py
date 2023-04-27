@@ -31,9 +31,11 @@ def home():
 @app.get("/api/response")
 async def get_response(message: str, request: Request):
     chat_log = request.session.get('chat_log')
-    if(chat_log == None):
-        request.session['chat_log'] = gpt3_logs('', '', chat_log)
-        chat_log = request.session.get('chat_log')
+    print(chat_log,'chaaaat')
+    print(message,'asdfadsfsdfdsf')
+    # if(chat_log == None):
+    #     request.session['chat_log'] = gpt3_logs('', '', chat_log)
+    #     chat_log = request.session.get('chat_log')
     response =  main(message,chat_log)
     if(len(response)!=0):
         request.session['chat_log'] = gpt3_logs(message, response, chat_log)
@@ -42,4 +44,4 @@ async def get_response(message: str, request: Request):
         return "Oops! Something went wrong"
 
 if __name__ == "__main__":
-    uvicorn.run("app:app",port = 8000,reload=True)
+    uvicorn.run("app:app",port = 8001,reload=True)

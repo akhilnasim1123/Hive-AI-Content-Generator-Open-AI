@@ -56,7 +56,7 @@ const GenerationPage = () => {
 
     const contentSave = (event, content, email) => {
         console.log(content, 'content')
-        dispatch(saveBlogIdea({ content, email, topic, keywords })).then((result) => {
+        dispatch(saveBlogIdea({ content, email, topic, keywords,unique_id })).then((result) => {
             console.log(result)
             toast.current.show({ severity: 'success', summary: 'Saved', life: 3000 })
         });
@@ -82,12 +82,7 @@ const GenerationPage = () => {
     }
     const selectContent = (content) => {     
         if(!checkedList.find(id => id === content)){
-            setCheckedList([ ... checkedList, content]); // adds a student id
-             // let data = studentID; //This can go
-             // data.push(content); //This can go 
-             console.log("Hi I'm True")
-             console.log(content)
-
+            setCheckedList([ ...checkedList, content]);
           }  
            else {
             setCheckedList(checkedList.filter(studentId => studentId !== content)) 
