@@ -76,10 +76,11 @@ const BlogGeneratorPage = () => {
     if (loading) return <Shimmer/>
     return (
         <Layout>
-            <div className='mt-4'>
+           <div className='min-h-screen'>
+           <div className='mt-4'>
                 <h3><b>Enter Your Blog ideas Below to <br /> Generate Blog Topic <br /> Suggestions</b></h3>
             </div>
-            <form onSubmit={onSubmitHandler} className='blog-form'>
+            <form onSubmit={onSubmitHandler} className='blog-form '>
             <Toast ref={toast} />
                 <div className='row'>
                     <div className='mt-5 col-lg-3 col-md-6'>
@@ -136,6 +137,7 @@ const BlogGeneratorPage = () => {
                     </div>
                 </div>
             </div>
+           </div>
         </Layout>
     )
 }

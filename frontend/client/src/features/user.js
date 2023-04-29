@@ -1187,7 +1187,17 @@ const userSlice = createSlice({
       .addCase(BlogDetails.rejected, (state) => {
         state.loading = false;
       })
-      //BlogDetails
+      .addCase(ImageGeneratorFun.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(ImageGeneratorFun.fulfilled, (state, actions) => {
+        state.loading = false;
+        state.user = actions.payload;
+      })
+      .addCase(ImageGeneratorFun.rejected, (state) => {
+        state.loading = false;
+      })
+      //ImageGeneratorFun
   },
 });
 export const { resetRegistered } = userSlice.actions;

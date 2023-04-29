@@ -42,7 +42,7 @@ const Banner = ()=>{
                 </div>
             </div>
             <div className='banner-img'>
-                <img src={require('./media/IMG_20230320_201820_983-removebg-preview.png')} alt="banner img" />
+                <img src={require('./media/IMG_20230320_201820_983-removebg-preview.png')} alt="banner img" style={{width:'100%'}}/>
             </div>
             </div>
             </div>
@@ -296,7 +296,7 @@ const LandingPage = () => {
     const {user} = useSelector(state=>state.user)
   return (
     <div style={{fontFamily:'Kadwa'}}>
-        <div className='landing'>
+        <div className='landing min-h-screen'>
         <Navbar/>
             <Banner/>
             <OpenAi/>

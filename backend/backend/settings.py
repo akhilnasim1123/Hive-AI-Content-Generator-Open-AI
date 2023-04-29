@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from datetime import timedelta
+import datetime
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -149,7 +150,7 @@ REST_FRAMEWORK = {
 
 }
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
 }
 AUTH_USER_MODEL = 'users.UserAccount'
 CORS_ALLOW_ALL_ORIGINS = True
@@ -169,3 +170,14 @@ EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 
 
 OPENAI_API_KEYS=os.environ.get('OPENAI_API_KEY')
+# JWT_AUTH = {
+#     # how long the original token is valid for
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+
+#     # allow refreshing of tokens
+#     'JWT_ALLOW_REFRESH': True,
+
+#     # this is the maximum time AFTER the token was issued that
+#     # it can be refreshed.  exprired tokens can't be refreshed.
+#     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+# }

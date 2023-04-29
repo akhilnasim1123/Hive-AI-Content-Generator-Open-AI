@@ -5,6 +5,7 @@ import { BlogDetails, deleteBlog } from '../../features/user'
 import { Sidebar } from 'primereact/sidebar'
 import { useNavigate } from 'react-router-dom'
 import Shimmer from '../shimmer/shimmer'
+import Swal from 'sweetalert2'
 
 const Blog = () => {
     const {user,loading}=useSelector(state=>state.user)
@@ -35,9 +36,31 @@ const visibleContentHandler = (event,content)=>{
         setVisibleContent(false)
     }
 const deleteBlogDet=(email,content)=>{
-    dispatch(deleteBlog({content,email})).then(result=>{
-        setBlog(result.payload)
+
+
+
+    new Swal({
+        title: 'Are you sure?',
+        text: "It will permanently deleted !",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(result=> {
+        if (result.isConfirmed){
+            dispatch(deleteBlog({content,email})).then(result=>{
+                setBlog(result.payload)
+            }).then(result=>{
+                new Swal(
+                    'Deleted!',
+                    'Your data has been deleted.',
+                    'success'
+                    );
     })
+    }
+
+      })
 }
 console.log(blog)
 

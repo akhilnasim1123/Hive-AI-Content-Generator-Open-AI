@@ -6,6 +6,7 @@ import { Sidebar } from 'primereact/sidebar'
 import { Toast } from 'primereact/toast'
 import copy from "copy-to-clipboard";  
 import Shimmer from '../shimmer/shimmer'
+import Swal from 'sweetalert2'
 
 const BlogSection = () => {
     const {user,loading}=useSelector(state=>state.user)
@@ -37,9 +38,32 @@ const visibleContentHandler = (event,content)=>{
         setVisibleContent(false)
     }
 const deleteSection=(email,content)=>{
-    dispatch(deleteSections({content,email})).then(result=>{
-        setBlogSection(result.payload)
+
+
+
+    new Swal({
+        title: 'Are you sure?',
+        text: "It will permanently deleted !",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(result=> {
+        if (result.isConfirmed){
+            dispatch(deleteSections({content,email})).then(result=>{
+                setBlogSection(result.payload)
+            }).then(result=>{
+                new Swal(
+                    'Deleted!',
+                    'Your data has been deleted.',
+                    'success'
+                    );
     })
+    }
+
+      })
+
 }
 
 const copyToClipboard = () => {

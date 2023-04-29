@@ -7,7 +7,7 @@ const Layout = ({title,content,children}) =>(
     <title>{title}</title>
         <meta name='description' content={content}/>
     </Helmet>
-    <div className='layout'>  
+    <div className='layout min-h-screen'>  
     <div className='layout-sidebar'>
         <SideBar/>
         </div>   

@@ -7,6 +7,7 @@ import { Toast } from 'primereact/toast'
 import { Sidebar } from 'primereact/sidebar'
 import Shimmer from '../shimmer/shimmer'
 import copy from "copy-to-clipboard";  
+import Swal from 'sweetalert2'
 
 
 
@@ -28,9 +29,31 @@ const SavedIdeas = () => {
     },[user])
 
     const deleteContent = (event,content,email) => {
-        dispatch(deleteIdea({content,email})).then(result => {
-            setCollection(result.payload)
+        new Swal({
+            title: 'Are you sure?',
+            text: "It will permanently deleted !",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then(result=> {
+            if (result.isConfirmed){
+                dispatch(deleteIdea({content,email})).then(result => {
+                    setCollection(result.payload)
+                }).then(result=>{
+                    new Swal(
+                        'Deleted!',
+                        'Your data has been deleted.',
+                        'success'
+                        );
         })
+        }
+   
+          })
+
+
+
     }
     const toast = useRef()
 
@@ -99,7 +122,8 @@ const SavedIdeas = () => {
                                 <tr>
                                     <td>{data.title}</td>
                                     <td>{data.blog_ideas}</td>
-                                    <td><button className='btn border-danger' onClick={(e)=>deleteContent(e.target.value,data.blog_ideas,user.email)}>Delete</button></td>
+                                    <td>
+                                        <button className='btn border-danger' onClick={(e)=>deleteContent(e.target.value,data.blog_ideas,user.email)}>Delete</button></td>
                                     
                                     <td>
                                                 <Checkbox checked={checkedList.includes(data)} key={index} value={data} onChange={(e)=>selectContent(e.target.value)} ></Checkbox>

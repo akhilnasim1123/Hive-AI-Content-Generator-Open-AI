@@ -627,6 +627,7 @@ def ImageGenerate(request):
     imageQuality = data['imageQuality']
     print(topic,keywords,imageQuality)
     imageUrl = ImageGenerator(topic,keywords,imageQuality)
+    print('heeeeeeeeeeeeeeeey')
     print(imageUrl)
     return Response(imageUrl,status=status.HTTP_200_OK)
 

@@ -129,7 +129,7 @@ def CountChecker(user,wordCount):
 
 def ImageGenerator(topic,keywords,imageQuality):
     response = openai.Image.create(
-                prompt="{}:keywords:{} ".format(topic,keywords),
+                prompt="{}. keywords:{}. full view,keep originality".format(topic,keywords),
                 n=1,
                 size=imageQuality
     )
