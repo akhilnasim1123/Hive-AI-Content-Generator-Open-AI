@@ -34,14 +34,10 @@ export const register = createAsyncThunk(
         });
         return data;
       } else {
-        console.log(res.statusText);
-        console.log(res);
         Swal.fire({
           text: res.statusText,
           icon: "error",
         });
-        console.log(res.statusText);
-        console.log(res);
         return thunkAPI.rejectWithValue(data);
       }
     } catch (err) {
@@ -49,8 +45,6 @@ export const register = createAsyncThunk(
         text: err.response.data,
         icon: "error",
       });
-      console.log(err);
-      console.log(err.response.data);
       return thunkAPI.rejectWithValue(err.response.data);
     }
   }
@@ -68,10 +62,6 @@ const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
     const data = await res.json();
 
     if (res.status === 200) {
-      // Swal.fire({
-      // 	text:res.statusText,
-      // 	icon:'success'
-      // })
       return data;
     } else {
       return thunkAPI.rejectWithValue(data);
@@ -119,7 +109,6 @@ export const login = createAsyncThunk(
         });
 
         const data = await res.json();
-        console.log(data);
         if (res.status === 200) {
           const { dispatch } = thunkAPI;
           console.log(res.status);
@@ -179,7 +168,7 @@ export const contentGenerator = createAsyncThunk(
     });
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/users/blog-ideas-generator`,
+        `${process.env.REACT_APP_API_URL}/api/users/blog-ideas-generator`,
         {
           method: "POST",
           headers: {
@@ -190,7 +179,6 @@ export const contentGenerator = createAsyncThunk(
         }
       );
       const data = await response.json();
-      console.log(data);
       if (response.status === 200) {
         return data;
       } else {
@@ -217,7 +205,7 @@ export const BlogGenerator = createAsyncThunk(
     });
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/users/blog-generator`,
+        `${process.env.REACT_APP_API_URL}/api/users/blog-generator`,
         {
           method: "POST",
           headers: {
@@ -228,7 +216,6 @@ export const BlogGenerator = createAsyncThunk(
         }
       );
       const data = await response.json();
-      console.log(data);
       if (response.status === 200) {
         return data;
       } else {
@@ -256,7 +243,7 @@ export const StoryGenerator = createAsyncThunk(
     });
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/users/story-generator`,
+        `${process.env.REACT_APP_API_URL}/api/users/story-generator`,
         {
           method: "POST",
           headers: {
@@ -267,7 +254,6 @@ export const StoryGenerator = createAsyncThunk(
         }
       );
       const data = await response.json();
-      console.log(data);
       if (response.status === 200) {
         return data;
       } else {
@@ -322,10 +308,10 @@ export const saveBlogIdea = createAsyncThunk(
       keywords,
       unique_id,
     });
-    console.log(body);
+
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/users/save-blog",
+        `${process.env.REACT_APP_API_URL}/api/users/save-blog`,
         {
           method: "POST",
           headers: {
@@ -335,9 +321,7 @@ export const saveBlogIdea = createAsyncThunk(
           body,
         }
       );
-      console.log(response);
       const data = await response.json();
-      console.log(data);
       if (response.status === 200) {
         return data;
       } else {
@@ -358,10 +342,10 @@ export const blogSections = createAsyncThunk(
       keywords,
       unique_id,
     });
-    console.log(body);
+
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/api/users/generate-blog-sections",
+        `${process.env.REACT_APP_API_URL}/api/users/generate-blog-sections`,
         {
           method: "POST",
           headers: {
@@ -371,9 +355,7 @@ export const blogSections = createAsyncThunk(
           body,
         }
       );
-      console.log(response);
       const data = await response.json();
-      console.log(data);
       if (response.status === 200) {
         return data;
       } else {
@@ -392,14 +374,12 @@ export const blogSections = createAsyncThunk(
 export const userCollection = createAsyncThunk(
   "users/collection",
   async (res,thunkAPI) => {
-    console.log(res,'sdfsadfsdaf')
     const email = res;
     const body = JSON.stringify({
       email,
     })
-    console.log(email,'emailllllllllllllllllllllllllllll')
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/user-collection",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/user-collection`,{
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -428,7 +408,7 @@ export const premiumSubscription = createAsyncThunk (
       key
     })
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/primium-subscription",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/primium-subscription`,{
         method: 'POST',
         headers:{
           Accept: 'application/json',
@@ -486,7 +466,7 @@ export const otpLogin = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/otp",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/otp`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -500,8 +480,6 @@ export const otpLogin = createAsyncThunk(
         return data
       }
       else{
-        console.log(res)
-        console.log(data)
         return thunkAPI.rejectWithValue(data)
       }
     } catch (error) {
@@ -516,7 +494,7 @@ export const emailVerify = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/email-verify",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/email-verify`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -530,8 +508,6 @@ export const emailVerify = createAsyncThunk(
         return data
       }
       else{
-        console.log(res)
-        console.log(data)
         return thunkAPI.rejectWithValue(data)
       }
     } catch (error) {
@@ -547,7 +523,7 @@ export const otpVerification = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/otp-verify",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/otp-verify`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -559,12 +535,9 @@ export const otpVerification = createAsyncThunk(
       const data = res.json()
       
       if (res.status === 200){
-        console.log(data)
         return data
       }
       else{
-        console.log(res)
-        console.log(data)
         Swal.fire({
           text: 'Invalid otp, Please enter a valid OTP',
           icon: "error",
@@ -585,7 +558,7 @@ export const otpEmailVerification = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/otp-email-verify",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/otp-email-verify`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -597,12 +570,9 @@ export const otpEmailVerification = createAsyncThunk(
       const data = res.json()
       
       if (res.status === 200){
-        console.log(data)
         return data
       }
       else{
-        console.log(res)
-        console.log(data)
         Swal.fire({
           text: 'Invalid otp, Please enter a valid OTP',
           icon: "error",
@@ -620,8 +590,6 @@ export const otpEmailVerification = createAsyncThunk(
 export const changeUserImage = createAsyncThunk(
   "user",
   async (obj, thunkAPI) => {
-    console.log("dfgsadhkjhdfkahkdjsfaksdhfkashdfk");
-    console.log(obj);
     const { url, email } = obj;
     // console.log(dataUrl,'this is data url ofofofofo')
     console.log(email, "this is email.........");
@@ -632,7 +600,7 @@ export const changeUserImage = createAsyncThunk(
     // console.log(dataUrl,'this is data url ofofofofo')
     // console.log(email,'emaaaaiillllllllll')
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/update-image", {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/update-image`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -669,7 +637,7 @@ export const ProfileEdit = createAsyncThunk(
     })
     console.log(body)
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/users/update-profile",{
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/update-profile`,{
           method: 'POST',
           headers:{
             Accept: 'application/json',
@@ -699,7 +667,7 @@ export const ProfileEdit = createAsyncThunk(
       })
       console.log(body)
         try {
-          const res = await fetch("http://127.0.0.1:8000/api/users/image-generator",{
+          const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/image-generator`,{
             method: 'POST',
             headers:{
               Accept: 'application/json',
@@ -731,7 +699,7 @@ export const ProfileEdit = createAsyncThunk(
         })
         console.log(body)
           try {
-            const res = await fetch("http://127.0.0.1:8000/api/users/saved-ideas",{
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/saved-ideas`,{
               method: 'POST',
               headers:{
                 Accept: 'application/json',
@@ -763,7 +731,7 @@ export const ProfileEdit = createAsyncThunk(
           })
           console.log(body)
             try {
-              const res = await fetch("http://127.0.0.1:8000/api/users/delete-idea",{
+              const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/delete-idea`,{
                 method: 'POST',
                 headers:{
                   Accept: 'application/json',
@@ -791,10 +759,10 @@ export const ProfileEdit = createAsyncThunk(
               checkedList,
             });
             console.log(checkedList)
-            console.log(body);
+        
             try {
               const response = await fetch(
-                "http://127.0.0.1:8000/api/users/blog-section",
+                `${process.env.REACT_APP_API_URL}/api/users/blog-section`,
                 {
                   method: "POST",
                   headers: {
@@ -804,9 +772,9 @@ export const ProfileEdit = createAsyncThunk(
                   body,
                 }
               );
-              console.log(response);
+      
               const data = await response.json();
-              console.log(data);
+    
               if (response.status === 200) {
                 return data;
               } else {
@@ -832,7 +800,7 @@ export const ProfileEdit = createAsyncThunk(
             })
             console.log(body)
               try {
-                const res = await fetch("http://127.0.0.1:8000/api/users/blog-sections-details",{
+                const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/blog-sections-details`,{
                   method: 'POST',
                   headers:{
                     Accept: 'application/json',
@@ -862,7 +830,7 @@ export const ProfileEdit = createAsyncThunk(
               })
               console.log(body)
                 try {
-                  const res = await fetch("http://127.0.0.1:8000/api/users/delete-section",{
+                  const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/delete-section`,{
                     method: 'POST',
                     headers:{
                       Accept: 'application/json',
@@ -895,7 +863,7 @@ export const BlogDetails = createAsyncThunk(
     })
     console.log(body)
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/users/blog-details",{
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/blog-details`,{
           method: 'POST',
           headers:{
             Accept: 'application/json',
@@ -927,7 +895,7 @@ export const BlogDetails = createAsyncThunk(
       })
       console.log(body)
         try {
-          const res = await fetch("http://127.0.0.1:8000/api/users/delete-Blog",{
+          const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/delete-Blog`,{
             method: 'POST',
             headers:{
               Accept: 'application/json',
@@ -956,7 +924,7 @@ async(email,thunkAPI)=>{
   })
   console.log(body)
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/subscribed",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/subscribed`,{
         method: 'POST',
         headers:{
           Accept: 'application/json',
@@ -985,7 +953,7 @@ async(email,thunkAPI)=>{
   })
   console.log(body)
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/cancel-sub",{
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/cancel-sub`,{
         method: 'POST',
         headers:{
           Accept: 'application/json',
