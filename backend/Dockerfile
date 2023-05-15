@@ -9,6 +9,7 @@ WORKDIR /app/backend
 COPY requirements.txt /app/backend/
 
 # RUN pip3 install -r requirements.txt
+RUN apt-get update && apt-get install -y pkg-config
 RUN pip install django django-cors-headers
 RUN pip install --upgrade pip
 RUN pip install gunicorn
