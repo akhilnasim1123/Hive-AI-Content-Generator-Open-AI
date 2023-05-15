@@ -243,6 +243,7 @@ def BlogTopicIdeas(request):
         if wordCountChecker:
             blog = BlogIdea.objects.create(
                 title=topic, keywords=keywords, user=user, wordCount=number_of_words)
+       
             request.session['blog_topic'] = blog_topic
             blog = BlogIdeaSerializer(blog)
             user.wordCount += number_of_words
