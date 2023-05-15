@@ -3,8 +3,8 @@ FROM python:3.10.7
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app/chatGPT
-USER myuser
-COPY --chown=myuser:myuser requirements.txt /app/chatGPT/
+
+COPY  requirements.txt /app/chatGPT/
 
 # RUN pip3 install -r requirements.txt
 RUN pip install django django-cors-headers
