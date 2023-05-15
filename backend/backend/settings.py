@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': 'hive',
         'USER': 'postgres',
         'PASSWORD': '2134',  # or use os.environ.get('DATABASE_PASSWORD')
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
