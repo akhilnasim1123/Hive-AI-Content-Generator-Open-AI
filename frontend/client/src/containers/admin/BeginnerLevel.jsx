@@ -62,11 +62,11 @@ const BeginnerLevel = () => {
           console.log(freeTrailDet)
           console.log(result.payload)
           setFormData({
-           words:freeTrailDet[2].words,
-           prize : freeTrailDet[2].prize,
-           month : freeTrailDet[2].month,
-           key: freeTrailDet[2].unique_id,
-           prime: freeTrailDet[2].prime
+           words:freeTrailDet[1].words,
+           prize : freeTrailDet[1].prize,
+           month : freeTrailDet[1].month,
+           key: freeTrailDet[1].unique_id,
+           prime: freeTrailDet[1].prime
           })
           console.log(freeTrailDet.words)
         })
@@ -94,7 +94,7 @@ const BeginnerLevel = () => {
       <AdminLayout>
   
         <div className='mt-5'>
-            <h3> Beginner Level Management</h3>
+            <h3> Beginner Management</h3>
         </div>
   
   
@@ -150,7 +150,7 @@ const BeginnerLevel = () => {
              </div>
   
               <div className='mt-5'>
-  
+              {users.length>0?
               <table class="table table-hover table-dark mt-3">
               <thead>
                 <tr>
@@ -201,7 +201,11 @@ const BeginnerLevel = () => {
                   })}
               </tbody>
             </table>
-  
+  :       
+                    <div className='text-center'>
+                      <b>There is no Subscribers</b>
+                    </div>
+  }
               </div>
       </AdminLayout>
   

@@ -4,9 +4,10 @@ const fetch = (...args) =>
 
 const router = express.Router();
 
-router.post("/api/users/register", async (req, res) => {
+router.post("/router/users/register", async (req, res) => {
   const { first_name, last_name,phone_number, email, password } = req.body;
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaammmmmmm')
+  console.log(email)
   const body = JSON.stringify({
     first_name,
     last_name,
@@ -14,8 +15,9 @@ router.post("/api/users/register", async (req, res) => {
     email,
     password,
   });
-  // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
   try {
+    console.log(process.env.API_URL)
     const apiRes = await fetch(`${process.env.API_URL}/api/users/register`, {
       method: "POST",
       headers: {
@@ -24,16 +26,12 @@ router.post("/api/users/register", async (req, res) => {
       },
       body,
     });
-    // console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     const data = await apiRes.json();
-    // console.log(data)
 
     return res.status(apiRes.status).json(data);
   } catch (err) {
-    Swal.fire({
-      text: err.response.data,
-      icon: "error",
-    });
+
     return res.status(500).json({
       error: "Something went wrong when registering account",
     });

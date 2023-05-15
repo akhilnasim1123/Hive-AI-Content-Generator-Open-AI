@@ -88,9 +88,9 @@ const Subscription = ()=>{
           dispatch(premiumSubscriptionPlans(email)).then(result => {
               console.log(result.payload)
               setPlans({
-                freeTrail:result.payload[1],
-                beginner:result.payload[2],
-                advanced:result.payload[0],
+                freeTrail:result.payload[0],
+                beginner:result.payload[1],
+                advanced:result.payload[2],
               })
     
           })

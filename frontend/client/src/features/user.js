@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
 import { json } from "react-router-dom";
+const cookie = require("cookie");
 
 export const register = createAsyncThunk(
   "users/register",
@@ -16,7 +17,7 @@ export const register = createAsyncThunk(
     });
 
     try {
-      const res = await fetch("/api/users/register", {
+      const res = await fetch("/router/users/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -26,7 +27,7 @@ export const register = createAsyncThunk(
       });
 
       const data = await res.json();
-
+      console.log(data)
       if (res.status === 201) {
         Swal.fire({
           text: res.statusText,
@@ -34,6 +35,7 @@ export const register = createAsyncThunk(
         });
         return data;
       } else {
+        console.log(res)
         Swal.fire({
           text: res.statusText,
           icon: "error",
@@ -50,9 +52,10 @@ export const register = createAsyncThunk(
   }
 );
 
-const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
+export const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
+  console.log('aasdfaaaaaaaaaaadsfa')
   try {
-    const res = await fetch("/api/users/me", {
+    const res = await fetch("/router/users/me", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -60,7 +63,7 @@ const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
     });
 
     const data = await res.json();
-
+    console.log(data)
     if (res.status === 200) {
       return data;
     } else {
@@ -73,7 +76,9 @@ const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
 
 export const login = createAsyncThunk(
   "users/login",
-  async ({ email, password }, thunkAPI) => {
+  async (req, thunkAPI) => {
+    console.log(req)
+    const { email, password } = req;
     const body = JSON.stringify({
       email,
       password,
@@ -99,7 +104,7 @@ export const login = createAsyncThunk(
       return thunkAPI.rejectWithValue();
     } else {
       try {
-        const res = await fetch("/api/users/login", {
+        const res = await fetch("/router/users/login", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -112,6 +117,7 @@ export const login = createAsyncThunk(
         if (res.status === 200) {
           const { dispatch } = thunkAPI;
           console.log(res.status);
+          
           dispatch(getUser());
           Swal.fire({
             text: "Logged in Successfully",
@@ -121,7 +127,7 @@ export const login = createAsyncThunk(
           return data;
         } else {
           Swal.fire({
-            text: data.error,
+            text: data.detail,
             icon: "error",
           });
           return thunkAPI.rejectWithValue(data);
@@ -139,7 +145,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("users/logout", async (_, thunkAPI) => {
   try {
-    const res = await fetch("/api/users/logout", {
+    const res = await fetch("/router/users/logout", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -274,7 +280,7 @@ export const checkAuth = createAsyncThunk(
   "users/verify",
   async (_, thunkAPI) => {
     try {
-      const res = await fetch("/api/users/verify", {
+      const res = await fetch("/router/users/verify", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -378,6 +384,7 @@ export const userCollection = createAsyncThunk(
     const body = JSON.stringify({
       email,
     })
+    console.log(email, body);
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/user-collection`,{
         method: "POST",
@@ -1013,7 +1020,7 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, (state, actions) => {
         state.authLoading = false;
         state.isAuthenticated = true;
-        state.user = actions.payload;
+        // state.user = actions.payload;
       })
       .addCase(login.rejected, (state) => {
         state.authLoading = false;

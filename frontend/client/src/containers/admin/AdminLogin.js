@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { InputText } from "primereact/inputtext";
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { useDispatch, useSelector } from 'react-redux';
-import { adminLog } from '../../features/admin';
+import { adminLog, checkAdmin } from '../../features/admin';
 import { Navigate, NavLink } from 'react-router-dom';
 
 const AdminLogin = () => {
     const {isAdminAuthenticated}=useSelector(state=>state.admin)
     const dispatch = useDispatch()
+    // useEffect(() => {
+    //   dispatch(checkAdmin());
+    // }, [isAdminAuthenticated]);
     const [formData, setFormData] = useState({
         email: '',
         password: '',

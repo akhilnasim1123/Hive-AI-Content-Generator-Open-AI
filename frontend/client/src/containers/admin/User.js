@@ -13,11 +13,15 @@ import "primereact/resources/primereact.min.css";
 
 //icons
 import "primeicons/primeicons.css";
-import { BlockUser, DeleteUser, searchData, UsersDetails } from "../../features/admin";
+import { BlockUser, checkAdmin, DeleteUser, searchData, UsersDetails } from "../../features/admin";
 import Shimmer from "../shimmer/shimmer";
 
 const UserData = () => {
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(checkAdmin());
+  // }, []);
   const [userdetails, setUserDetails] = useState([]);
   // const { allUser } = useSelector((state) => state.admin);
   // const [searchInput, setSearchInput] = useState('');

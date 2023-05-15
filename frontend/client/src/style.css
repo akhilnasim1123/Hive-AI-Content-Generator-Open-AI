@@ -613,6 +613,7 @@
     background-color: #303134;
 }.prime-management-buttons .prime-buttons{
     background-color: #212529;
+    width: 90%;
 }
 .forgot-password{
     width: 35%;

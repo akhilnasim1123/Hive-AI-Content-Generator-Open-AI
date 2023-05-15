@@ -5,14 +5,16 @@ const fetch = (...args) =>
 
 const router = express.Router();
 
-router.post("/api/users/login", async (req, res) => {
+router.post("/router/users/login", async (req, res) => {
+
   const { email, password } = req.body;
-  console.log(req.cookies,'login cookie');
+  console.log(req)
 
   const body = JSON.stringify({ email, password });
 
   try {
-    const apiRes = await fetch(`${process.env.API_URL}/api/token/`, {
+    // const apiRes = await fetch(`http://192.168.48.111:80/api/token/`, {
+      const apiRes = await fetch(`${process.env.API_URL}/api/token/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -20,22 +22,22 @@ router.post("/api/users/login", async (req, res) => {
       },
       body,
     });
-
+    
     const data = await apiRes.json();
-    console.log(data)
+    console.log(data,'adsfasfdasfasddfssssssssssssssssssssssa')
     if (apiRes.status === 200) {
       res.setHeader("Set-Cookie", [
         cookie.serialize("access", data.access, {
           httpOnly: true,
-          maxAge: 60 * 30,
-          path: "/api/",
+          maxAge: 60 * 30*30,
+          path: "/router/",
           sameSite: "strict",
           secure: process.env.NODE_ENV === "production",
         }),
         cookie.serialize("refresh", data.refresh, {
           httpOnly: true,
           maxAge: 60 * 60 * 30,
-          path: "/api/",
+          path: "/router/",
           sameSite: "strict",
           secure: process.env.NODE_ENV === "production",
         }),

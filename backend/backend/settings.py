@@ -25,12 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY =  os.environ.get('SECRET_KEY')
+# os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,14 +87,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'hive open A I',
-       'USER': 'postgres',
-       'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-       'HOST': 'localhost',
-       'PORT': '5432',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hive',
+        'USER': 'postgres',
+        'PASSWORD': '2134',  # or use os.environ.get('DATABASE_PASSWORD')
+        'HOST': 'db',
+        'PORT': '5432',
+    }
 }
 
 
@@ -157,8 +158,10 @@ CORS_ALLOWED_ORIGIN = [
     "http://localhost:3000/",
     "http://localhost:5000/",
     "http://localhost:8000/",
+    "http://127.0.0.1/",
     "http://192.168.44.247:3000",
-    "http://127.0.0.1:8000"
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:80/",
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

@@ -108,9 +108,9 @@ export default function LoginPage() {
                             </>
                         )}
                     />
-                    <div className='forgot-password'>
+                    {/* <div className='forgot-password'>
                     <NavLink to='/otp'>forgot password?</NavLink>
-                    </div>
+                    </div> */}
                 
                     <div>      
                    {email ? <Button label="Login" className='mt-3' style={{ backgroundColor: 'rgb(59 255 225)', color: 'rgb(26 32 43)', border: 'none' }} type="submit" icon="pi pi-check" />
@@ -122,9 +122,9 @@ export default function LoginPage() {
                     <p style={{ width: 'auto' }}>Don't have an account?</p>
                     <NavLink to='/sign-up' className='login-signup' style={{ width: 'auto' }}>Sign Up</NavLink>
                 </div>
-                <div className='text-secondary user-sign-or' >
+                {/* <div className='text-secondary user-sign-or' >
                     <div></div><hr style={{ width: '21%' }} /><p>or</p> <hr style={{ width: '21%' }} /> <div></div>
-                </div>
+                </div> */}
 
             </div>
            

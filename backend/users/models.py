@@ -102,10 +102,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     return self.approve
   
 
-  @property
-  def currentSub(self):
-    plan = self.currentsub_set.all()
-    return plan
 
   
 
@@ -118,6 +114,7 @@ class BlogCollection(models.Model):
   accuracy = models.IntegerField(blank=True,null=True)
   wordCount = models.IntegerField(blank=True,default=0)
   user = models.ForeignKey(UserAccount,on_delete=models.CASCADE)
+  show = models.BooleanField(default=True)
 
   unique_id=models.CharField(null=True,max_length=100,blank=True, )
   slug = models.SlugField(max_length=500,unique=True,blank=True,null=True)
@@ -180,6 +177,7 @@ class BlogSection(models.Model):
   slug = models.SlugField(max_length=500,unique=True,blank=True,null=True)
   date_created = models.DateTimeField(null=True,blank=True)
   last_updated = models.DateTimeField(null=True,blank=True)
+  show = models.BooleanField(default=True)
 
   def __str__(self):
     return '{} {}'.format(self.title,self.unique_id)
@@ -209,6 +207,7 @@ class BlogIdeaSave(models.Model):
   slug                    = models.SlugField(max_length=500,unique=True,blank=True,null=True)
   date_created            = models.DateTimeField(null=True,blank=True)
   last_updated            = models.DateTimeField(null=True,blank=True)
+  show                    = models.BooleanField(default=True)
 
 
   def __str__(self):
@@ -266,6 +265,7 @@ class Prime(models.Model):
   month                   = models.IntegerField(default=1)
   prize                   = models.FloatField(default=00.0)
   unique_id               = models.CharField(null=True,max_length=100,blank=True)
+  active                  = models.BooleanField(default=True)
 
   def __str__(self) :
     return self.prime

@@ -33,7 +33,7 @@ def answer(ques, chat_log = None):
                 top_p = 1,
                 frequency_penalty = 0.0,
                 presence_penalty = 0.6,
-                stop = ["User:", "VBot:"]
+                stop = ["User:", "HiveBot:"]
             ) 
             # print(response)
             ans = response['choices'][0]['text']
@@ -67,7 +67,7 @@ def message_check(message, chat_log):
 
 def main(msg,chat):
     ans = message_check(msg,chat)
-    print("VBot: ", str(ans),)
+    print("Hive Bot: ", str(ans),)
     return ans
 
 if __name__ == "__main__":

@@ -83,12 +83,12 @@ class BlogIdeaSerializer(serializers.ModelSerializer):
 class BlogSectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogSection   
-        fields = ('title','body','date_created')
+        fields = ('title','body','date_created','show')
 
 class BlogCollectionSerializer(serializers.ModelSerializer):
    class Meta:
       model = BlogCollection
-      fields = ('title','blog','keywords','accuracy','wordCount','unique_id')
+      fields = ('title','blog','keywords','accuracy','wordCount','unique_id','show')
 
 class BlogIdeaSaveSerializer(serializers.ModelSerializer):
     class Meta:

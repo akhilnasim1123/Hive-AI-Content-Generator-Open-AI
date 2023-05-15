@@ -3,19 +3,19 @@ const cookie = require("cookie");
 
 const router = express.Router();
 
-router.get("/api/users/logout", (req, res) => {
+router.get("/router/users/logout", (req, res) => {
   res.setHeader("Set-Cookie", [
     cookie.serialize("access", "", {
       httpOnly: true,
       expires: new Date(0),
-      path: "/api/",
+      path: "/router/",
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
     }),
     cookie.serialize("refresh", "", {
       httpOnly: true,
       expires: new Date(0),
-      path: "/api/",
+      path: "/router/",
       sameSite: "strict",
       secure: process.env.NODE_ENV === "production",
     }),

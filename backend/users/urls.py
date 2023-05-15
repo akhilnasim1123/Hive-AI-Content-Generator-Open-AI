@@ -3,6 +3,7 @@ from .views import RegisterView, RetrieveUserView
 from . import views
 
 
+
 urlpatterns = [
   path('register', RegisterView.as_view()),
   path('me', RetrieveUserView.as_view()),
@@ -26,7 +27,9 @@ urlpatterns = [
   path('user-collection',views.UserCollection),
   path('free-trail',views.FreeTrailData),
   path('beginner',views.Beginner),
+  path('advanced',views.advanced),
   path('edit-prime',views.EditPrime),
+  path('action-prime',views.ActionPrime),
   path('prime-data',views.PrimeData),
   path('premium-plans',views.subscriptionPlans),
   path('primium-subscription',views.registerSubscriptions),
@@ -41,5 +44,6 @@ urlpatterns = [
   path('blog-details',views.blogDetails),
   path('delete-Blog',views.deleteBlog),
   path('subscribed',views.subscribedDetails),
+  
 
 ]

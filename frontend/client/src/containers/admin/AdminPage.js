@@ -1,11 +1,24 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import Shimmer from '../shimmer/shimmer'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavLink, Navigate, useNavigate } from 'react-router-dom'
+
+
+import { adminLogout, checkAdmin } from '../../features/admin'
+
+
 
 const AdminPage = () => {
-    // const {loading} = useSelector(state=>state.admin)
-    // if (loading) return <Shimmer />
+    const dispatch = useDispatch()
+    // useEffect(() => {
+    //   dispatch(checkAdmin());
+    // }, []);
+    const {loading} = useSelector(state=>state.admin)
+
+
+    const { isAdminAuthenticated } = useSelector((state) => state.admin);
+    console.log(isAdminAuthenticated);
+    const navigate = useNavigate();
+    if(!isAdminAuthenticated) return <Navigate to='/admin'/>
     return (
         <div className='row admin-body'>
             <div className='navbar-admin bg-dark'>
@@ -18,11 +31,11 @@ const AdminPage = () => {
                         <div className="userpage">
                             <NavLink to='/users-list' className='nav-users '>Users Management</NavLink>
                         </div>
-                        <div className="key-page mt-3">
-                            <NavLink to='/users' className='nav-users '>Keys</NavLink>
-                        </div>
                         <div className="prime-management mt-3">
                             <NavLink to='/admin-page/prime-management' className='nav-users '>Prime Management</NavLink>
+                        </div>
+                        <div className="key-page mt-5">
+                            <NavLink  className='nav-users' onClick={()=>dispatch(adminLogout()).then(result=>{navigate('/admin')})}>Logout</NavLink>
                         </div>
                     </div>
                 </div>

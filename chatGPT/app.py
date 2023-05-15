@@ -26,7 +26,7 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return "Hit from VBot"
+    return "Hit from Hive Bot"
 
 @app.get("/api/response")
 async def get_response(message: str, request: Request):
@@ -44,4 +44,4 @@ async def get_response(message: str, request: Request):
         return "Oops! Something went wrong"
 
 if __name__ == "__main__":
-    uvicorn.run("app:app",port = 8001,reload=True)
+    uvicorn.run("app:app", port=8001, reload=True)

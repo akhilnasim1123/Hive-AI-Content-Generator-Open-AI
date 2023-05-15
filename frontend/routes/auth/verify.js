@@ -4,16 +4,16 @@ const fetch = (...args) =>
 
 const router = express.Router();
 
-router.get("/api/users/verify", async (req, res) => {
+router.get("/router/users/verify", async (req, res) => {
   // console.log('jjsdhfksasfkaskjfhskjfhkjfshkjfhn')
   const { access } = req.cookies;
   // console.log(access)
   const body = JSON.stringify({
     token: access,
   });
-
+// 192.168.48.182:80
   try {
-    const apiRes = await fetch(`http://127.0.0.1:8000/api/token/verify/`, {
+    const apiRes = await fetch(`${process.env.API_URL}/api/token/verify/`, {
       method: "POST",
       headers: {
         Accept: "application/json",

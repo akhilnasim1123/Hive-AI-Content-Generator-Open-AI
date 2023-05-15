@@ -20,18 +20,19 @@ const UserDashboard = () => {
     const toast = useRef()
 
     const { user } = useSelector(state => state.user)
+    console.log(user&&user)
     const navigate = useNavigate()
     const [Collection, setCollection] = useState()
     useEffect(() => {
         const email = user&&user.email
             if (email === undefined) {
                 return null
-            }
-            
+            }else{
+            console.log(email)
             dispatch(userCollection(email)).then((result) => {
             setCollection(result.payload)
             })
-    
+        }
     }, [user])
 
 
@@ -80,7 +81,7 @@ const emailVerification = () => {
             <form >
             <Toast ref={toast} />
             </form>
-            {user&&user.email_verified ===false?
+            {/* {user&&user.email_verified ===false?
                 <div className='container'>
                     <div className="alert alert-danger mt-3 " role="alert" >
                     Your Email is not Verified. <NavLink onClick={emailVerification} className="alert-link" >click here</NavLink> to verify your email.
@@ -88,7 +89,7 @@ const emailVerification = () => {
                 </div>
         :
         <div></div>
-        }
+        } */}
          <Dialog header="Otp" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>
             <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
             <h6>OTP Sended into this {user&&user.email}</h6>

@@ -39,17 +39,12 @@ class RegisterView(APIView):
         return Response(user.data, status=status.HTTP_201_CREATED)
     
 
-
-
-
-
 class RetrieveUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
         user_data = UserAccount.objects.get(email=user)
-        print(user_data.currentSub)
         user_data = UserSerializer(user_data)
         return Response(user_data.data, status=status.HTTP_200_OK)
 
@@ -251,6 +246,7 @@ def BlogTopicIdeas(request):
             request.session['blog_topic'] = blog_topic
             blog = BlogIdeaSerializer(blog)
             user.wordCount += number_of_words
+            user.save()
             context = {'blog_topic': blog_topic, 'blog': blog.data}
             return Response(context, status=status.HTTP_200_OK)
         else:
@@ -482,7 +478,7 @@ def FreeTrailData(request):
         user = UserAccount.objects.filter(is_superuser=False,subscriptionType = 'Free Trail')
         userDetails = UserSerializer(user, many=True)
 
-        freeTrail = Prime.objects.all()
+        freeTrail = Prime.objects.all().order_by('id')
         print(freeTrail)
         freeTrailDet = PrimeSerializer(freeTrail, many=True)
         print(freeTrailDet)
@@ -503,6 +499,7 @@ def EditPrime(request):
         key = data['key']
         prime = data['prime']
         month = data['month']
+        print(key,prize,month,words)
 
         prime = Prime.objects.get(
             unique_id = key,
@@ -524,12 +521,29 @@ def EditPrime(request):
 @permission_classes([AllowAny])
 def PrimeData(request):
     if request.method == 'GET':
-        prime = Prime.objects.all()
+        prime = Prime.objects.all().order_by('id')
         print(prime)
-        prime = PrimeNameSerializer(prime, many=True)
-        print(prime.data[2])
+        prime = PrimeSerializer(prime, many=True)
+        # print(prime.data[2])
         return Response(prime.data, status=status.HTTP_200_OK)
     
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def ActionPrime(request):
+    data = request.data
+    prime = data['prime']
+    active = data['active']
+    plan = Prime.objects.get(prime=prime,active=active)
+    if active:
+        plan.active = False
+        plan.save()
+    else:
+        plan.active = True
+        plan.save()
+    plan = Prime.objects.all().order_by('id')
+    plan = PrimeSerializer(plan,many=True)
+    return Response(plan.data,status=status.HTTP_200_OK)
 
 
 
@@ -540,7 +554,24 @@ def Beginner(request):
         user = UserAccount.objects.filter(is_superuser=False,subscriptionType = 'Beginner Level')
         userDetails = UserSerializer(user, many=True)
 
-        freeTrail = Prime.objects.all()
+        freeTrail = Prime.objects.all().order_by('id')
+        print(freeTrail)
+        freeTrailDet = PrimeSerializer(freeTrail, many=True)
+        print(freeTrailDet)
+        context = {
+            'userDetails':userDetails.data,
+            'freeTrailDet':freeTrailDet.data
+        }
+        return Response(context, status=status.HTTP_200_OK)
+
+@api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
+def advanced(request):
+    if request.method == 'GET':
+        user = UserAccount.objects.filter(is_superuser=False,subscriptionType = 'Advanced Level')
+        userDetails = UserSerializer(user, many=True)
+
+        freeTrail = Prime.objects.all().order_by('id')
         print(freeTrail)
         freeTrailDet = PrimeSerializer(freeTrail, many=True)
         print(freeTrailDet)
@@ -637,7 +668,7 @@ def savedIdeas(request):
     data = request.data
     email = data['email']
     user = UserAccount.objects.get(email=email)
-    ideas = BlogIdeaSave.objects.filter(user=user)
+    ideas = BlogIdeaSave.objects.filter(user=user,show=True)
     ideas = BlogIdeaSaveSerializer(ideas,many=True)
     return Response(ideas.data,status=status.HTTP_200_OK)
 
@@ -650,8 +681,9 @@ def deleteIdea(request):
     email = data['email']
     user = UserAccount.objects.get(email=email)
     ideas = BlogIdeaSave.objects.get(user=user,blog_ideas=idea)
-    ideas.delete()
-    allIdeas = BlogIdeaSave.objects.filter(user=user)
+    ideas.show = False
+    ideas.save()
+    allIdeas = BlogIdeaSave.objects.filter(user=user,show=True)
     allIdeas = BlogIdeaSaveSerializer(allIdeas,many=True)
     return Response(allIdeas.data,status=status.HTTP_200_OK)
 
@@ -711,7 +743,7 @@ def blogSectionDetails(request):
     data = request.data
     email = data['email']
     user = UserAccount.objects.get(email=email)
-    section = BlogSection.objects.filter(user=user)
+    section = BlogSection.objects.filter(user=user,show=True)
     section = BlogSectionSerializer(section,many=True)
     return Response(section.data,status=status.HTTP_200_OK)
 
@@ -725,8 +757,9 @@ def deleteSection(request):
     email = data['email']
     user = UserAccount.objects.get(email=email)
     section = BlogSection.objects.get(user=user,body=body)
-    section.delete()
-    all_section = BlogSection.objects.filter(user=user)
+    section.show = False
+    section.save()
+    all_section = BlogSection.objects.filter(user=user,show=True)
     all_section = BlogSectionSerializer(all_section,many=True)
     return Response(all_section.data,status=status.HTTP_200_OK)
 
@@ -738,7 +771,7 @@ def blogDetails(request):
     data = request.data
     email = data['email']
     user = UserAccount.objects.get(email=email)
-    blog = BlogCollection.objects.filter(user=user)
+    blog = BlogCollection.objects.filter(user=user,show=True)
     print(blog)
     blog = BlogCollectionSerializer(blog,many=True)
     return Response(blog.data,status=status.HTTP_200_OK)
@@ -752,8 +785,9 @@ def deleteBlog(request):
     email = data['email']
     user = UserAccount.objects.get(email=email)
     blog = BlogCollection.objects.get(user=user,blog=blog)
-    blog.delete()
-    all_blog = BlogSection.objects.filter(user=user)
+    blog.show = False
+    blog.save()
+    all_blog = BlogSection.objects.filter(user=user,show=True)
     all_blog = BlogSectionSerializer(all_blog,many=True)
     return Response(all_blog.data,status=status.HTTP_200_OK)
 

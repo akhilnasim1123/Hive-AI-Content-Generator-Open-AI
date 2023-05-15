@@ -153,9 +153,9 @@ export default function RegisterPage() {
                      </div>
                 </form>
 
-                <div className='text-secondary user-sign-or mt-3' >
+                {/* <div className='text-secondary user-sign-or mt-3' >
                     <div></div><hr style={{ width: '21%' }} /><p>or</p> <hr style={{ width: '21%' }} /> <div></div>
-                </div>
+                </div> */}
 
             </div>
             <Dialog header="Otp" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)}>

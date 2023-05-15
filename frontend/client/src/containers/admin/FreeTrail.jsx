@@ -64,11 +64,11 @@ const FreeTrailPage = () => {
           console.log(freeTrailDet)
           console.log(result.payload)
           setFormData({
-           words:freeTrailDet[1].words,
-           prize : freeTrailDet[1].prize,
-           month : freeTrailDet[1].month,
-           key: freeTrailDet[1].unique_id,
-           prime: freeTrailDet[1].prime
+           words:freeTrailDet[0].words,
+           prize : freeTrailDet[0].prize,
+           month : freeTrailDet[0].month,
+           key: freeTrailDet[0].unique_id,
+           prime: freeTrailDet[0].prime
           })
           console.log(freeTrailDet.words)
         })

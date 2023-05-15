@@ -47,7 +47,7 @@ const ChatGPT = ()=>{
     useEffect(() => {
       if (userInput !== '') {
         setLoading(true)
-        axios.get(`http://localhost:8001/api/response?message=${userInput}`)
+        axios.get(`http://192.168.48.29:80/api/response?message=${userInput}`)
           .then((response) => {
   
             speechSynthesis.cancel();
