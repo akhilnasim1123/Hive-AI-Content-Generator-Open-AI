@@ -8,6 +8,4 @@ RUN npm i nodemon
 RUN npm install http-proxy-middleware --save
 
 COPY . /app/frontend/
-
-EXPOSE 5000
 CMD ["npm", "start"]
