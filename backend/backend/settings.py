@@ -176,7 +176,6 @@ print(env('EMAIL_HOST_PASSWORD'),'sadfasdddddddddddddddddddddddddddd')
 EMAIL_HOST_PASSWORD = 'xumqgyhgihpvulea'
 
 
-OPENAI_API_KEYS= env('OPENAI_API_KEY')
 # JWT_AUTH = {
 #     # how long the original token is valid for
 #     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
