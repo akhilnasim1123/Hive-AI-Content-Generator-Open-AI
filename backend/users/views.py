@@ -240,6 +240,7 @@ def BlogTopicIdeas(request):
         print(blog_topic)
         print(number_of_words)
         print(wordCountChecker)
+        number_of_words = int(number_of_words)
         if wordCountChecker:
             blog = BlogIdea.objects.create(
                 title=topic, keywords=keywords, user=user, wordCount=number_of_words)
