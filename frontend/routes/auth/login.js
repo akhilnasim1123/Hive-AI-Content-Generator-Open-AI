@@ -10,10 +10,10 @@ router.post("/router/users/login", async (req, res) => {
   const { email, password } = req.body;
 
   const body = JSON.stringify({ email, password });
-
+console.log(process.env.API_URL,'asdfsdafsdfsfd')
   try {
     // const apiRes = await fetch(`http://192.168.48.111:80/api/token/`, {
-      const apiRes = await fetch(`${process.env.API_URL}/api/token/`, {
+      const apiRes = await fetch(`/api/token/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
