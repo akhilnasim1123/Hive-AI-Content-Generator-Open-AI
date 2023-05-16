@@ -15,8 +15,11 @@ import datetime
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import environ
 
 load_dotenv()
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -172,7 +175,7 @@ print(os.environ.get('EMAIL_HOST_PASSWORD'),'sadfasdddddddddddddddddddddddddddd'
 EMAIL_HOST_PASSWORD = 'xumqgyhgihpvulea'
 
 
-OPENAI_API_KEYS=os.environ.get('OPENAI_API_KEY')
+OPENAI_API_KEYS=env('OPENAI_API_KEY')
 # JWT_AUTH = {
 #     # how long the original token is valid for
 #     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
