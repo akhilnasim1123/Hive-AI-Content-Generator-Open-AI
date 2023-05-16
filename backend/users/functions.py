@@ -3,7 +3,8 @@ import openai
 # from django.conf import settings
 from backend import settings
 # Load your API key from an environment variable or secret management service
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+k = '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'
+openai.api_key = k
 print(os.environ.get('DATABASE_PASSWORD'))
 
 def generateBlogTopicIdeas(topic, keywords):
