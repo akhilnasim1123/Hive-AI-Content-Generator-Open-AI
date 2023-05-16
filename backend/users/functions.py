@@ -4,7 +4,7 @@ import openai
 from backend import settings
 # Load your API key from an environment variable or secret management service
 openai.api_key = os.environ.get('OPENAI_API_KEY')
-
+print(os.environ.get('DATABASE_PASSWORD'))
 
 def generateBlogTopicIdeas(topic, keywords):
     blog_topics = []
