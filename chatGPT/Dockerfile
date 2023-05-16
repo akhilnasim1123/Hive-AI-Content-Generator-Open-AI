@@ -15,7 +15,7 @@ RUN  pip install -r requirements.txt
 
 
 
-COPY . /app/chatGPT/
+COPY . .
 
 # running migrations
 # RUN python manage.py makemigrations
