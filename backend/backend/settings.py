@@ -165,6 +165,7 @@ CORS_ALLOWED_ORIGIN = [
     "http://192.168.44.247:3000",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:80/",
+    "http://192.168.0.4:8000/",
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

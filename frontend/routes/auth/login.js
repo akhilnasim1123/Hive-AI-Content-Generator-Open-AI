@@ -8,13 +8,12 @@ const router = express.Router();
 router.post("/router/users/login", async (req, res) => {
 
   const { email, password } = req.body;
-  console.log('sssss')
 
   const body = JSON.stringify({ email, password });
 
   try {
     // const apiRes = await fetch(`http://192.168.48.111:80/api/token/`, {
-      const apiRes = await fetch(`/api/token/`, {
+      const apiRes = await fetch(`${process.env.API_URL}/api/token/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
