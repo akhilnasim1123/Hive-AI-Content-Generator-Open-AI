@@ -17,7 +17,7 @@ router.post("/router/users/register", async (req, res) => {
   });
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',body);
   try {
-    const res = await fetch(`http://64.227.168.207/api/users/register`, {
+    const apiRes = await fetch(`http://64.227.168.207/api/users/register`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -26,7 +26,7 @@ router.post("/router/users/register", async (req, res) => {
       body,
     });
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbb')
-    const data = await res.json();
+    const data = await apiRes.json();
     console.log(data)
     return res.status(apiRes.status).json(data);
   } catch (err) {
