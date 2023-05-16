@@ -5,9 +5,9 @@ from backend import settings
 from dotenv import load_dotenv
 # Load your API key from an environment variable or secret management service
 load_dotenv()
-print(os.environ.get('DATABASE_PASSWORD'))
+print(os.getenv('DATABASE_PASSWORD'))
 openai.api_key = os.environ.get('OPENAI_API_KEY')
-print(os.environ.get('DATABASE_PASSWORD'))
+print(os.environ.get('OPENAI_API_KEY'))
 
 def generateBlogTopicIdeas(topic, keywords):
     blog_topics = []
