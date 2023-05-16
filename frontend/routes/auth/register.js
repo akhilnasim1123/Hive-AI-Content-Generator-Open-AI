@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/router/users/register", async (req, res) => {
   const { first_name, last_name,phone_number, email, password } = req.body;
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaammmmmmm')
-  console.log(email)
+  console.log(email,first_name,last_name,phone_number,password);
   const body = JSON.stringify({
     first_name,
     last_name,
@@ -17,7 +17,6 @@ router.post("/router/users/register", async (req, res) => {
   });
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
   try {
-    console.log(process.env.API_URL)
     const apiRes = await fetch(`/api/users/register`, {
       method: "POST",
       headers: {
@@ -28,7 +27,7 @@ router.post("/router/users/register", async (req, res) => {
     });
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     const data = await apiRes.json();
-
+    console.log(data)
     return res.status(apiRes.status).json(data);
   } catch (err) {
 
