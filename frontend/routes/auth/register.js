@@ -18,7 +18,7 @@ router.post("/router/users/register", async (req, res) => {
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
   try {
     console.log(process.env.API_URL)
-    const apiRes = await fetch(`${process.env.API_URL}/api/users/register`, {
+    const apiRes = await fetch(`/api/users/register`, {
       method: "POST",
       headers: {
         Accept: "application/json",
