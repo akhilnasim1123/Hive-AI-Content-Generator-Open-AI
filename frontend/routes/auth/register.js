@@ -15,9 +15,9 @@ router.post("/router/users/register", async (req, res) => {
     email,
     password,
   });
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',body);
   try {
-    const apiRes = await fetch(`/api/users/register`, {
+    const res = await fetch(`/api/users/register`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -25,12 +25,12 @@ router.post("/router/users/register", async (req, res) => {
       },
       body,
     });
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-    const data = await apiRes.json();
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbb')
+    const data = await res.json();
     console.log(data)
     return res.status(apiRes.status).json(data);
   } catch (err) {
-
+    console.log(err)
     return res.status(500).json({
       error: "Something went wrong when registering account",
     });

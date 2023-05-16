@@ -37,7 +37,7 @@ export const register = createAsyncThunk(
       } else {
         console.log(res)
         Swal.fire({
-          text: res.statusText,
+          text: res.error,
           icon: "error",
         });
         return thunkAPI.rejectWithValue(data);
