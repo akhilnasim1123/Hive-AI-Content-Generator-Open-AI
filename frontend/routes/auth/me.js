@@ -9,7 +9,7 @@ router.get("/router/users/me", async (req, res) => {
   console.log(access,'alkdsfjasjflasflaslfsd')
 
   try {
-    const apiRes = await fetch(`/api/users/me`, {
+    const apiRes = await fetch(`http://64.227.168.207/api/users/me`, {
       method: "GET",
       headers: {
         Accept: "application/json",

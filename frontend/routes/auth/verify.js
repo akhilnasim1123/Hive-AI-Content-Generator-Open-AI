@@ -13,7 +13,7 @@ router.get("/router/users/verify", async (req, res) => {
   });
 // 192.168.48.182:80
   try {
-    const apiRes = await fetch(`/api/token/verify/`, {
+    const apiRes = await fetch(`http://64.227.168.207/api/token/verify/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
