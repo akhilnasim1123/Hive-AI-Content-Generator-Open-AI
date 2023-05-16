@@ -14,16 +14,16 @@ from datetime import timedelta
 import datetime
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-from os import environ
+# from dotenv import load_dotenv
 
-load_dotenv()
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
-environ.Env.read_env()
+# env = environ.Env()
+# environ.Env.read_env()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -172,7 +172,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER ='akhilnasim1123@gmail.com'
-print(env('EMAIL_HOST_PASSWORD'),'sadfasdddddddddddddddddddddddddddd')
+print(config('EMAIL_HOST_PASSWORD'),'sadfasdddddddddddddddddddddddddddd')
 EMAIL_HOST_PASSWORD = 'xumqgyhgihpvulea'
 
 
