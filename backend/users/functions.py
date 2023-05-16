@@ -3,7 +3,7 @@ import openai
 # from django.conf import settings
 from backend import settings
 # Load your API key from an environment variable or secret management service
-k = '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'
+k = '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'
 openai.api_key = k
 print(os.environ.get('DATABASE_PASSWORD'))
 
