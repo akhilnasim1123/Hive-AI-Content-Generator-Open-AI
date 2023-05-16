@@ -2,8 +2,10 @@ import os
 import openai
 # from django.conf import settings
 from backend import settings
+from dotenv import load_dotenv
 # Load your API key from an environment variable or secret management service
-
+load_dotenv()
+print(os.environ.get('DATABASE_PASSWORD'))
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 print(os.environ.get('DATABASE_PASSWORD'))
 
