@@ -16,7 +16,7 @@ import os
 from pathlib import Path
 # from dotenv import load_dotenv
 
-from decouple import config
+# from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -172,7 +172,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER ='akhilnasim1123@gmail.com'
-print(config('EMAIL_HOST_PASSWORD'),'sadfasdddddddddddddddddddddddddddd')
+# print(config('EMAIL_HOST_PASSWORD'),'sadfasdddddddddddddddddddddddddddd')
 EMAIL_HOST_PASSWORD = 'xumqgyhgihpvulea'
 
 
