@@ -17,7 +17,7 @@ router.post("/router/users/register", async (req, res) => {
   });
   console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',body);
   try {
-    const res = await fetch(`/api/users/register`, {
+    const res = await fetch(`http://64.227.168.207/api/users/register`, {
       method: "POST",
       headers: {
         Accept: "application/json",
