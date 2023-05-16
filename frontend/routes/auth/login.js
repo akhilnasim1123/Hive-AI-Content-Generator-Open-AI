@@ -14,7 +14,7 @@ router.post("/router/users/login", async (req, res) => {
 
   try {
     // const apiRes = await fetch(`http://192.168.48.111:80/api/token/`, {
-      const apiRes = await fetch(`http://64.227.168.207/api/token/`, {
+      const apiRes = await fetch(`/api/token/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
