@@ -67,8 +67,5 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-<<<<<<< HEAD
       - backend
-=======
-      - backend
->>>>>>> 9ed3c8aacbbdbe5139c137a5e8983232119f056b
+
