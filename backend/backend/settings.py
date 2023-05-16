@@ -15,7 +15,7 @@ import datetime
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import environ
+from os import environ
 
 load_dotenv()
 
