@@ -174,7 +174,7 @@ export const contentGenerator = createAsyncThunk(
     });
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/users/blog-ideas-generator`,
+        `/api/users/blog-ideas-generator`,
         {
           method: "POST",
           headers: {
@@ -211,7 +211,7 @@ export const BlogGenerator = createAsyncThunk(
     });
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/users/blog-generator`,
+        `/api/users/blog-generator`,
         {
           method: "POST",
           headers: {
@@ -249,7 +249,7 @@ export const StoryGenerator = createAsyncThunk(
     });
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/users/story-generator`,
+        `/api/users/story-generator`,
         {
           method: "POST",
           headers: {
@@ -317,7 +317,7 @@ export const saveBlogIdea = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/users/save-blog`,
+        `/api/users/save-blog`,
         {
           method: "POST",
           headers: {
@@ -351,7 +351,7 @@ export const blogSections = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/users/generate-blog-sections`,
+        `/api/users/generate-blog-sections`,
         {
           method: "POST",
           headers: {
@@ -386,7 +386,7 @@ export const userCollection = createAsyncThunk(
     })
     console.log(email, body);
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/user-collection`,{
+      const res = await fetch(`/api/users/user-collection`,{
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -415,7 +415,7 @@ export const premiumSubscription = createAsyncThunk (
       key
     })
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/primium-subscription`,{
+      const res = await fetch(`/api/users/primium-subscription`,{
         method: 'POST',
         headers:{
           Accept: 'application/json',
@@ -445,7 +445,7 @@ export const premiumSubscriptionPlans = createAsyncThunk (
   
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/premium-plans`,{
+      const res = await fetch(`/api/users/premium-plans`,{
         method: 'POST',
         headers:{
           Accept: 'application/json',
@@ -501,7 +501,7 @@ export const emailVerify = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/email-verify`,{
+      const res = await fetch(`/api/users/email-verify`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -530,7 +530,7 @@ export const otpVerification = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/otp-verify`,{
+      const res = await fetch(`/api/users/otp-verify`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -565,7 +565,7 @@ export const otpEmailVerification = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/otp-email-verify`,{
+      const res = await fetch(`/api/users/otp-email-verify`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
@@ -607,7 +607,7 @@ export const changeUserImage = createAsyncThunk(
     // console.log(dataUrl,'this is data url ofofofofo')
     // console.log(email,'emaaaaiillllllllll')
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/update-image`, {
+      const res = await fetch(`/api/users/update-image`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -644,7 +644,7 @@ export const ProfileEdit = createAsyncThunk(
     })
     console.log(body)
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/update-profile`,{
+        const res = await fetch(`/api/users/update-profile`,{
           method: 'POST',
           headers:{
             Accept: 'application/json',
@@ -674,7 +674,7 @@ export const ProfileEdit = createAsyncThunk(
       })
       console.log(body)
         try {
-          const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/image-generator`,{
+          const res = await fetch(`/api/users/image-generator`,{
             method: 'POST',
             headers:{
               Accept: 'application/json',
@@ -706,7 +706,7 @@ export const ProfileEdit = createAsyncThunk(
         })
         console.log(body)
           try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/saved-ideas`,{
+            const res = await fetch(`/api/users/saved-ideas`,{
               method: 'POST',
               headers:{
                 Accept: 'application/json',
@@ -738,7 +738,7 @@ export const ProfileEdit = createAsyncThunk(
           })
           console.log(body)
             try {
-              const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/delete-idea`,{
+              const res = await fetch(`/api/users/delete-idea`,{
                 method: 'POST',
                 headers:{
                   Accept: 'application/json',
@@ -769,7 +769,7 @@ export const ProfileEdit = createAsyncThunk(
         
             try {
               const response = await fetch(
-                `${process.env.REACT_APP_API_URL}/api/users/blog-section`,
+                `/api/users/blog-section`,
                 {
                   method: "POST",
                   headers: {
@@ -807,7 +807,7 @@ export const ProfileEdit = createAsyncThunk(
             })
             console.log(body)
               try {
-                const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/blog-sections-details`,{
+                const res = await fetch(`/api/users/blog-sections-details`,{
                   method: 'POST',
                   headers:{
                     Accept: 'application/json',
@@ -837,7 +837,7 @@ export const ProfileEdit = createAsyncThunk(
               })
               console.log(body)
                 try {
-                  const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/delete-section`,{
+                  const res = await fetch(`/api/users/delete-section`,{
                     method: 'POST',
                     headers:{
                       Accept: 'application/json',
@@ -870,7 +870,7 @@ export const BlogDetails = createAsyncThunk(
     })
     console.log(body)
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/blog-details`,{
+        const res = await fetch(`/api/users/blog-details`,{
           method: 'POST',
           headers:{
             Accept: 'application/json',
@@ -902,7 +902,7 @@ export const BlogDetails = createAsyncThunk(
       })
       console.log(body)
         try {
-          const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/delete-Blog`,{
+          const res = await fetch(`/api/users/delete-Blog`,{
             method: 'POST',
             headers:{
               Accept: 'application/json',
@@ -931,7 +931,7 @@ async(email,thunkAPI)=>{
   })
   console.log(body)
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/subscribed`,{
+      const res = await fetch(`/api/users/subscribed`,{
         method: 'POST',
         headers:{
           Accept: 'application/json',
@@ -960,7 +960,7 @@ async(email,thunkAPI)=>{
   })
   console.log(body)
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/cancel-sub`,{
+      const res = await fetch(`/api/users/cancel-sub`,{
         method: 'POST',
         headers:{
           Accept: 'application/json',
