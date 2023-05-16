@@ -1,0 +1,8 @@
+SECRET_KEY=django-insecure-$+l_p%1hw-jm*^xysaz0wu67p@@+ej^!kdj(l&j77x5bz_nh0e
+DATABASE_PASSWORD=2134
+OPENAI_API_KEY=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
+TWILIO_ACCOUNT_KEY=ACe8822ddb1d00b83216bd3af7616f39e7
+EMAIL_HOST=smtp.gmail.com
+EMAIL_HOST_USER=akhilnasim1123@gmail.com
+EMAIL_HOST_PASSWORD=xumqgyhgihpvulea
+SECRET_KEY_OPENAI=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
