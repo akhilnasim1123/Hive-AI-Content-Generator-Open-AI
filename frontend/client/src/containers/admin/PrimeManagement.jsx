@@ -85,12 +85,12 @@ const PrimeManagement = () => {
   console.log(prime)
 
   useEffect(() => {
-    if (searchInput.length > 0) {
+    if (searchInput&&searchInput.length > 0) {
       dispatch(searchData(searchInput)).then((result) => {
         console.log(result.payload)
         setUsers(result.payload)
       })
-    } else if (searchInput.length === 0) {
+    } else if (searchInput&&searchInput.length === 0) {
       dispatch(primeUsers(null)).then((result) => {
         setUsers(result.payload)
       });
