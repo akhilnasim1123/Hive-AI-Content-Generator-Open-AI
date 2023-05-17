@@ -61,6 +61,7 @@ const FreeTrailPage = () => {
         dispatch(freeTrail()).then((result)=>{
           const {userDetails,freeTrailDet} = result.payload
           setUsers(userDetails)
+          console.log(userDetails)
           console.log(freeTrailDet)
           console.log(result.payload)
           setFormData({
@@ -166,7 +167,7 @@ const FreeTrailPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {users&&users.map((user, i) => {
+                {users?users.map((user, i) => {
                     return (
                       <tr>
                         <th scope="row">{i + 1}</th>
@@ -208,7 +209,7 @@ const FreeTrailPage = () => {
                         </td>
                       </tr>
                     );
-                  })}
+                  }): <div></div>}
               </tbody>
             </table>
   
