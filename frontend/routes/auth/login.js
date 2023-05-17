@@ -44,9 +44,11 @@ console.log(process.env.API_URL,'asdfsdafsdfsfd')
 
       return res.status(200).json({success: "Logged in successfully" });
     } else {
+      console.log(apiRes.status)
       return res.status(apiRes.status).json(data);
     }
   } catch (err) {
+    console.log(res)
     return res.status(500).json({
       error: "Something went wrong when logging in",
     });
