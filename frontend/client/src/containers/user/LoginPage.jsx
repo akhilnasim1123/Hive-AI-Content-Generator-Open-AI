@@ -56,7 +56,7 @@ export default function LoginPage() {
     const onSubmitHandler = (e) => {
         e.preventDefault();
         console.log(email, password);
-        if (email.length > 30){
+        if (email.length > 60){
             toast.current.show({ severity: 'error', summary: 'Error', detail: 'Email is too long' });
         }else if (email && password) {
             dispatch(login({email, password})).then((result)=>{

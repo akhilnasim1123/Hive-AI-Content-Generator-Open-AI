@@ -36,10 +36,18 @@ export const register = createAsyncThunk(
         return data;
       } else {
         console.log(res)
-        Swal.fire({
-          text: res.error,
-          icon: "error",
-        });
+        if (res.password){
+          Swal.fire({
+            text: res.password,
+            icon: "error",
+          });
+        }else if (res.email){
+          Swal.fire({
+            text: res.email,
+            icon: "error",
+          });
+        }
+
         return thunkAPI.rejectWithValue(data);
       }
     } catch (err) {

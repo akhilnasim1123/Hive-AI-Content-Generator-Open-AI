@@ -82,7 +82,7 @@ console.log(users)
         setUsers(result.payload)
       })
     }else if (searchInput.length === 0 || searchInput === ''){
-      dispatch(primeUsers('Beginner Level')).then(result => {
+      dispatch(primeUsers('Advance Level')).then(result => {
           setUsers(result.payload)
       });
     }
