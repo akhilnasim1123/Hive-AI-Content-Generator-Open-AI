@@ -13,7 +13,7 @@ urlpatterns = [
   path('delete',views.Delete),
   path('search',views.Search),
   path('prime-search',views.PrimeSearch),
-  path('otp',views.email_login),
+  path('otp',views.email_logins),
   path('email-verify',views.email_verify),
   path('otp-verify',views.otp_verify),
   path('otp-email-verify',views.otp_emailVerify),
