@@ -385,6 +385,7 @@ export const editPrime = createAsyncThunk(
       key,
       prime,
     })
+    console.log(prime)
     try {
       const res = await fetch(`/api/users/edit-prime`,{
         method: "POST",

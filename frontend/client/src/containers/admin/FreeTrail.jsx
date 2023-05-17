@@ -32,7 +32,7 @@ const FreeTrailPage = () => {
       e.preventDefault()
       dispatch(editPrime({words,prize,month,key,prime})).then(result => {
         const data = result.payload
-        const {prime} = result.payload
+        const {prime} = data
         console.log(prime)
         setFormData({
 
@@ -166,8 +166,7 @@ const FreeTrailPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {users &&
-                  users.map((user, i) => {
+                {users&&users.map((user, i) => {
                     return (
                       <tr>
                         <th scope="row">{i + 1}</th>
