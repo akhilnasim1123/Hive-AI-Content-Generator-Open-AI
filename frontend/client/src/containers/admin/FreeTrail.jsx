@@ -75,19 +75,7 @@ const FreeTrailPage = () => {
         })
       },[])
   
-    useEffect(()=>{
-      if (searchInput.length > 0) {
-        dispatch(searchData(searchInput)).then((result)=>{
-          console.log(result.payload)
-          setUsers(result.payload)
-        })
-      }else if (searchInput.length === 0 || searchInput === ''){
-        dispatch(primeUsers('Free Trail')).then(result => {
-            setUsers(result.payload)
-            console.log(users)
-        });
-      }
-    },[searchInput])
+
   console.log(users)
   
     const toast = useRef()
