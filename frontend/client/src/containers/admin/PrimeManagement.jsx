@@ -152,7 +152,7 @@ const PrimeManagement = () => {
       </div> */}
 
       <div className='mt-5'>
-        {prime.length > 1 ?
+        {prime&&prime.length > 1 ?
           <table class="table table-hover table-dark mt-3">
             <thead>
               <tr>
