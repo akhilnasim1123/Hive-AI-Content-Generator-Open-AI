@@ -485,7 +485,7 @@ export const otpLogin = createAsyncThunk(
         method: 'POST',
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body,
         
@@ -513,7 +513,7 @@ export const emailVerify = createAsyncThunk(
         method: 'POST',
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body,
         
@@ -542,7 +542,7 @@ export const otpVerification = createAsyncThunk(
         method: 'POST',
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body,
         
@@ -619,7 +619,7 @@ export const changeUserImage = createAsyncThunk(
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body,
       });
