@@ -18,7 +18,7 @@ const PrimeManagement = () => {
   //   dispatch(checkAdmin());
   // }, []);
   const [users, setUsers] = useState([])
-  const [searchInput, setSearchInput] = useState(users);
+  const [searchInput, setSearchInput] = useState([]);
   const [prime, setPrime] = useState([])
   useEffect(() => {
     dispatch(primeUsers(null)).then((result) => {
