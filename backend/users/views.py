@@ -149,6 +149,7 @@ def UsersData(request):
 def UserData(request):
     if request.method == 'POST':
         data = request.data
+        print(data)
         if data is None:
             value = None
         else:

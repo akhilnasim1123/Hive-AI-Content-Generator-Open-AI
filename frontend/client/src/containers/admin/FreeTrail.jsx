@@ -84,6 +84,7 @@ const FreeTrailPage = () => {
       }else if (searchInput.length === 0 || searchInput === ''){
         dispatch(primeUsers('Free Trail')).then(result => {
             setUsers(result.payload)
+            console.log(users)
         });
       }
     },[searchInput])
