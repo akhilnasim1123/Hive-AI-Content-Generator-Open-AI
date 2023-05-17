@@ -157,7 +157,7 @@ export const BlockUser = createAsyncThunk(
     const body = JSON.stringify(email);
     console.log(email);
     try {
-      const res = await fetch(`/api/users/Block`, {
+      const res = await fetch(`64.227.168.207/api/users/Block`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -187,7 +187,7 @@ export const DeleteUser = createAsyncThunk(
     const body = JSON.stringify(email);
     console.log(email);
     try {
-      const res = await fetch(`/api/users/delete`, {
+      const res = await fetch(`64.227.168.207/api/users/delete`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -217,7 +217,7 @@ export const searchData = createAsyncThunk(
     const body = JSON.stringify(search);
     console.log(search);
     try {
-      const res = await fetch(`/api/users/prime-search`, {
+      const res = await fetch(`64.227.168.207/api/users/prime-search`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -245,7 +245,7 @@ export const UsersDetails = createAsyncThunk(
   "users/",
   async (setUserDetails, thunkAPI) => {
     try {
-      const res = await fetch(`/api/users/user-details`, {
+      const res = await fetch(`64.227.168.207/api/users/user-details`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -276,7 +276,7 @@ export const primeUsers = createAsyncThunk(
       value,
     });
     try {
-      const res = await fetch(`/api/users/user-data`, {
+      const res = await fetch(`64.227.168.207/api/users/user-data`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -302,7 +302,7 @@ export const freeTrail = createAsyncThunk(
   "users/freeTrail",
   async (_, thunkAPI) => {
     try {
-      const res = await fetch(`/api/users/free-trail`, {
+      const res = await fetch(`64.227.168.207/api/users/free-trail`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -328,7 +328,7 @@ export const Beginner = createAsyncThunk(
   "users/Beginner",
   async (_, thunkAPI) => {
     try {
-      const res = await fetch(`/api/users/beginner`, {
+      const res = await fetch(`64.227.168.207/api/users/beginner`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -353,7 +353,7 @@ export const Advanced = createAsyncThunk(
   "users/Beginner",
   async (_, thunkAPI) => {
     try {
-      const res = await fetch(`/api/users/advanced`, {
+      const res = await fetch(`64.227.168.207/api/users/advanced`, {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -387,7 +387,7 @@ export const editPrime = createAsyncThunk(
     })
     console.log(prime)
     try {
-      const res = await fetch(`/api/users/edit-prime`,{
+      const res = await fetch(`64.227.168.207/api/users/edit-prime`,{
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -418,7 +418,7 @@ export const DeactivatePrime = createAsyncThunk(
       prime,
     })
     try {
-      const res = await fetch(`/api/users/action-prime`,{
+      const res = await fetch(`64.227.168.207/api/users/action-prime`,{
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -445,7 +445,7 @@ export const PrimeData = createAsyncThunk(
   "users/prime",
   async (_, thunkAPI) => {
     try {
-      const res = await fetch(`/api/users/prime-data`, {
+      const res = await fetch(`64.227.168.207/api/users/prime-data`, {
         method: "GET",
         headers: {
           Accept: "application/json",
