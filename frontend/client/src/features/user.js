@@ -127,7 +127,7 @@ export const login = createAsyncThunk(
           return data;
         } else {
           Swal.fire({
-            text: data.detail,
+            text: 'There is no User With This Credentials',
             icon: "error",
           });
           return thunkAPI.rejectWithValue(data);

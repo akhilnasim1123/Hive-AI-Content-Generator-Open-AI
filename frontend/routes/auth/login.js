@@ -13,7 +13,7 @@ router.post("/router/users/login", async (req, res) => {
 console.log(process.env.API_URL,'asdfsdafsdfsfd')
   try {
     // const apiRes = await fetch(`http://192.168.48.111:80/api/token/`, {
-      const apiRes = await fetch(`/api/token/`, {
+      const apiRes = await fetch(`http://64.227.168.207/api/token/`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -44,11 +44,11 @@ console.log(process.env.API_URL,'asdfsdafsdfsfd')
 
       return res.status(200).json({success: "Logged in successfully" });
     } else {
-      console.log(apiRes.status)
+      console.log(apiRes.status,'jhgjhgjjjjjjjjjjjjjjjjjjj')
       return res.status(apiRes.status).json(data);
     }
   } catch (err) {
-    console.log(res)
+    console.log(res,'gggggggggggggggggggggggggggggggggg')
     return res.status(500).json({
       error: "Something went wrong when logging in",
     });
