@@ -275,8 +275,9 @@ export const primeUsers = createAsyncThunk(
     const body = JSON.stringify({
       value,
     });
+    console.log(body)
     try {
-      const res = await fetch(`64.227.168.207/api/users/user-data`, {
+      const res = await fetch(`/api/users/user-data`, {
         method: "POST",
         headers: {
           Accept: "application/json",
