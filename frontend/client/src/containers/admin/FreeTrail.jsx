@@ -87,7 +87,7 @@ const FreeTrailPage = () => {
         });
       }
     },[searchInput])
-  
+  console.log(users)
   
     const toast = useRef()
     // const {loading} = useSelector(state=>state.admin)
