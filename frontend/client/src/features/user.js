@@ -27,7 +27,6 @@ export const register = createAsyncThunk(
       });
 
       const data = await res.json();
-      console.log(data)
       if (res.status === 201) {
         Swal.fire({
           text: res.statusText,
@@ -53,7 +52,6 @@ export const register = createAsyncThunk(
 );
 
 export const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
-  console.log('aasdfaaaaaaaaaaadsfa')
   try {
     const res = await fetch("/router/users/me", {
       method: "GET",
@@ -63,7 +61,7 @@ export const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
     });
 
     const data = await res.json();
-    console.log(data)
+
     if (res.status === 200) {
       return data;
     } else {
@@ -77,7 +75,6 @@ export const getUser = createAsyncThunk("users/me", async (_, thunkAPI) => {
 export const login = createAsyncThunk(
   "users/login",
   async (req, thunkAPI) => {
-    console.log(req)
     const { email, password } = req;
     const body = JSON.stringify({
       email,
@@ -116,7 +113,6 @@ export const login = createAsyncThunk(
         const data = await res.json();
         if (res.status === 200) {
           const { dispatch } = thunkAPI;
-          console.log(res.status);
           
           dispatch(getUser());
           Swal.fire({

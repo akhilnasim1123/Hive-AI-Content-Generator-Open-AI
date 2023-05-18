@@ -10,7 +10,6 @@ router.post("/router/users/login", async (req, res) => {
   const { email, password } = req.body;
 
   const body = JSON.stringify({ email, password });
-console.log(process.env.API_URL,'asdfsdafsdfsfd')
   try {
     // const apiRes = await fetch(`http://192.168.48.111:80/api/token/`, {
       const apiRes = await fetch(`http://64.227.168.207/api/token/`, {
@@ -23,7 +22,7 @@ console.log(process.env.API_URL,'asdfsdafsdfsfd')
     });
     
     const data = await apiRes.json();
-    console.log(data,'adsfasfdasfasddfssssssssssssssssssssssa')
+
     if (apiRes.status === 200) {
       res.setHeader("Set-Cookie", [
         cookie.serialize("access", data.access, {
@@ -44,11 +43,9 @@ console.log(process.env.API_URL,'asdfsdafsdfsfd')
 
       return res.status(200).json({success: "Logged in successfully" });
     } else {
-      console.log(apiRes.status,'jhgjhgjjjjjjjjjjjjjjjjjjj')
       return res.status(apiRes.status).json(data);
     }
   } catch (err) {
-    console.log(res,'gggggggggggggggggggggggggggggggggg')
     return res.status(500).json({
       error: "Something went wrong when logging in",
     });
