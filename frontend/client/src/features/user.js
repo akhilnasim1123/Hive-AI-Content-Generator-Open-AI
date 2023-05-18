@@ -174,7 +174,7 @@ export const contentGenerator = createAsyncThunk(
     });
     try {
       const response = await fetch(
-        `http://64.227.168.207/api/users/blog-ideas-generator`,
+        `http://64.227.168.20/api/users/blog-ideas-generator`,
         {
           method: "POST",
           headers: {
