@@ -482,7 +482,9 @@ export const otpLogin = createAsyncThunk(
         body,
         
       })
+      
       const data = res.json()
+      console.log(data)
       if (res.status === 200){
         return data
       }
