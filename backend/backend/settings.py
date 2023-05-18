@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hive',
         'USER': 'postgres',
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),  # or use os.environ.get('DATABASE_PASSWORD')
+        'PASSWORD': '2134',  # or use os.environ.get('DATABASE_PASSWORD')
         'HOST': 'db',
         'PORT': '5432',
     }
