@@ -36,18 +36,10 @@ export const register = createAsyncThunk(
         return data;
       } else {
         console.log(res)
-        if (res.password){
-          Swal.fire({
-            text: res.password,
-            icon: "error",
-          });
-        }else if (res.email){
-          Swal.fire({
-            text: res.email,
-            icon: "error",
-          });
-        }
-
+        Swal.fire({
+          text: res.error,
+          icon: "error",
+        });
         return thunkAPI.rejectWithValue(data);
       }
     } catch (err) {
@@ -485,7 +477,7 @@ export const otpLogin = createAsyncThunk(
         method: 'POST',
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body,
         
@@ -513,7 +505,7 @@ export const emailVerify = createAsyncThunk(
         method: 'POST',
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body,
         
@@ -542,7 +534,7 @@ export const otpVerification = createAsyncThunk(
         method: 'POST',
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body,
         
@@ -619,7 +611,7 @@ export const changeUserImage = createAsyncThunk(
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body,
       });

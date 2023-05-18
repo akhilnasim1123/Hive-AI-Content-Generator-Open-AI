@@ -18,7 +18,6 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 import Shimmer from '../shimmer/shimmer';
-import { Dialog } from 'primereact/dialog';
 
 
 
@@ -39,7 +38,8 @@ export default function LoginPage() {
     }
 
     const show = () => {
-        toast.current.show({ severity: 'success', summary: 'Login successful'});
+        // toast.current.show({ severity: 'success', summary: 'Login successful'});
+        console.log('hmm')
     };
 
     const defaultValues = {

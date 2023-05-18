@@ -54,19 +54,20 @@ class RetrieveUserView(APIView):
 @api_view(['GET', 'POST'])
 @permission_classes([AllowAny])
 def email_login(request):
-    data = request.data
-    email = data['email']
-    user = UserAccount.objects.filter(email=email).exists()
-    print(email)
-    print(user,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-    if user:
-        message="Email Already, please try again"
-        return Response(message,status=status.HTTP_401_UNAUTHORIZED)
-    else:
-        otp = sent_otp_via_email(email)
-        print(otp)
-        message = "Otp Sended"
-        return Response(message,status=status.HTTP_200_OK)
+    if request.method == 'POST':
+        data = request.data
+        email = data['email']
+        user = UserAccount.objects.filter(email=email).exists()
+        print(email)
+        print(user,'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        if user:
+            message="Email Already, please try again"
+            return Response(message,status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            otp = sent_otp_via_email(email)
+            print(otp)
+            message = "Otp Sended"
+            return Response(message,status=status.HTTP_200_OK)
     
 
 @api_view(['GET', 'POST'])
