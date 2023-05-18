@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  'django-insecure-$+l_p%1hw-jm*^xysaz0wu67p@@+ej^!kdj(l&j77x5bz_nh0e'
+SECRET_KEY =  os.environ.get('SECRET_KEY')
 # os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -92,7 +92,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hive',
         'USER': 'postgres',
-        'PASSWORD': '2134',  # or use os.environ.get('DATABASE_PASSWORD')
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),  # or use os.environ.get('DATABASE_PASSWORD')
         'HOST': 'db',
         'PORT': '5432',
     }
@@ -169,9 +169,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER ='akhilnasim1123@gmail.com'
+EMAIL_HOST_USER =os.environ.get('EMAIL_HOST_USER')
 # print(config('EMAIL_HOST_PASSWORD'),'sadfasdddddddddddddddddddddddddddd')
-EMAIL_HOST_PASSWORD = 'xumqgyhgihpvulea'
+
 
 
 # JWT_AUTH = {

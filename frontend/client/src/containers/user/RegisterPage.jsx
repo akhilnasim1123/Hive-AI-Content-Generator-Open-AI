@@ -38,7 +38,7 @@ export default function RegisterPage() {
         password:'',
         confirm_password:'',
     });
-
+    console.log(process.env.REACT_APP_API_URL)
     const {first_name, last_name,phone, email, password, confirm_password} = formData;
 
     const onChange = (e) => {
