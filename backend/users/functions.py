@@ -5,7 +5,6 @@ from backend import settings
 from dotenv import load_dotenv
 # Load your API key from an environment variable or secret management service
 load_dotenv()
-print(os.getenv('DATABASE_PASSWORD'))
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
 
