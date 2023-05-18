@@ -473,7 +473,7 @@ export const otpLogin = createAsyncThunk(
       email,
     })
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/users/otp`,{
+      const res = await fetch(`/api/users/otp`,{
         method: 'POST',
         headers: {
           Accept: "application/json",
